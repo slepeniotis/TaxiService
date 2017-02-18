@@ -7,7 +7,7 @@ import taxi.model.Koursa;
 
 import java.util.Date;
 
-
+//gamiesai poustako
 /**
  * 
  * @author nyxteridas
