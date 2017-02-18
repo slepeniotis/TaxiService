@@ -1,6 +1,5 @@
 package taxi.model;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Route {
 	
@@ -10,7 +9,7 @@ public class Route {
 	private int duration;
 	private float cost;
 	private float commision;
-	private List<Evaluation> eval = new ArrayList<Evaluation>();
+	private Evaluation eval;
 	
 	public Route(int id, String from, String to, int duration, float cost, float commision) {
 		
@@ -70,13 +69,12 @@ public class Route {
 		this.commision = commision;
 	}
 	
-	public List<Evaluation> geteval() {
-		return this.eval;
+	public Evaluation getEval() {
+		return eval;
 	}
-	
-	public void addeval(Evaluation eval) {
-		this.eval.add(eval);
 
+	public void setEval(Evaluation eval) {
+		this.eval = eval;
 	}
 
 	public void calculateCommision(){

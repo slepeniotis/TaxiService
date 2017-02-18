@@ -169,18 +169,18 @@ public class Customer {
 	}
 
 	public void addNewCustomer() {
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public void taxiSearch() {
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public void chooseTaxi() {
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public void informCustomer() {
-		throw new UnsupportedOperationException();
+		
 	}
 }
