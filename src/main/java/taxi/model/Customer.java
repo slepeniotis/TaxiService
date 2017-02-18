@@ -1,9 +1,9 @@
-package aueb.taxi.model;
+package taxi.model;
 
 import java.util.Vector;
 
-import aueb.taxi.model.Evaluation;
-import aueb.taxi.model.Koursa;
+import taxi.model.Evaluation;
+import taxi.model.Koursa;
 
 import java.util.Date;
 
