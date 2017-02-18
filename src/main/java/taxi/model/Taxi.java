@@ -1,6 +1,7 @@
 package taxi.model;
 
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,15 +20,17 @@ public class Taxi {
 	private String carType;
 	private String licensePlate;
 	private Date carModelDate;
-	public Vector<TaxiDriver> owns = new Vector<TaxiDriver>();
-	public Vector<Koursa> unnamed_Koursa = new Vector<Koursa>();
+	private String location;
+	private TaxiDriver owns;
+	private List<Request> req = new ArrayList<Request>();
 
-	public Taxi(int id, String carModel, String carType, String licensePlate, Date carModelDate) {
+	public Taxi(int id, String carModel, String carType, String licensePlate, Date carModelDate, String location) {
 		this.id = id;
 		this.carModel = carModel;
 		this.carType = carType;
 		this.licensePlate = licensePlate;
 		this.carModelDate = carModelDate;
+		this.location = location;
 	}
 
 	public int getId() {
@@ -69,8 +72,13 @@ public class Taxi {
 	public void setCarModelDate(Date carModelDate) {
 		this.carModelDate = carModelDate;
 	}
-
-	protected void addTaxi() {
-		throw new UnsupportedOperationException();
+	
+	public List<Request> getRequest() {
+		return this.req;
 	}
+	
+	public void addRequest(Request req) {
+		this.req.add(req);
+	}
+	
 }

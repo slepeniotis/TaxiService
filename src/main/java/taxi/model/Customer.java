@@ -1,10 +1,8 @@
 package taxi.model;
 
-import java.util.Vector;
-
-import taxi.model.Evaluation;
-import taxi.model.Koursa;
-
+import java.util.List;
+import java.util.ArrayList;
+import taxi.model.Request;
 import java.util.Date;
 
 
@@ -12,7 +10,6 @@ import java.util.Date;
  * 
  * @author nyxteridas
  * το ID πρέπει να είναι autoincrement
- * αλλαγή των vectors σε λίστες
  * dateofbirth μόνο ως ημερομηνία
  * expiritydate μόνο μήνας χρόνος
  *
@@ -32,8 +29,7 @@ public class Customer {
 	private int creditCardNumber;
 	private Date expirityDate;
 	private int ccv;
-	public Vector<Koursa> unnamed_Koursa = new Vector<Koursa>();
-	public Vector<Evaluation> unnamed_Evaluation = new Vector<Evaluation>();
+	private List<Request> req = new ArrayList<Request>();
 
 	public int getId() {
 		return this.id;
@@ -145,6 +141,14 @@ public class Customer {
 
 	public void setCcv(int ccv) {
 		this.ccv = ccv;
+	}
+	
+	public List<Request> getRequest() {
+		return this.req;
+	}
+
+	public void addRequest(Request req) {
+		this.req.add(req);
 	}
 
 	public Customer(int id, String name, String surname, String sex, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
