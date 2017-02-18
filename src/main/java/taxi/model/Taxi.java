@@ -22,7 +22,7 @@ public class Taxi {
 	private Date carModelDate;
 	private String location;
 	private TaxiDriver owns;
-	private List<Request> req = new ArrayList<Request>();
+	private List<Request> accepts = new ArrayList<Request>();
 
 	public Taxi(int id, String carModel, String carType, String licensePlate, Date carModelDate, String location) {
 		this.id = id;
@@ -65,6 +65,22 @@ public class Taxi {
 		this.licensePlate = licensePlate;
 	}
 	
+	public String getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	public TaxiDriver getTaxiDriver() {
+		return this.owns;
+	}
+
+	public void setTaxiDriver(TaxiDriver owns) {
+		this.owns = owns;
+	}
+	
 	public Date getCarModelDate() {
 		return this.carModelDate;
 	}
@@ -74,11 +90,11 @@ public class Taxi {
 	}
 	
 	public List<Request> getRequest() {
-		return this.req;
+		return this.accepts;
 	}
 	
 	public void addRequest(Request req) {
-		this.req.add(req);
+		this.accepts.add(req);
 	}
 	
 }
