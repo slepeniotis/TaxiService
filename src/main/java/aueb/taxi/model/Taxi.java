@@ -1,4 +1,4 @@
-package taxi.model;
+package aueb.taxi.model;
 
 import java.util.Vector;
 import java.util.Date;
