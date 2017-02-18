@@ -57,14 +57,6 @@ public class Route {
 		return cost;
 	}
 
-	public void setCost(float cost) {
-		this.cost = cost;
-	}
-
-	public float getCommision() {
-		return commision;
-	}
-
 	public void setCommision(float commision) {
 		this.commision = commision;
 	}

@@ -16,13 +16,15 @@ import java.util.Date;
 public class Request {
 	private int id;
 	private Date dateTime;
+	private Boolean status;
 	private Taxi taxi;
 	private Customer customer;
 	private Route route;
 	
-	public Request(int id, Date dateTime, Taxi taxi, Customer customer, Route route) {
+	public Request(int id, Date dateTime,Boolean status, Taxi taxi, Customer customer, Route route) {
 		this.id = id;
 		this.dateTime = dateTime;
+		this.status = status;
 		this.taxi= taxi;
 		this.customer =customer;
 		this.route = route;	
@@ -44,17 +46,13 @@ public class Request {
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 	}
-
-	public void startKoursa() {
-		throw new UnsupportedOperationException();
+	
+	public Boolean getStatus() {
+		return status;
 	}
 
-	public void endtKoursa() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void calculateStatistics() {
-		throw new UnsupportedOperationException();
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	public void setTaxi(Taxi taxi) {
@@ -80,4 +78,13 @@ public class Request {
 	public Route getRoute() {
 		return this.route;
 	}
+	
+	public void startRequest() {
+		
+	}
+
+	public void endtRequest() {
+		
+	}
+
 }
