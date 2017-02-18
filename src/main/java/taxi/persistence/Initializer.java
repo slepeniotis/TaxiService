@@ -4,8 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import gr.aueb.mscis.sample.model.Category;
-import gr.aueb.mscis.sample.model.Movie;
+import taxi.model.*;
 
 
 public class Initializer  {
@@ -40,7 +39,7 @@ public class Initializer  {
 
         eraseData();                      
 
-        Movie terminator = new Movie("Snowden", 2016, "Oliver Stone");
+        Customer customer = new Customer("Snowden", 2016, "Oliver Stone");
         Movie inception = new Movie("Inception", 2010, "Christopher Nolan");
         
         Category cat = new Category();
