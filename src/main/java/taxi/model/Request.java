@@ -2,27 +2,44 @@ package taxi.model;
 
 import java.util.Date;
 
+import javax.persistence.*;
+
 /**
  * 
  * @author nyxteridas
- * το ID πρέπει να είναι autoincrement
- * αλλαγή των vectors σε λίστες
  *  
- * constructor χωρίς κόμιστρο, κόστος, διάρκεια επειδή στην έναρξη δεν τα ξέρουμε.
  *
  */
 
 
+@Entity
+@Table(name = "Request")
 public class Request {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Column(name = "dateTime", length = 20, nullable = false)
 	private Date dateTime;
+	
+	@Column(name = "status", length = 1, nullable = false)
 	private Boolean status;
+	
+	@ManyToOne
+    @JoinColumn(name="id")
 	private Taxi taxi;
+	
+	@ManyToOne
+    @JoinColumn(name="id")
 	private Customer customer;
+	
+	@ManyToOne
+    @JoinColumn(name="id")
 	private Route route;
 	
-	public Request(int id, Date dateTime,Boolean status, Taxi taxi, Customer customer, Route route) {
-		this.id = id;
+	public Request(){}
+	public Request(Date dateTime,Boolean status, Taxi taxi, Customer customer, Route route) {
 		this.dateTime = dateTime;
 		this.status = status;
 		this.taxi= taxi;

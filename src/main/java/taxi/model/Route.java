@@ -1,24 +1,41 @@
 package taxi.model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Route")
 public class Route {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Column(name = "from", length = 256, nullable = false)
 	private String from;
+	
+	@Column(name = "to", length = 256, nullable = false)
 	private String to;
+	
+	@Column(name = "duration", length = 5, nullable = false)
 	private int duration;
+	
+	@Column(name = "cost", length = 5, nullable = false)
 	private float cost;
+	
+	@Column(name = "commision", length = 5, nullable = false)
 	private float commision;
+	
+	@OneToOne
+	@JoinColumn(name="evalID")
 	private Evaluation eval;
 	
-	public Route(int id, String from, String to, int duration, float cost, float commision) {
-		
-		this.id = id;
+	public Route(){}
+	public Route(String from, String to, int duration, float cost, float commision) {		
 		this.from = from;
 		this.to = to;
 		this.duration = duration;
 		this.cost = cost;
-		this.commision = commision;
+		this.calculateCommision();
 		}
 
 	public int getId() {

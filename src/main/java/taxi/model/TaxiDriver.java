@@ -2,6 +2,8 @@ package taxi.model;
 
 import java.util.Date;
 
+import javax.persistence.*;
+
 /**
  * 
  * @author nyxteridas
@@ -13,26 +15,60 @@ import java.util.Date;
  *
  */
 
-public class TaxiDriver {	
+@Entity
+@Table(name = "TaxiDriver")
+public class TaxiDriver {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Column(name = "name", length = 30, nullable = false)
 	private String name;
+	
+	@Column(name = "surname", length = 30, nullable = false)
 	private String surname;
+	
+	@Column(name = "sex", length = 20, nullable = false)
 	private String sex;
+	
+	@Column(name = "username", length = 30, nullable = false)
 	private String username;
+	
+	@Column(name = "password", length = 30, nullable = false)
 	private String password;
+	
+	@Column(name = "dateOfBirth", nullable = false)
 	private Date dateOfBirth;
+	
+	@Column(name = "address", length = 100, nullable = false)
 	private String address;
+	
+	@Column(name = "city", length = 50, nullable = false)
 	private String city;
+	
+	@Column(name = "zipCode", length = 5, nullable = false)
 	private int zipCode;
+	
+	@Column(name = "creditCardType", length = 10, nullable = false)
 	private String creditCardType;
+	
+	@Column(name = "creditCardNumber", length = 14, nullable = false)
 	private int creditCardNumber;
+	
+	@Column(name = "expirityDate", length = 7, nullable = false)
 	private Date expirityDate;
-	private int ccv;
+	
+	@Column(name = "ccv", length = 3, nullable = false)
+	private int ccv;	
+	
+	@OneToOne
+	@JoinColumn(name="taxiID")
 	private Taxi owns;
 
 
-	public TaxiDriver(int id, String name, String surname,String sex, String username, String password,Date dateOfBirth, String address, String city,int zipCode, String creditCardType, int creditCardNumber, Date expirityDate, int ccv, Taxi owns) {
-		this.id = id;
+	public TaxiDriver(){}
+	public TaxiDriver(String name, String surname,String sex, String username, String password,Date dateOfBirth, String address, String city,int zipCode, String creditCardType, int creditCardNumber, Date expirityDate, int ccv, Taxi owns) {
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;

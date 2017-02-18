@@ -1,38 +1,74 @@
 package taxi.model;
 
 import java.util.List;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import taxi.model.Request;
 import java.util.Date;
+import java.io.*;
 
 
 /**
  * 
  * @author nyxteridas
- * το ID πρέπει να είναι autoincrement
  * dateofbirth μόνο ως ημερομηνία
  * expiritydate μόνο μήνας χρόνος
  *
  */
-public class Customer {
+
+//serializable UID
+@Entity
+@Table(name = "Customer")
+public class Customer implements Serializable{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Column(name = "name", length = 30, nullable = false)
 	private String name;
+	
+	@Column(name = "surname", length = 30, nullable = false)
 	private String surname;
+	
+	@Column(name = "sex", length = 20, nullable = false)
 	private String sex;
+	
+	@Column(name = "username", length = 30, nullable = false)
 	private String username;
+	
+	@Column(name = "password", length = 30, nullable = false)
 	private String password;
+	
+	@Column(name = "dateOfBirth", nullable = false)
 	private Date dateOfBirth;
+	
+	@Column(name = "address", length = 100, nullable = false)
 	private String address;
+	
+	@Column(name = "city", length = 50, nullable = false)
 	private String city;
+	
+	@Column(name = "zipCode", length = 5, nullable = false)
 	private int zipCode;
+	
+	@Column(name = "creditCardType", length = 10, nullable = false)
 	private String creditCardType;
+	
+	@Column(name = "creditCardNumber", length = 14, nullable = false)
 	private int creditCardNumber;
+	
+	@Column(name = "expirityDate", length = 7, nullable = false)
 	private Date expirityDate;
+	
+	@Column(name = "ccv", length = 3, nullable = false)
 	private int ccv;	
+	
+	@OneToMany(mappedBy="Customer")
 	private List<Request> req = new ArrayList<Request>();
 	
-	public Customer(int id, String name, String surname, String sex, String username, String password, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
-		this.id = id;
+	public Customer(){}
+	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
