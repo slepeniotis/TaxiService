@@ -28,7 +28,7 @@ public class Customer {
 	private String creditCardType;
 	private int creditCardNumber;
 	private Date expirityDate;
-	private int ccv;
+	private int ccv;	
 	private List<Request> req = new ArrayList<Request>();
 
 	public int getId() {
