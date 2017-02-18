@@ -13,25 +13,15 @@ import java.util.Date;
  */
 
 
-public class Koursa {
+public class Request {
 	private int id;
-	private String from;
-	private String to;
 	private Date dateTime;
-	private int duration;
-	private float cost;
-	private Float commision;
-	public Taxi unnamed_Taxi;
-	public Customer unnamed_Customer;
+	private Taxi taxi;
+	private Customer customer;
 
-	public Koursa(int id, String from, String to, Date dateTime, int duration, float cost, float commision) {
+	public Request(int id, Date dateTime) {
 		this.id = id;
-		this.from = from;
-		this.to = to;
 		this.dateTime = dateTime;
-		this.duration = duration;
-		this.cost = cost;
-		this.commision = commision;
 	}
 
 	public int getId() {
@@ -42,52 +32,12 @@ public class Koursa {
 		this.id = id;
 	}
 
-	public String getFrom() {
-		return this.from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getTo() {
-		return this.to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
 	public Date getDateTime() {
 		return this.dateTime;
 	}
 
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
-	}
-
-	public int getDuration() {
-		return this.duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public float getCost() {
-		return this.cost;
-	}
-
-	public void setCost(float cost) {
-		this.cost = cost;
-	}
-
-	public Float getCommision() {
-		return this.commision;
-	}
-
-	public void setCommision(Float commision) {
-		this.commision = commision;
 	}
 
 	public void startKoursa() {
@@ -102,19 +52,19 @@ public class Koursa {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setUnnamed_Taxi_(Taxi aUnnamed_Taxi_) {
-		this.unnamed_Taxi = aUnnamed_Taxi_;
+	public void setTaxi(Taxi taxi) {
+		this.taxi = taxi;
 	}
 
-	public Taxi getUnnamed_Taxi_() {
-		return this.unnamed_Taxi;
+	public Taxi getTaxi() {
+		return this.taxi;
 	}
 
-	public void setUnnamed_Customer_(Customer aUnnamed_Customer_) {
-		this.unnamed_Customer = aUnnamed_Customer_;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
-	public Customer getUnnamed_Customer_() {
-		return this.unnamed_Customer;
+	public Customer getCustomer() {
+		return this.customer;
 	}
 }
