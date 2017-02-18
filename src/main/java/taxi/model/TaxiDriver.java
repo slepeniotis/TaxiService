@@ -7,8 +7,6 @@ import javax.persistence.*;
 /**
  * 
  * @author nyxteridas
- * το ID πρέπει να είναι autoincrement
- * αλλαγή των vectors σε λίστες
  * dateofbirth μόνο ημερομηνία
  * expiritydate μόνο μήνας χρόνος
  *  
