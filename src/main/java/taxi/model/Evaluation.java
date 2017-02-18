@@ -18,13 +18,12 @@ public class Evaluation {
 	private int rating;
 	private String comment;
 	private Date dateOfEval;
-	public TaxiDriver unnamed_TaxiDriver;
-	public Customer unnamed_Customer;
 
-	public Evaluation(int id, int rating, String comment) {
+	public Evaluation(int id, int rating, String comment, Date dateOfEval) {
 		this.id = id;
 		this.rating = rating;
 		this.comment = comment;
+		this.dateOfEval = dateOfEval;
 	}
 
 	public int getId() {
@@ -60,22 +59,7 @@ public class Evaluation {
 	}
 
 	public void newEvaluation() {
-		throw new UnsupportedOperationException();
+	
 	}
 
-	public void setUnnamed_TaxiDriver_(TaxiDriver unnamed_TaxiDriver) {
-		this.unnamed_TaxiDriver = unnamed_TaxiDriver;
-	}
-
-	public TaxiDriver getUnnamed_TaxiDriver() {
-		return this.unnamed_TaxiDriver;
-	}
-
-	public void setUnnamed_Customer_(Customer unnamed_Customer) {
-		this.unnamed_Customer = unnamed_Customer;
-	}
-
-	public Customer getUnnamed_Customer() {
-		return this.unnamed_Customer;
-	}
 }
