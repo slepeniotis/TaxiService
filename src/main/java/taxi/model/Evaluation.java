@@ -58,8 +58,4 @@ public class Evaluation {
 		this.dateOfEval = dateOfEval;
 	}
 
-	public void newEvaluation() {
-	
-	}
-
 }
