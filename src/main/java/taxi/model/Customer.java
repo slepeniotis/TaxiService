@@ -24,12 +24,29 @@ public class Customer {
 	private Date dateOfBirth;
 	private String address;
 	private String city;
-	private int tk;
+	private int zipCode;
 	private String creditCardType;
 	private int creditCardNumber;
 	private Date expirityDate;
 	private int ccv;	
 	private List<Request> req = new ArrayList<Request>();
+	
+	public Customer(int id, String name, String surname, String sex, String username, String password, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.sex = sex;
+		this.username = username;
+		this.password = password; 
+		this.dateOfBirth = dateOfBirth;
+		this.address = address;
+		this.city = city;
+		this.zipCode = tk;
+		this.creditCardType = creditCardType;
+		this.creditCardNumber = creditCardNumber;
+		this.expirityDate = expirityDate;
+		this.ccv = ccv;		
+	}
 
 	public int getId() {
 		return this.id;
@@ -104,11 +121,11 @@ public class Customer {
 	}
 
 	public int getTk() {
-		return this.tk;
+		return this.zipCode;
 	}
 
 	public void setTk(int tk) {
-		this.tk = tk;
+		this.zipCode = tk;
 	}
 
 	public String getCreditCardType() {
@@ -149,21 +166,6 @@ public class Customer {
 
 	public void addRequest(Request req) {
 		this.req.add(req);
-	}
-
-	public Customer(int id, String name, String surname, String sex, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.sex = sex;
-		this.dateOfBirth = dateOfBirth;
-		this.address = address;
-		this.city = city;
-		this.tk = tk;
-		this.creditCardType = creditCardType;
-		this.creditCardNumber = creditCardNumber;
-		this.expirityDate = expirityDate;
-		this.ccv = ccv;		
 	}
 
 	public void addNewCustomer() {

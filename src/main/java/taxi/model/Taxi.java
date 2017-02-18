@@ -8,7 +8,7 @@ import java.util.Date;
  * 
  * @author nyxteridas
  * το ID πρέπει να είναι autoincrement
- * αλλαγή των vectors σε λίστες
+ * 
  * carmodeldate μόνο ημερομηνία
  *  
  *
