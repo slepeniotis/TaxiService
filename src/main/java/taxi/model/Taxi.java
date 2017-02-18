@@ -39,7 +39,7 @@ public class Taxi {
 	@Column(name = "location", length = 30, nullable = false)
 	private String location;
 	
-	@OneToMany(mappedBy="Taxi")
+	@OneToMany(mappedBy="taxi")
 	private List<Request> accepts = new ArrayList<Request>();
 	
 	public Taxi(){}

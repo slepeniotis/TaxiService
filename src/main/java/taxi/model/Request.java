@@ -39,7 +39,7 @@ public class Request {
 	private Route route;
 	
 	public Request(){}
-	public Request(Date dateTime,Boolean status, Taxi taxi, Customer customer, Route route) {
+	public Request(Date dateTime, Boolean status, Taxi taxi, Customer customer, Route route) {
 		this.dateTime = dateTime;
 		this.status = status;
 		this.taxi= taxi;

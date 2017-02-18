@@ -16,13 +16,13 @@ public class Route {
 	@Column(name = "to", length = 256, nullable = false)
 	private String to;
 	
-	@Column(name = "duration", length = 5, nullable = false)
+	@Column(name = "duration", length = 5, nullable = true)
 	private int duration;
 	
-	@Column(name = "cost", length = 5, nullable = false)
+	@Column(name = "cost", length = 5, nullable = true)
 	private float cost;
 	
-	@Column(name = "commision", length = 5, nullable = false)
+	@Column(name = "commision", length = 5, nullable = true)
 	private float commision;
 	
 	@OneToOne

@@ -52,7 +52,7 @@ public class TaxiDriver {
 	private String creditCardType;
 	
 	@Column(name = "creditCardNumber", length = 14, nullable = false)
-	private int creditCardNumber;
+	private long creditCardNumber;
 	
 	@Column(name = "expirityDate", length = 7, nullable = false)
 	private Date expirityDate;
@@ -66,7 +66,7 @@ public class TaxiDriver {
 
 
 	public TaxiDriver(){}
-	public TaxiDriver(String name, String surname,String sex, String username, String password,Date dateOfBirth, String address, String city,int zipCode, String creditCardType, int creditCardNumber, Date expirityDate, int ccv, Taxi owns) {
+	public TaxiDriver(String name, String surname,String sex, String username, String password,Date dateOfBirth, String address, String city,int zipCode, String creditCardType, long creditCardNumber, Date expirityDate, int ccv, Taxi owns) {
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
@@ -115,11 +115,11 @@ public class TaxiDriver {
 		this.creditCardType = creditCardType;
 	}
 
-	public int getCreditCardNumber() {
+	public long getCreditCardNumber() {
 		return this.creditCardNumber;
 	}
 
-	public void setCreditCardNumber(int creditCardNumber) {
+	public void setCreditCardNumber(long creditCardNumber) {
 		this.creditCardNumber = creditCardNumber;
 	}
 

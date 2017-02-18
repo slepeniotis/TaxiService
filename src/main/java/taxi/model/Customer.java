@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import taxi.model.Request;
 import java.util.Date;
-import java.io.*;
 
 
 /**
@@ -17,10 +16,9 @@ import java.io.*;
  *
  */
 
-//serializable UID
 @Entity
 @Table(name = "Customer")
-public class Customer implements Serializable{
+public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -64,10 +62,9 @@ public class Customer implements Serializable{
 	@Column(name = "ccv", length = 3, nullable = false)
 	private int ccv;	
 	
-	@OneToMany(mappedBy="Customer")
+	@OneToMany(mappedBy="customer")
 	private List<Request> req = new ArrayList<Request>();
 	
-	public Customer(){}
 	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
 		this.name = name;
 		this.surname = surname;
@@ -83,6 +80,7 @@ public class Customer implements Serializable{
 		this.expirityDate = expirityDate;
 		this.ccv = ccv;		
 	}
+	public Customer(){}
 
 	public int getId() {
 		return this.id;
