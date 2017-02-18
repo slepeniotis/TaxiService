@@ -1,9 +1,11 @@
-package TaxiService;
+package taxi.model;
 
 import java.util.Vector;
+
+import taxi.model.Evaluation;
+import taxi.model.Koursa;
+
 import java.util.Date;
-import TaxiService.Koursa;
-import TaxiService.Evaluation;
 
 
 /**

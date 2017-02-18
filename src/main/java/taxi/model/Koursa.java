@@ -1,4 +1,4 @@
-package TaxiService;
+package taxi.model;
 
 import java.util.Date;
 
