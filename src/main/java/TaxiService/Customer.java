@@ -6,7 +6,6 @@ import TaxiService.Koursa;
 import TaxiService.Evaluation;
 
 
-
 /**
  * 
  * @author nyxteridas
