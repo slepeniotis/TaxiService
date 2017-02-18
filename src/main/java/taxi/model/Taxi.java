@@ -21,7 +21,6 @@ public class Taxi {
 	private String licensePlate;
 	private Date carModelDate;
 	private String location;
-	private TaxiDriver owns;
 	private List<Request> accepts = new ArrayList<Request>();
 
 	public Taxi(int id, String carModel, String carType, String licensePlate, Date carModelDate, String location) {
@@ -71,14 +70,6 @@ public class Taxi {
 
 	public void setLocation(String location) {
 		this.location = location;
-	}
-	
-	public TaxiDriver getTaxiDriver() {
-		return this.owns;
-	}
-
-	public void setTaxiDriver(TaxiDriver owns) {
-		this.owns = owns;
 	}
 	
 	public Date getCarModelDate() {
