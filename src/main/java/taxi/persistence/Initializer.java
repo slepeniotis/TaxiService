@@ -4,7 +4,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import taxi.model.*;
+import java.text.*;
+
 
 
 public class Initializer  {
@@ -34,29 +38,53 @@ public class Initializer  {
         
     }
     
-
-    public void prepareData() {
-
-        eraseData();                      
-
-        Customer customer = new Customer("Snowden", 2016, "Oliver Stone");
-        Movie inception = new Movie("Inception", 2010, "Christopher Nolan");
-        
-        Category cat = new Category();
-        Category cat2 = new Category();
-        cat.setDescription("Drama");
-        cat2.setDescription("Science Fiction");
-       
-        EntityManager em = JPAUtil.getCurrentEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-        
-        em.persist(terminator);
-        em.persist(inception);
-        em.persist(cat);
-        em.persist(cat2);
-        
-        tx.commit();
+  public static void prepareData() throws ParseException{
+	  
+  //eraseData();  
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	Date d;
+	try {
+		d = sdf.parse("21/12/2012");
+	}
+	catch (ParseException e){
+		d = sdf.parse("21/12/2012");
+	}
+	
+	
+    Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
+    Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
+    Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
+    TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123, taxi);
+    Route route = new Route("from", "to", 0, 1.5f, 2.3f);
+    Request req = new Request(d, true, taxi, customer, route);
     
-    }
+    /*Category cat = new Category();
+    Category cat2 = new Category();
+    cat.setDescription("Drama");
+    cat2.setDescription("Science Fiction");*/
+   
+    EntityManager em = JPAUtil.getCurrentEntityManager();
+    EntityTransaction tx = em.getTransaction();
+    tx.begin();
+    
+    em.persist(customer);
+    em.persist(eval);
+    em.persist(req);
+    em.persist(route);
+    em.persist(taxi);
+    em.persist(taxidr);
+    
+    tx.commit();
+
+}
+
+public static void main (String [] args) {
+	try {
+		prepareData();
+	}
+	catch (ParseException e){
+		System.out.println("poytana date");
+	}
+}
 }
