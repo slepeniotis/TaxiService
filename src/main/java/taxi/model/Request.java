@@ -18,10 +18,15 @@ public class Request {
 	private Date dateTime;
 	private Taxi taxi;
 	private Customer customer;
-
-	public Request(int id, Date dateTime) {
+	private Route route;
+	
+	public Request(int id, Date dateTime, Taxi taxi, Customer customer, Route route) {
 		this.id = id;
 		this.dateTime = dateTime;
+		this.taxi= taxi;
+		this.customer =customer;
+		this.route = route;	
+		
 	}
 
 	public int getId() {
@@ -66,5 +71,13 @@ public class Request {
 
 	public Customer getCustomer() {
 		return this.customer;
+	}
+	
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+
+	public Route getRoute() {
+		return this.route;
 	}
 }
