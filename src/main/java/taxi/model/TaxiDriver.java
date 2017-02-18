@@ -1,6 +1,4 @@
 package taxi.model;
-
-import java.util.Vector;
 import java.util.Date;
 
 /**
@@ -24,22 +22,30 @@ public class TaxiDriver {
 	private Date dateOfBirth;
 	private String address;
 	private String city;
-	private int tk;
+	private int zipCode;
 	private String creditCardType;
 	private int creditCardNumber;
 	private Date expirityDate;
 	private int ccv;
-	public Taxi owns;
-	public Vector<Evaluation> unnamed_Evaluation = new Vector<Evaluation>();
+	private Taxi owns;
 
-	public TaxiDriver(int id, String name, String surname, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
+
+	public TaxiDriver(int id, String name, String surname,String sex, String username, String password,Date dateOfBirth, String address, String city,int zipCode, String creditCardType, int creditCardNumber, Date expirityDate, int ccv, Taxi owns) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.sex = sex;
+		this.username = username;
+		this.password = password;
+		this.dateOfBirth = dateOfBirth;
+		this.address = address;
+		this.city = city;
+		this.zipCode = zipCode;
 		this.creditCardType = creditCardType;
 		this.creditCardNumber = creditCardNumber;
 		this.expirityDate = expirityDate;
 		this.ccv = ccv;
+		this.owns = owns; 
 	}
 
 	public int getId() {
@@ -122,12 +128,12 @@ public class TaxiDriver {
 		this.city = city;
 	}
 
-	public int getTk() {
-		return this.tk;
+	public int getzipCode() {
+		return this.zipCode;
 	}
 
-	public void setTk(int tk) {
-		this.tk = tk;
+	public void setTk(int zipCode) {
+		this.zipCode = zipCode;
 	}
 
 	public String getUsername() {
@@ -154,15 +160,11 @@ public class TaxiDriver {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public void addNewDriver() {
-		throw new UnsupportedOperationException();
-	}
-
 	public void informTaxiDriver() {
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public void confirmCustomer() {
-		throw new UnsupportedOperationException();
+		
 	}	
 }
