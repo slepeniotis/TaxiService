@@ -33,7 +33,7 @@ public class Customer {
 	@Column(name = "username", length = 30, nullable = false)
 	private String username;
 	
-	@Column(name = "password", length = 30, nullable = false)
+	@Column(name = "password", length = 256, nullable = false)
 	private String password;
 	
 	@Column(name = "dateOfBirth", nullable = false)

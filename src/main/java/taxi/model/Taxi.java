@@ -32,6 +32,9 @@ public class Taxi {
 	
 	@Column(name = "location", length = 30, nullable = false)
 	private String location;
+		
+	@Column(name = "status", nullable = false)
+	private boolean status;
 	
 	//every taxi can accept several requests
 	@OneToMany(mappedBy="taxi")
@@ -46,6 +49,7 @@ public class Taxi {
 		this.licensePlate = licensePlate;
 		this.carModelDate = carModelDate;
 		this.location = location;
+		this.status = true;
 	}
 	
 	//get/set methods in order to have access in private attributes
@@ -85,6 +89,14 @@ public class Taxi {
 		this.location = location;
 	}
 	
+	public boolean getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+	
 	public Date getCarModelDate() {
 		return this.carModelDate;
 	}
@@ -105,7 +117,7 @@ public class Taxi {
 		@Override
 		public String toString() {
 	        String temp = this.id + " " + this.carModel + " " + this.carType + 
-	        		" " + this.licensePlate + " " + this.carModelDate + " " + this.location;	        
+	        		" " + this.licensePlate + " " + this.carModelDate + " " + this.location + " " + this.status;	        
 	        
 	        for(Request r : accepts) {
 	            temp += " (" + r.toString() + ")";

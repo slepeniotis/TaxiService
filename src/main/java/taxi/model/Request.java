@@ -101,7 +101,7 @@ public class Request {
 		this.setRoute(route);
 	}
 
-	public void endtRequest() {
+	public void endRequest() {
 		this.status = true;
 	}
 	

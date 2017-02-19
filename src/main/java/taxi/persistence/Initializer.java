@@ -20,17 +20,17 @@ public class Initializer  {
      * Remove all data from database.
      * The functionality must be executed within the bounds of a transaction
      */
-    public void  eraseData() {
+    public static void eraseData() {
         EntityManager em = JPAUtil.getCurrentEntityManager();
        
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         Query query = null;
 
-        query = em.createNativeQuery("delete from movies");
+        query = em.createNativeQuery("delete from evaluation");
         query.executeUpdate();
         
-        query = em.createNativeQuery("delete from categories");
+        query = em.createNativeQuery("delete from route");
         query.executeUpdate();
         
         query = em.createNativeQuery("ALTER SEQUENCE hibernate_sequence RESTART WITH 1");
@@ -42,7 +42,7 @@ public class Initializer  {
     
   public static void prepareData() throws ParseException{
 	  
-  //eraseData();  
+	eraseData();  
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	Date d;
@@ -86,14 +86,6 @@ public class Initializer  {
     
     for(Customer c : results) {
         System.out.println(c.toString());
-        System.out.println("password given: " + password);
-        System.out.println("password encrypted: " + c.getPassword());
-        try {
-        	System.out.println("password decrypted: " + AESEncrypt.decrypt(c.getPassword()));
-        }
-        catch (Exception e){
-        	System.out.println(e.getStackTrace());
-        }
     }   
 
 }
