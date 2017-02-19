@@ -217,4 +217,10 @@ public class Customer {
 	public void informCustomer() {
 		
 	}
+	
+	public String toString() {
+        return this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
+        		this.address + " " + this.city + " " + this.zipCode + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+        		this.expirityDate + " " + this.ccv;
+    }
 }
