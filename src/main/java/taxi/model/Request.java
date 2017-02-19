@@ -34,7 +34,7 @@ public class Request {
     @JoinColumn(name="customerId")
 	private Customer customer;
 	
-	@ManyToOne
+	@OneToOne
     @JoinColumn(name="routeId")
 	private Route route;
 	

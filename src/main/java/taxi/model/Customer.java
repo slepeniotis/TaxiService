@@ -1,10 +1,10 @@
 package taxi.model;
 
+//imports for using persistence, List, ArrayList, date.
 import java.util.List;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import taxi.model.Request;
 import java.util.Date;
 
 
@@ -16,13 +16,17 @@ import java.util.Date;
  *
  */
 
+//Declaring table id DB with name Customer
 @Entity
 @Table(name = "Customer")
 public class Customer {
+	
+	//Declaring Primary Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "name", length = 30, nullable = false)
 	private String name;
 	
