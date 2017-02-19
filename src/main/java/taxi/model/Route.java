@@ -1,15 +1,19 @@
 package taxi.model;
 
+//imports for using persistence
 import javax.persistence.*;
 
+//Declaring table id DB with name Route
 @Entity
 @Table(name = "Route")
 public class Route {
 	
+	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "origin", length = 256, nullable = false)
 	private String from;
 	
@@ -25,19 +29,25 @@ public class Route {
 	@Column(name = "commision", length = 5, nullable = true)
 	private float commision;
 	
+	//each route can have only one evaluation or none
 	@OneToOne
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
 	
+	//constructors for Route
 	public Route(){}
-	public Route(String from, String to, int duration, float cost) {		
+	public Route(String from, String to) {	
+		//ID is auto generated, so no need to include it here
+		//Route will have origin and destination
+		//duration, cost and commission have to be zero since the request is not yet done
 		this.from = from;
 		this.to = to;
-		this.duration = duration;
-		this.cost = cost;
+		this.duration = 0;
+		this.cost = 0;
 		this.calculateCommision();
 		}
-
+	
+	//get/set methods in order to have access in private attributes
 	public long getId() {
 		return id;
 	}
@@ -69,9 +79,14 @@ public class Route {
 	public float getCost() {
 		return cost;
 	}
-
-	public void setCommision(float commision) {
-		this.commision = commision;
+	
+	public void setCost(float cost) {
+		if (cost > 0) {
+			this.cost = cost;
+		}
+		else {
+			this.cost = 0;
+		}
 	}
 	
 	public Evaluation getEval() {
@@ -81,12 +96,31 @@ public class Route {
 	public void setEval(Evaluation eval) {
 		this.eval = eval;
 	}
-
+	
+	
+	//methods for calculating commision and statistics
 	public void calculateCommision(){
-		this.commision = (float)3.5;
+		if (this.cost == 0){
+			this.commision = 0;
+		}
+		else{
+			this.commision = this.cost*0.05f;
+		}
 	}
 	
 	public void calculateStatistics(){
 		
 	}
+	
+	//override of toString method from Object
+		@Override
+		public String toString() {
+	        String temp = this.id + " " + this.from + " " + this.to + " " + this.duration + " " + this.cost + " " + this.commision;
+			
+	        if (this.eval != null){
+	        	temp += " (" + this.eval.toString() + ")";
+	        }
+	        
+	        return temp;
+	    }	
 }

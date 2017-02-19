@@ -1,26 +1,22 @@
 package taxi.model;
 
+//imports for using persistence, date
 import java.util.Date;
-
 import javax.persistence.*;
 
-/**
- * 
- * @author nyxteridas
- * dateofbirth μόνο ημερομηνία
- * expiritydate μόνο μήνας χρόνος
- *  
- *
- */
+import taxi.utils.AESEncrypt;
 
+//Declaring table id DB with name TaxiDriver
 @Entity
 @Table(name = "TaxiDriver")
 public class TaxiDriver {
 	
+	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "name", length = 30, nullable = false)
 	private String name;
 	
@@ -60,18 +56,25 @@ public class TaxiDriver {
 	@Column(name = "ccv", length = 3, nullable = false)
 	private int ccv;	
 	
+	//Each Taxi driver can have only one Taxi connected with him
 	@OneToOne
 	@JoinColumn(name="taxiID")
 	private Taxi owns;
 
-
+	//constructors for Customer
 	public TaxiDriver(){}
 	public TaxiDriver(String name, String surname,String sex, String username, String password,Date dateOfBirth, String address, String city,int zipCode, String creditCardType, long creditCardNumber, Date expirityDate, int ccv, Taxi owns) {
+		//ID is auto generated, so no need to include it here
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
 		this.username = username;
-		this.password = password;
+		try {
+			this.password = AESEncrypt.encrypt(password);
+		}
+		catch (Exception e){
+        	System.out.println(e.getStackTrace());
+        }
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 		this.city = city;
@@ -83,12 +86,9 @@ public class TaxiDriver {
 		this.owns = owns; 
 	}
 
+	//get/set methods in order to have access in private attributes
 	public int getId() {
 		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -195,11 +195,20 @@ public class TaxiDriver {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	//operation methods
 	public void informTaxiDriver() {
 		
 	}
 
 	public void confirmCustomer() {
 		
-	}	
+	}
+	
+	//override of toString method from Object
+		@Override
+		public String toString() {
+	        return this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
+	        		this.address + " " + this.city + " " + this.zipCode + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+	        		this.expirityDate + " " + this.ccv + " (" + this.owns.toString() + ")";
+	    }	
 }

@@ -3,11 +3,12 @@ package taxi.persistence;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import taxi.model.*;
+import taxi.utils.AESEncrypt;
+
 import java.text.*;
 
 
@@ -52,14 +53,14 @@ public class Initializer  {
 		d = sdf.parse("21/12/2012");
 	}
 	
-	
-    Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
-    Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
+	String password = "mak";
+    Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", password, d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
+    Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", password, d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
     Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
     Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
     TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123, taxi);
-    Route route = new Route("from", "to", 0, 1.5f);
-    Request req = new Request(d, true, taxi, customer, route);
+    Route route = new Route("from", "to");
+    Request req = new Request(d, taxi, customer);
     
     /*Category cat = new Category();
     Category cat2 = new Category();
@@ -85,6 +86,14 @@ public class Initializer  {
     
     for(Customer c : results) {
         System.out.println(c.toString());
+        System.out.println("password given: " + password);
+        System.out.println("password encrypted: " + c.getPassword());
+        try {
+        	System.out.println("password decrypted: " + AESEncrypt.decrypt(c.getPassword()));
+        }
+        catch (Exception e){
+        	System.out.println(e.getStackTrace());
+        }
     }   
 
 }

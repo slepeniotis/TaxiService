@@ -1,29 +1,23 @@
 package taxi.model;
 
+//imports for using persistence, List, ArrayList, date
 import java.util.List;
-
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * 
- * @author nyxteridas
- * 
- * carmodeldate μόνο ημερομηνία
- *  
- *
- */
 
+//Declaring table id DB with name Taxi
 @Entity
 @Table(name = "Taxi")
 public class Taxi {
 	
+	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	
+	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "carModel", length = 10, nullable = false)
 	private String carModel;
 	
@@ -39,24 +33,24 @@ public class Taxi {
 	@Column(name = "location", length = 30, nullable = false)
 	private String location;
 	
+	//every taxi can accept several requests
 	@OneToMany(mappedBy="taxi")
 	private List<Request> accepts = new ArrayList<Request>();
 	
+	//constructors for Taxi
 	public Taxi(){}
 	public Taxi(String carModel, String carType, String licensePlate, Date carModelDate, String location) {
+		//ID is auto generated, so no need to include it here
 		this.carModel = carModel;
 		this.carType = carType;
 		this.licensePlate = licensePlate;
 		this.carModelDate = carModelDate;
 		this.location = location;
 	}
-
-	public int getId() {
+	
+	//get/set methods in order to have access in private attributes
+	public long getId() {
 		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getCarModel() {
@@ -106,5 +100,18 @@ public class Taxi {
 	public void addRequest(Request req) {
 		this.accepts.add(req);
 	}
+	
+	//override of toString method from Object
+		@Override
+		public String toString() {
+	        String temp = this.id + " " + this.carModel + " " + this.carType + 
+	        		" " + this.licensePlate + " " + this.carModelDate + " " + this.location;	        
+	        
+	        for(Request r : accepts) {
+	            temp += " (" + r.toString() + ")";
+	        }  
+	        
+	        return temp;
+	    }	
 	
 }

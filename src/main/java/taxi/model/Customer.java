@@ -1,30 +1,24 @@
 package taxi.model;
 
-//imports for using persistence, List, ArrayList, date.
+//imports for using persistence, List, ArrayList, date
 import java.util.List;
-
 import javax.persistence.*;
+
+import taxi.utils.AESEncrypt;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-
-/**
- * 
- * @author nyxteridas
- * dateofbirth μόνο ως ημερομηνία
- * expiritydate μόνο μήνας χρόνος
- *
- */
 
 //Declaring table id DB with name Customer
 @Entity
 @Table(name = "Customer")
 public class Customer {
 	
-	//Declaring Primary Key as autoincrement
+	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "name", length = 30, nullable = false)
@@ -66,15 +60,26 @@ public class Customer {
 	@Column(name = "ccv", length = 3, nullable = false)
 	private int ccv;	
 	
+	//every customer has a list of requests done, since he can make several requests
 	@OneToMany(mappedBy="customer")
 	private List<Request> req = new ArrayList<Request>();
 	
+	//constructors for Customer
+	public Customer(){}
 	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
+		
+		//ID is auto generated, so no need to include it here
+		//List of requests is empty when a new user is signed up
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
-		this.username = username;
-		this.password = password; 
+		this.username = username;		
+		try {
+			this.password = AESEncrypt.encrypt(password); 
+		}
+		catch (Exception e){
+        	System.out.println(e.getStackTrace());
+        }
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 		this.city = city;
@@ -84,14 +89,10 @@ public class Customer {
 		this.expirityDate = expirityDate;
 		this.ccv = ccv;		
 	}
-	public Customer(){}
-
-	public int getId() {
+	
+	//get/set methods in order to have access in private attributes
+	public long getId() {
 		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -205,7 +206,8 @@ public class Customer {
 	public void addRequest(Request req) {
 		this.req.add(req);
 	}
-
+	
+	//operation methods
 	public void addNewCustomer() {
 		
 	}
@@ -222,9 +224,17 @@ public class Customer {
 		
 	}
 	
+	//override of toString method from Object
+	@Override
 	public String toString() {
-        return this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
+        String temp = this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
         		this.address + " " + this.city + " " + this.zipCode + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
         		this.expirityDate + " " + this.ccv;
-    }
+        
+        for(Request r : req) {
+            temp += " (" + r.toString() + ")";
+        }  
+        
+        return temp;
+    }	
 }
