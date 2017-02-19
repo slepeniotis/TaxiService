@@ -8,12 +8,12 @@ public class Route {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	
-	@Column(name = "from", length = 256, nullable = false)
+	@Column(name = "origin", length = 256, nullable = false)
 	private String from;
 	
-	@Column(name = "to", length = 256, nullable = false)
+	@Column(name = "destination", length = 256, nullable = false)
 	private String to;
 	
 	@Column(name = "duration", length = 5, nullable = true)
@@ -30,7 +30,7 @@ public class Route {
 	private Evaluation eval;
 	
 	public Route(){}
-	public Route(String from, String to, int duration, float cost, float commision) {		
+	public Route(String from, String to, int duration, float cost) {		
 		this.from = from;
 		this.to = to;
 		this.duration = duration;
@@ -38,12 +38,8 @@ public class Route {
 		this.calculateCommision();
 		}
 
-	public int getId() {
+	public long getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getFrom() {
@@ -87,7 +83,7 @@ public class Route {
 	}
 
 	public void calculateCommision(){
-		
+		this.commision = (float)3.5;
 	}
 	
 	public void calculateStatistics(){

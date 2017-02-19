@@ -27,15 +27,15 @@ public class Request {
 	private Boolean status;
 	
 	@ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="taxiId")
 	private Taxi taxi;
 	
 	@ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="customerId")
 	private Customer customer;
 	
 	@ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="routeId")
 	private Route route;
 	
 	public Request(){}
