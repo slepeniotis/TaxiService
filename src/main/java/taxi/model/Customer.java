@@ -39,6 +39,9 @@ public class Customer {
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date dateOfBirth;
 	
+	@Column(name = "location", length = 30, nullable = false)
+	private String location;
+	
 	@Column(name = "address", length = 100, nullable = false)
 	private String address;
 	
@@ -66,7 +69,7 @@ public class Customer {
 	
 	//constructors for Customer
 	public Customer(){}
-	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
+	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, String location, String address, String city, int tk, String creditCardType, int creditCardNumber, Date expirityDate, int ccv) {
 		
 		//ID is auto generated, so no need to include it here
 		//List of requests is empty when a new user is signed up
@@ -81,6 +84,7 @@ public class Customer {
         	System.out.println(e.getStackTrace());
         }
 		this.dateOfBirth = dateOfBirth;
+		this.location = location;
 		this.address = address;
 		this.city = city;
 		this.zipCode = tk;
@@ -124,7 +128,12 @@ public class Customer {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		try {
+			this.password = AESEncrypt.encrypt(password); 
+		}
+		catch (Exception e){
+        	System.out.println(e.getStackTrace());
+        }
 	}
 
 	public String getSex() {
@@ -141,6 +150,14 @@ public class Customer {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+	
+	public String getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public String getAddress() {

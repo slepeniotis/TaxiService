@@ -184,7 +184,12 @@ public class TaxiDriver {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		try {
+			this.password = AESEncrypt.encrypt(password); 
+		}
+		catch (Exception e){
+        	System.out.println(e.getStackTrace());
+        }
 	}
 	
 	public Date getDateOfBirth() {

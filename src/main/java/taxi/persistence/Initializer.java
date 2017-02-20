@@ -53,9 +53,9 @@ public class Initializer  {
 		d = sdf.parse("21/12/2012");
 	}
 	
-	String password = "mak";
-    Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", password, d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
-    Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", password, d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
+    Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
+    Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
+    customer2.setPassword("mak2");
     Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
     Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
     TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123, taxi);
