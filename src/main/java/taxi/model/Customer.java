@@ -245,7 +245,7 @@ public class Customer {
 	@Override
 	public String toString() {
         String temp = this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
-        		this.address + " " + this.city + " " + this.zipCode + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+        		this.location + " " + this.address + " " + this.city + " " + this.zipCode + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
         		this.expirityDate + " " + this.ccv;
         
         for(Request r : req) {
