@@ -25,15 +25,23 @@ public class Request {
 	private Boolean status;
 	
 	//One request has a reference to a specific taxiID, customerID and routeID. The routeID can be also null
-	@ManyToOne
+	//fetch type EAGER does fetch the taxi object
+	//cascade types used here, enable persist and merge for the taxi object, in case request is persisted or merged.
+	//we don't use remove cascade here, since we do not wish the taxi object to be fully removed from DB
+	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="taxiId")
 	private Taxi taxi;
-	
-	@ManyToOne
+
+	//fetch type EAGER does fetch the customer object
+	//cascade types used here, enable persist and merge for the customer object, in case request is persisted or merged.
+	//we don't use remove cascade here, since we do not wish the customer object to be fully removed from DB
+	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="customerId")
 	private Customer customer;
 	
-	@OneToOne
+	//fetch type lazy does not fetch the object Route
+	//we don't use any kind of cascade here, since the route is not necessarily set
+	@OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="routeId")
 	private Route route;
 	

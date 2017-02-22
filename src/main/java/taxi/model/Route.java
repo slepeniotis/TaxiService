@@ -30,7 +30,8 @@ public class Route {
 	private float commision;
 	
 	//each route can have only one evaluation or none
-	@OneToOne
+	//fetch type lazy does not fetch the object evaluation
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
 	

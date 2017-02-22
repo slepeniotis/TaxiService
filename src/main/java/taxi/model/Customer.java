@@ -65,7 +65,9 @@ public class Customer {
 	private String ccv;	
 	
 	//every customer has a list of requests done, since he can make several requests
-	@OneToMany(mappedBy="customer")
+	//fetch type lazy does not fetch all the list. fetching is done only if we ask for it
+	//cascade types used here, enable persist merge and remove for the whole list, in case Customer is persisted, merged or removed.
+	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Request> req = new ArrayList<Request>();
 	
 	//constructors for Customer
@@ -232,7 +234,7 @@ public class Customer {
 	}
 	
 	//operation methods
-	public boolean validate(String name, String surname, String sex, String username, String password, 
+	private boolean validate(String name, String surname, String sex, String username, String password, 
 			Date dateOfBirth, String location, String address, String city, int zipCode, String creditCardType, 
 			String creditCardNumber, String expiryDate, String ccv) {
 				

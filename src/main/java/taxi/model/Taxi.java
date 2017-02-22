@@ -38,7 +38,9 @@ public class Taxi {
 	private boolean status;
 	
 	//every taxi can accept several requests
-	@OneToMany(mappedBy="taxi")
+	//fetch type lazy does not fetch all the list. fetching is done only if we ask for it
+	//cascade type used here is ALL. Merge, persist, detach, remove, refresh 
+	@OneToMany(mappedBy="taxi",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Request> accepts = new ArrayList<Request>();
 	
 	//constructors for Taxi

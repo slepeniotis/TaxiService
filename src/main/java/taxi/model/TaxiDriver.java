@@ -58,7 +58,9 @@ public class TaxiDriver {
 	private String ccv;	
 	
 	//Each Taxi driver can have only one Taxi connected with him
-	@OneToOne
+	//fetch type EAGER does fetch the taxi object
+	//cascade types used here, enable persist merge and remove for the taxi, in case taxi driver is persisted, merged or removed.
+	@OneToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="taxiID")
 	private Taxi owns;
 
@@ -210,7 +212,7 @@ public class TaxiDriver {
 	}
 
 	//operation methods
-	public boolean validate(String name, String surname, String sex, String username, String password, 
+	private boolean validate(String name, String surname, String sex, String username, String password, 
 			Date dateOfBirth, String address, String city, int zipCode, String creditCardType, 
 			String creditCardNumber, String expiryDate, String ccv) {
 		

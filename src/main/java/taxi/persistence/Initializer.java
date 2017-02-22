@@ -69,6 +69,8 @@ public class Initializer  {
 		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", "1234567891234567", "01/45", "123", taxi);
 		Route route = new Route("from", "to");
 		Request req = new Request(d, taxi, customer);
+		Request req2 = new Request(d, taxi, customer2);
+		
 
 		/*Category cat = new Category();
 		 * Category cat2 = new Category();
@@ -82,17 +84,17 @@ public class Initializer  {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
-		em.persist(customer);
-		em.persist(customer2);
+		//em.persist(customer);
+		//em.persist(customer2);
 		em.persist(eval);
 		em.persist(req);
+		em.persist(req2);
 		em.persist(route);
-		em.persist(taxi);
 		em.persist(taxidr);
 		
 		//the transaction is now committed
 		tx.commit();
-		
+			
 		
 		//we are now preparing a query in order to see that the data are correctly inserted in the DB
 		Query query = em.createQuery("select cust from Customer cust");
