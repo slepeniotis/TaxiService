@@ -60,13 +60,13 @@ public class Initializer  {
 		
 		//creating some objects of our model
 		//several objects of them, will need others to exist already
-		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
-		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123);
+		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", "1234567891234567", "01/19", "123");
+		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", "1234567891234567", "01/19", "123");
 		//changing the password of customer2 in order to check if it is encrypted correctly
 		customer2.setPassword("mak2");
 		Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
 		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
-		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", 123456710, d, 123, taxi);
+		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", "1234567891234567", "01/45", "123", taxi);
 		Route route = new Route("from", "to");
 		Request req = new Request(d, taxi, customer);
 

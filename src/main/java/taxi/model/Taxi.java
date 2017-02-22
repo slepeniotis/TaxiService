@@ -27,7 +27,8 @@ public class Taxi {
 	@Column(name = "licensePlate", length = 7, nullable = false)
 	private String licensePlate;
 	
-	@Column(name = "carModelDate", length = 10, nullable = false)
+	@Temporal(TemporalType.DATE)
+	@Column(name = "carModelDate", nullable = false)
 	private Date carModelDate;
 	
 	@Column(name = "location", length = 30, nullable = false)

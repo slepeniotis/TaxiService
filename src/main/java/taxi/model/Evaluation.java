@@ -29,7 +29,8 @@ public class Evaluation {
 	@Column(name = "comment", length = 512, nullable = false)
 	private String comment;
 	
-	@Column(name = "date", length = 10, nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "date", nullable = false)
 	private Date dateOfEval;
 	
 	//constructors for Evaluation

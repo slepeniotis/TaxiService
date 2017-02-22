@@ -15,7 +15,8 @@ public class Request {
 	private long id;
 	
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
-	@Column(name = "dateTime", length = 20, nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "dateTime", nullable = false)
 	private Date dateTime;
 	
 	//false represents that the request is either not finished or not accepted

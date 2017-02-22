@@ -32,6 +32,7 @@ public class TaxiDriver {
 	@Column(name = "password", length = 256, nullable = false)
 	private String password;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date dateOfBirth;
 	
@@ -47,14 +48,14 @@ public class TaxiDriver {
 	@Column(name = "creditCardType", length = 10, nullable = false)
 	private String creditCardType;
 	
-	@Column(name = "creditCardNumber", length = 14, nullable = false)
-	private long creditCardNumber;
+	@Column(name = "creditCardNumber", length = 16, nullable = false)
+	private String creditCardNumber;
 	
-	@Column(name = "expirityDate", length = 7, nullable = false)
-	private Date expirityDate;
+	@Column(name = "expiryDate", length = 5, nullable = false)
+	private String expiryDate;
 	
 	@Column(name = "ccv", length = 3, nullable = false)
-	private int ccv;	
+	private String ccv;	
 	
 	//Each Taxi driver can have only one Taxi connected with him
 	@OneToOne
@@ -63,14 +64,21 @@ public class TaxiDriver {
 
 	//constructors for Customer
 	public TaxiDriver(){}
-	public TaxiDriver(String name, String surname,String sex, String username, String password,Date dateOfBirth, String address, String city,int zipCode, String creditCardType, long creditCardNumber, Date expirityDate, int ccv, Taxi owns) {
+	public TaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
+			String address, String city, int zipCode, String creditCardType, String creditCardNumber, 
+			String expiryDate, String ccv, Taxi owns) {
+		
+		if (validate(name, surname, sex, username, password, dateOfBirth, address, city, zipCode, creditCardType, 
+				creditCardNumber, expiryDate, ccv)){
+			
+		
 		//ID is auto generated, so no need to include it here
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
 		this.username = username;
 		try {
-			this.password = AESEncrypt.encrypt(password);
+			this.password = AESEncrypt.encrypt(password); 
 		}
 		catch (Exception e){
         	System.out.println(e.getStackTrace());
@@ -81,9 +89,10 @@ public class TaxiDriver {
 		this.zipCode = zipCode;
 		this.creditCardType = creditCardType;
 		this.creditCardNumber = creditCardNumber;
-		this.expirityDate = expirityDate;
+		this.expiryDate = expiryDate;
 		this.ccv = ccv;
 		this.owns = owns; 
+		}
 	}
 
 	//get/set methods in order to have access in private attributes
@@ -115,27 +124,27 @@ public class TaxiDriver {
 		this.creditCardType = creditCardType;
 	}
 
-	public long getCreditCardNumber() {
+	public String getCreditCardNumber() {
 		return this.creditCardNumber;
 	}
 
-	public void setCreditCardNumber(long creditCardNumber) {
+	public void setCreditCardNumber(String creditCardNumber) {
 		this.creditCardNumber = creditCardNumber;
 	}
 
-	public Date getExpirityDate() {
-		return this.expirityDate;
+	public String getExpiryDate() {
+		return this.expiryDate;
 	}
 
-	public void setExpirityDate(Date expirityDate) {
-		this.expirityDate = expirityDate;
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
 	}
 
-	public int getCcv() {
+	public String getCcv() {
 		return this.ccv;
 	}
 
-	public void setCcv(int ccv) {
+	public void setCcv(String ccv) {
 		this.ccv = ccv;
 	}
 
@@ -167,7 +176,7 @@ public class TaxiDriver {
 		return this.zipCode;
 	}
 
-	public void setTk(int zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 
@@ -201,6 +210,18 @@ public class TaxiDriver {
 	}
 
 	//operation methods
+	public boolean validate(String name, String surname, String sex, String username, String password, 
+			Date dateOfBirth, String address, String city, int zipCode, String creditCardType, 
+			String creditCardNumber, String expiryDate, String ccv) {
+		
+		
+		String month = expiryDate.substring(0, 1);
+		String year = expiryDate.substring(3, 4);
+		expiryDate = month + "/" + year;
+		
+		return true;
+	}
+	
 	public void informTaxiDriver() {
 		
 	}
@@ -214,6 +235,6 @@ public class TaxiDriver {
 		public String toString() {
 	        return this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
 	        		this.address + " " + this.city + " " + this.zipCode + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
-	        		this.expirityDate + " " + this.ccv + " (" + this.owns.toString() + ")";
+	        		this.expiryDate + " " + this.ccv + " (" + this.owns.toString() + ")";
 	    }	
 }
