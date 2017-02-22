@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import taxi.utils.AESEncrypt;
+import taxi.utils.Validators;
 
 //Declaring table id DB with name TaxiDriver
 @Entity
@@ -45,6 +46,9 @@ public class TaxiDriver {
 	@Column(name = "zipCode", length = 5, nullable = false)
 	private int zipCode;
 	
+	@Column(name = "email", length = 50, nullable = false)
+	private String email;
+	
 	@Column(name = "creditCardType", length = 10, nullable = false)
 	private String creditCardType;
 	
@@ -67,34 +71,51 @@ public class TaxiDriver {
 	//constructors for Customer
 	public TaxiDriver(){}
 	public TaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
-			String address, String city, int zipCode, String creditCardType, String creditCardNumber, 
+			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv, Taxi owns) {
 		
-		if (validate(name, surname, sex, username, password, dateOfBirth, address, city, zipCode, creditCardType, 
-				creditCardNumber, expiryDate, ccv)){
-			
 		
 		//ID is auto generated, so no need to include it here
+		//List of requests is empty when a new user is signed up
+		
+		//validations
+		if (Validators.validateUsername(username))
+			this.username = username;
+		else
+			System.out.println("Username already in use");
+		
+		if (Validators.validatePassword(password))
+			try {
+				this.password = AESEncrypt.encrypt(password); 
+			}
+			catch (Exception e){
+	        	System.out.println(e.getStackTrace());
+	        }
+		else
+			System.out.println("Invalid password");
+		
+		if (Validators.validateEmail(email))
+			this.email = email;
+		else
+			System.out.println("Email already in use");
+		
+		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
+			this.creditCardType = creditCardType;
+			this.creditCardNumber = creditCardNumber;
+			this.expiryDate = expiryDate;
+			this.ccv = ccv;	
+		}
+		else
+			System.out.println("Credit Card's details are invalid");
+		
 		this.name = name;
 		this.surname = surname;
-		this.sex = sex;
-		this.username = username;
-		try {
-			this.password = AESEncrypt.encrypt(password); 
-		}
-		catch (Exception e){
-        	System.out.println(e.getStackTrace());
-        }
+		this.sex = sex;	
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 		this.city = city;
-		this.zipCode = zipCode;
-		this.creditCardType = creditCardType;
-		this.creditCardNumber = creditCardNumber;
-		this.expiryDate = expiryDate;
-		this.ccv = ccv;
+		this.zipCode = zipCode;	
 		this.owns = owns; 
-		}
 	}
 
 	//get/set methods in order to have access in private attributes
@@ -122,32 +143,27 @@ public class TaxiDriver {
 		return this.creditCardType;
 	}
 
-	public void setCreditCardType(String creditCardType) {
-		this.creditCardType = creditCardType;
-	}
-
 	public String getCreditCardNumber() {
 		return this.creditCardNumber;
 	}
 
-	public void setCreditCardNumber(String creditCardNumber) {
-		this.creditCardNumber = creditCardNumber;
+	public void setCreditCard(String creditCardType, String creditCardNumber, String expiryDate, String ccv) {
+		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
+			this.creditCardType = creditCardType;
+			this.creditCardNumber = creditCardNumber;
+			this.expiryDate = expiryDate;
+			this.ccv = ccv;	
+		}
+		else
+			System.out.println("Credit Card's details are invalid");
 	}
 
 	public String getExpiryDate() {
 		return this.expiryDate;
 	}
 
-	public void setExpiryDate(String expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-
 	public String getCcv() {
 		return this.ccv;
-	}
-
-	public void setCcv(String ccv) {
-		this.ccv = ccv;
 	}
 
 	public String getSex() {
@@ -181,13 +197,19 @@ public class TaxiDriver {
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		if (Validators.validateEmail(email))
+			this.email = email;
+		else
+			System.out.println("Email already in use");
+	}
 
 	public String getUsername() {
 		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {
@@ -195,12 +217,15 @@ public class TaxiDriver {
 	}
 
 	public void setPassword(String password) {
-		try {
-			this.password = AESEncrypt.encrypt(password); 
-		}
-		catch (Exception e){
-        	System.out.println(e.getStackTrace());
-        }
+		if (Validators.validatePassword(password))
+			try {
+				this.password = AESEncrypt.encrypt(password); 
+			}
+			catch (Exception e){
+	        	System.out.println(e.getStackTrace());
+	        }
+		else
+			System.out.println("Invalid password");
 	}
 	
 	public Date getDateOfBirth() {
@@ -212,18 +237,6 @@ public class TaxiDriver {
 	}
 
 	//operation methods
-	private boolean validate(String name, String surname, String sex, String username, String password, 
-			Date dateOfBirth, String address, String city, int zipCode, String creditCardType, 
-			String creditCardNumber, String expiryDate, String ccv) {
-		
-		
-		String month = expiryDate.substring(0, 1);
-		String year = expiryDate.substring(3, 4);
-		expiryDate = month + "/" + year;
-		
-		return true;
-	}
-	
 	public void informTaxiDriver() {
 		
 	}
