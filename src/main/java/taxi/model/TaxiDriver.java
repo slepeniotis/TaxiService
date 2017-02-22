@@ -146,15 +146,18 @@ public class TaxiDriver {
 		return this.creditCardNumber;
 	}
 
-	public void setCreditCard(String creditCardType, String creditCardNumber, String expiryDate, String ccv) {
+	public boolean setCreditCard(String creditCardType, String creditCardNumber, String expiryDate, String ccv) {
 		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
 			this.creditCardType = creditCardType;
 			this.creditCardNumber = creditCardNumber;
 			this.expiryDate = expiryDate;
-			this.ccv = ccv;	
+			this.ccv = ccv;
+			return true;
 		}
-		else
+		else {
 			System.out.println("Credit Card's details are invalid");
+			return false;
+		}
 	}
 
 	public String getExpiryDate() {
@@ -200,11 +203,15 @@ public class TaxiDriver {
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
-		if (Validators.validateEmail(email))
+	public boolean setEmail(String email) {
+		if (Validators.validateEmail(email)) {
 			this.email = email;
-		else
+			return true;
+		}
+		else {
 			System.out.println("Email already in use");
+			return false;
+		}
 	}
 
 	public String getUsername() {
@@ -215,16 +222,21 @@ public class TaxiDriver {
 		return this.password;
 	}
 
-	public void setPassword(String password) {
-		if (Validators.validatePassword(password))
+	public boolean setPassword(String password) {
+		if (Validators.validatePassword(password)) {
 			try {
 				this.password = AESEncrypt.encrypt(password); 
 			}
 			catch (Exception e){
 	        	System.out.println(e.getStackTrace());
+	        	return false;
 	        }
-		else
+			return true;
+		}
+		else {
 			System.out.println("Invalid password");
+			return false;
+		}
 	}
 	
 	public Date getDateOfBirth() {
@@ -248,7 +260,7 @@ public class TaxiDriver {
 		@Override
 		public String toString() {
 	        return this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
-	        		this.address + " " + this.city + " " + this.zipCode + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+	        		this.address + " " + this.city + " " + this.zipCode + " "  + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
 	        		this.expiryDate + " " + this.ccv + " (" + this.owns.toString() + ")";
 	    }	
 }
