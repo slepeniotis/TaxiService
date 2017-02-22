@@ -3,7 +3,6 @@ package taxi.utils;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-
 import taxi.model.Customer;
 import taxi.persistence.JPAUtil;
 import java.util.regex.Pattern;
