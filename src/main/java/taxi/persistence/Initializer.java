@@ -22,7 +22,7 @@ public class Initializer  {
 	public static void eraseData() {
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 
-		//starting a new traksaction
+		//starting a new transaction
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Query query = null;
