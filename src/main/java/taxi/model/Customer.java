@@ -3,8 +3,6 @@ package taxi.model;
 //imports for using persistence, List, ArrayList, date
 import java.util.List;
 import javax.persistence.*;
-
-import taxi.persistence.JPAUtil;
 import taxi.utils.AESEncrypt;
 import taxi.utils.Validators;
 import java.util.ArrayList;

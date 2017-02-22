@@ -3,7 +3,6 @@ package taxi.model;
 //imports for using persistence, date
 import java.util.Date;
 import javax.persistence.*;
-
 import taxi.utils.AESEncrypt;
 import taxi.utils.Validators;
 
