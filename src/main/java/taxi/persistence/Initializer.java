@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import taxi.model.*;
+import taxi.utils.Validators;
 
 import java.text.*;
 
@@ -60,13 +61,13 @@ public class Initializer  {
 		
 		//creating some objects of our model
 		//several objects of them, will need others to exist already
-		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", "1234567891234567", "01/19", "123");
-		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", "1234567891234567", "01/19", "123");
+		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "gnyxteridas@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
+		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
 		//changing the password of customer2 in order to check if it is encrypted correctly
-		customer2.setPassword("mak2");
+		customer2.setPassword("fdkE9skfs");
 		Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
 		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
-		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "mastercard", "1234567891234567", "01/45", "123", taxi);
+		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "vlabrakakis@aueb.gr", "mastercard", "1234567891234567", "01/45", "123", taxi);
 		Route route = new Route("from", "to");
 		Request req = new Request(d, taxi, customer);
 		Request req2 = new Request(d, taxi, customer2);
