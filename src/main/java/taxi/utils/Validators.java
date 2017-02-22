@@ -18,8 +18,7 @@ public class Validators {
 		//starting a new transaction
 		EntityTransaction tx = em.getTransaction();
 		
-		StackTraceElement ste[] = Thread.currentThread().getStackTrace();
-        System.out.println("method is called from " + ste[2]);
+		StackTraceElement ste[] = Thread.currentThread().getStackTrace();        
         if(ste[2].toString() == "Customer"){
         	
     		Query query = em.createQuery("select cust from Customer cust where username = :usrnm");
@@ -73,8 +72,8 @@ public class Validators {
 		if(creditCardNumber.length() < 16 || ccv.length() < 3)
 			return false;
 		
-		String month = expiryDate.substring(0, 1);
-		String year = expiryDate.substring(3, 4);
+		String month = expiryDate.substring(0, 2);
+		String year = expiryDate.substring(3, 5);
 		
 		Calendar now = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yy");
