@@ -26,16 +26,12 @@ public class Request {
 	
 	//One request has a reference to a specific taxiID, customerID and routeID. The routeID can be also null
 	//fetch type EAGER does fetch the taxi object
-	//cascade types used here, enable persist and merge for the taxi object, in case request is persisted or merged.
-	//we don't use remove cascade here, since we do not wish the taxi object to be fully removed from DB
-	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="taxiId")
 	private Taxi taxi;
 
 	//fetch type EAGER does fetch the customer object
-	//cascade types used here, enable persist and merge for the customer object, in case request is persisted or merged.
-	//we don't use remove cascade here, since we do not wish the customer object to be fully removed from DB
-	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="customerId")
 	private Customer customer;
 	

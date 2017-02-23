@@ -80,8 +80,10 @@ public class TaxiDriver {
 		//validations
 		if (Validators.validateUsername(username))
 			this.username = username;
-		else
+		else {
 			System.out.println("Username already in use");
+			this.username = " ";
+		}
 		
 		if (Validators.validatePassword(password))
 			try {
@@ -90,13 +92,17 @@ public class TaxiDriver {
 			catch (Exception e){
 	        	System.out.println(e.getStackTrace());
 	        }
-		else
+		else {
 			System.out.println("Invalid password");
+			this.password = " ";
+		}
 		
 		if (Validators.validateEmail(email))
 			this.email = email;
-		else
+		else {
 			System.out.println("Email already in use");
+			this.email = " ";
+		}
 		
 		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
 			this.creditCardType = creditCardType;
@@ -104,8 +110,13 @@ public class TaxiDriver {
 			this.expiryDate = expiryDate;
 			this.ccv = ccv;	
 		}
-		else
+		else {
 			System.out.println("Credit Card's details are invalid");
+			this.creditCardType = " ";
+			this.creditCardNumber = " ";
+			this.expiryDate = " ";
+			this.ccv = " ";	
+		}
 		
 		this.name = name;
 		this.surname = surname;
@@ -156,6 +167,10 @@ public class TaxiDriver {
 		}
 		else {
 			System.out.println("Credit Card's details are invalid");
+			this.creditCardType = " ";
+			this.creditCardNumber = " ";
+			this.expiryDate = " ";
+			this.ccv = " ";	
 			return false;
 		}
 	}
@@ -210,6 +225,7 @@ public class TaxiDriver {
 		}
 		else {
 			System.out.println("Email already in use");
+			this.email = " ";
 			return false;
 		}
 	}
@@ -235,6 +251,7 @@ public class TaxiDriver {
 		}
 		else {
 			System.out.println("Invalid password");
+			this.password = " ";
 			return false;
 		}
 	}
