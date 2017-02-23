@@ -56,40 +56,58 @@ public class Initializer  {
 			d = sdf.parse("21/12/2012");
 		}
 		
+		//start inserting the data (objects) that we have created previously, in the DB
+		//the way we are going to insert them is within a transaction
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
 		//creating some objects of our model
 		//several objects of them, will need others to exist already
 		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "gnyxteridas@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
-		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
-		//changing the password of customer2 in order to check if it is encrypted correctly
-		customer2.setPassword("fdkE9skfs");
-		Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
-		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
-		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "vlabrakakis@aueb.gr", "mastercard", "1234567891234567", "01/45", "123", taxi);
-		Route route = new Route("from", "to");
-		Request req = new Request(d, taxi, customer);
-		Request req2 = new Request(d, taxi, customer2);
+		em.persist(customer);
+		tx.commit();
 		
+		tx.begin();
+		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak3", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
+		em.persist(customer2);
+		tx.commit();
+		
+		tx.begin();
+		//changing the password of customer2 in order to check if it is encrypted correctly
+		Customer customer3 = new Customer("mak", "xrist", "gynaika", "mak2", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
+		em.persist(customer3);
+		customer2.setPassword("fdkE9skfs");
+		tx.commit();
+			
+		tx.begin();
+		Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
+		em.persist(eval);
+		
+		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
+		em.persist(taxi);
+		
+		Request req = new Request(d, taxi, customer);
+		em.persist(req);
+		
+		Request req2 = new Request(d, taxi, customer2);
+		em.persist(req2);
+		
+		Request req3 = new Request(d, taxi, customer3);
+		em.persist(req3);		
+		
+		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "vlabrakakis@aueb.gr", "mastercard", "1234567891234567", "01/45", "123", taxi);
+		em.persist(taxidr);
+		
+		Route route = new Route("from", "to");
+		em.persist(route);
 
 		/*Category cat = new Category();
 		 * Category cat2 = new Category();
 		 * cat.setDescription("Drama");
 		 * cat2.setDescription("Science Fiction");
 		 */
-		
-		//start inserting the data (objects) that we have created previously, in the DB
-		//the way we are going to insert them is within a transaction
-		EntityManager em = JPAUtil.getCurrentEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-
-		//em.persist(customer);
-		//em.persist(customer2);
-		em.persist(eval);
-		em.persist(req);
-		em.persist(req2);
-		em.persist(route);
-		em.persist(taxidr);
-		
+					
 		//the transaction is now committed
 		tx.commit();
 			
@@ -103,7 +121,9 @@ public class Initializer  {
 		//in this case, the result list is of type Customer
 		for(Customer c : results) {
 			System.out.println(c.toString());
-		}   
+		}
+		
+		em.close();
 
 	}
 
