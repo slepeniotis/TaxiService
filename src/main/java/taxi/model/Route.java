@@ -58,13 +58,13 @@ public class Route {
 		//duration, cost and commission have to be zero since the request is not yet done
 		this.fromAddress = fromAddress;
 		this.toAddress = toAddress;
-		this.duration = 0;
-		this.cost = 0;
-		this.calculateCommision();
 		this.fromCity = fromCity;
 		this.toCity = toCity;
 		this.fromZipCode = fromZipCode;
 		this.toZipCode = toZipCode;
+		this.duration = 0;
+		this.cost = 0;
+		this.calculateCommision();
 		}
 	
 	//get/set methods in order to have access in private attributes
