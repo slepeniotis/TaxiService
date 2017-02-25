@@ -32,6 +32,21 @@ public class Initializer  {
 
 		query = em.createNativeQuery("delete from route");
 		query.executeUpdate();
+		
+		query = em.createNativeQuery("delete from customer");
+		query.executeUpdate();
+		
+		query = em.createNativeQuery("delete from taxi");
+		query.executeUpdate();
+		
+		query = em.createNativeQuery("delete from taxidriver");
+		query.executeUpdate();
+		
+		query = em.createNativeQuery("delete from customer");
+		query.executeUpdate();
+		
+		query = em.createNativeQuery("delete from request");
+		query.executeUpdate();
 
 		query = em.createNativeQuery("ALTER SEQUENCE hibernate_sequence RESTART WITH 1");
 		query.executeUpdate();
