@@ -65,7 +65,7 @@ public class Initializer  {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date d;
 		try {
-			d = sdf.parse("21/12/2012");
+			d = sdf.parse("21/12/2012");			
 		}
 		catch (ParseException e){
 			d = sdf.parse("21/12/2012");
@@ -121,7 +121,7 @@ public class Initializer  {
 		tx.commit();
 
 		tx.begin();
-		Taxi taxi = new Taxi("dfadad", "fdafda", "AHX0987", d, "fdafadfaea");
+		Taxi taxi = new Taxi("dfadad", "fdafda", "AHX0987", "09/2010", "fdafadfaea");
 		//in case an error during validation took place, we need to rollback the transaction
 		if (taxi.getLicensePlate() != "ERROR"){
 			em.persist(taxi);
