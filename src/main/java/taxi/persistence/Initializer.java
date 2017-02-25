@@ -103,10 +103,20 @@ public class Initializer  {
 		tx.begin();
 		Evaluation eval = new Evaluation(3, "djhalfhalcdalr", d);
 		em.persist(eval);
+		tx.commit();
 		
-		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
-		em.persist(taxi);
+		tx.begin();
+		Taxi taxi = new Taxi("dfadad", "fdafda", "AHX0987", d, "fdafadfaea");
+		//in case an error during validation took place, we need to rollback the transaction
+		if (taxi.getLicensePlate() != "ERROR"){
+			em.persist(taxi);
+			tx.commit();
+		}
+		else{
+			tx.rollback();
+		}
 		
+		tx.begin();
 		Request req = new Request(d, taxi, customer);
 		em.persist(req);
 		
