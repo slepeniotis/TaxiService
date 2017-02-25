@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 
 //class which includes all the methods related to validation checks
 public class Validators {
-	
+
 	/* Method validating username.
 	 * At first checks from which class it was called, Customer or TaxiDriver
 	 * Then searches in the appropriate table of the DB to find if another user 
@@ -24,12 +24,12 @@ public class Validators {
 		//it is not allowed to have a username "ERROR" as this is reserved word for our implementation
 		if(username == null || username == " " || username == "ERROR")
 			return false;
-		
+
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 
 		StackTraceElement ste[] = Thread.currentThread().getStackTrace();
 		if(ste[2].getClassName() == "taxi.model.Customer"){
-			
+
 			Query query = em.createQuery("select cust from Customer cust where username like :usrnm");
 			query.setParameter("usrnm", username); 
 			List<Customer> results = query.getResultList();
@@ -87,13 +87,13 @@ public class Validators {
 	public static boolean validateEmail(String email){
 		if(email == null || email == " ")
 			return false;
-		
+
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
 		Pattern p = Pattern.compile(ePattern);
 		Matcher m = p.matcher(email);
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 		StackTraceElement ste[] = Thread.currentThread().getStackTrace(); 
-		
+
 		if(m.matches()){
 			if(ste[2].getClassName() == "taxi.model.Customer"){
 
@@ -165,7 +165,7 @@ public class Validators {
 		return false;
 
 	}
-	
+
 	/* Method validating taxi.
 	 * This method receives as parameter the license plate of a taxi.
 	 * We assume that a license plate consists of 3 capital letters and 4 numbers
@@ -176,18 +176,18 @@ public class Validators {
 	 * If the checks are passed, the validation was completed successfully (true) 
 	 */
 	public static boolean validateLicensePlate(String licensePlate){
-		
+
 		if (licensePlate == null || licensePlate.length() != 7)
 			return false;
-		
+
 		String letters = licensePlate.substring(0, 3);
 		String numbers = licensePlate.substring(3,7);		
-			
+
 		if (letters.matches("[0-9]+"))
 			return false;
 		else if (!numbers.matches("[0-9]+"))
 			return false;		
-		
+
 		return true;
 	}
 }
