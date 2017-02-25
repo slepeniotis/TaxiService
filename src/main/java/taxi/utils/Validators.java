@@ -21,9 +21,8 @@ public class Validators {
 	 * In case the username does not already exist, the validation was successful (true).
 	 */
 	public static boolean validateUsername(String username){
-		
 		//it is not allowed to have a username "ERROR" as this is reserved word for our implementation
-		if(username == "ERROR")
+		if(username == null || username == " " || username == "ERROR")
 			return false;
 		
 		EntityManager em = JPAUtil.getCurrentEntityManager();
@@ -69,7 +68,7 @@ public class Validators {
 		/* if the check was password.length() < 8 || password.length() < 1
 		 * the case where the password is empty, would have been missed
 		 */
-		if (password.length() < 1 || password.length() < 8)
+		if (password == null || password.length() < 1 || password.length() < 8)
 			return false;
 		else if (!hasUppercase.matcher(password).find())
 			return false;
@@ -86,6 +85,9 @@ public class Validators {
 	 * If the email does not exist, then the validation was completed successfully (true) 
 	 */
 	public static boolean validateEmail(String email){
+		if(email == null || email == " ")
+			return false;
+		
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
 		Pattern p = Pattern.compile(ePattern);
 		Matcher m = p.matcher(email);
@@ -134,7 +136,7 @@ public class Validators {
 	 */
 	public static boolean validateCreditCard(String creditCardNumber, String expiryDate, String ccv){
 
-		if(creditCardNumber.length() < 16 || ccv.length() < 3)
+		if(creditCardNumber == null || ccv == null || creditCardNumber.length() != 16 || ccv.length() != 3)
 			return false;
 		if (!creditCardNumber.matches("[0-9]+"))
 			return false;
@@ -162,5 +164,30 @@ public class Validators {
 
 		return false;
 
+	}
+	
+	/* Method validating taxi.
+	 * This method receives as parameter the license plate of a taxi.
+	 * We assume that a license plate consists of 3 capital letters and 4 numbers
+	 * At first step we are checking the length of the license plate. It has to be 7 and not empty
+	 * Secondly, we split the license plate to its letters and numbers
+	 * We then assure that the letters variable has no numbers, and that the numbers variable has only numbers
+	 *   
+	 * If the checks are passed, the validation was completed successfully (true) 
+	 */
+	public static boolean validateLicensePlate(String licensePlate){
+		
+		if (licensePlate == null || licensePlate.length() != 7)
+			return false;
+		
+		String letters = licensePlate.substring(0, 3);
+		String numbers = licensePlate.substring(3,7);		
+			
+		if (letters.matches("[0-9]+"))
+			return false;
+		else if (!numbers.matches("[0-9]+"))
+			return false;		
+		
+		return true;
 	}
 }
