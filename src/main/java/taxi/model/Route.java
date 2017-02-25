@@ -7,49 +7,48 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Route")
 public class Route {
-	
+
 	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "fromAddress", length = 256, nullable = false)
 	private String fromAddress;
-	
+
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "fromCity", length = 256, nullable = false)
 	private String fromCity;
-	
+
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "fromZipCode", length = 256, nullable = false)
 	private String fromZipCode;
-	
+
 	@Column(name = "toAddress", length = 256, nullable = false)
 	private String toAddress;
-	
+
 	@Column(name = "toCity", length = 256, nullable = false)
 	private String toCity;
-	
+
 	@Column(name = "toZipCode", length = 256, nullable = false)
-	private String toZipCode;
-	
-	
+	private String toZipCode;	
+
 	@Column(name = "duration", length = 5, nullable = true)
 	private int duration;
-	
+
 	@Column(name = "cost", length = 5, nullable = true)
 	private float cost;
-	
+
 	@Column(name = "commision", length = 5, nullable = true)
 	private float commision;
-	
+
 	//each route can have only one evaluation or none
 	//fetch type lazy does not fetch the object evaluation
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
-	
+
 	//constructors for Route
 	public Route(){}
 	public Route(String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {	
@@ -65,8 +64,8 @@ public class Route {
 		this.duration = 0;
 		this.cost = 0;
 		this.calculateCommision();
-		}
-	
+	}
+
 	//get/set methods in order to have access in private attributes
 	public long getId() {
 		return id;
@@ -79,7 +78,7 @@ public class Route {
 	public void setFromAddress(String fromAddress) {
 		this.fromAddress = fromAddress;
 	}
-	
+
 	public String getToAddress() {
 		return toAddress;
 	}
@@ -87,7 +86,7 @@ public class Route {
 	public void setToAddress(String toAddress) {
 		this.toAddress = toAddress;
 	}
-	
+
 	public String getFromCity() {
 		return fromCity;
 	}
@@ -103,7 +102,7 @@ public class Route {
 	public void setToCity(String toCity) {
 		this.toCity = toCity;
 	}
-	
+
 	public String getFromZipCode() {
 		return fromZipCode;
 	}
@@ -111,7 +110,7 @@ public class Route {
 	public void setFromZipCode(String fromZipCode) {
 		this.fromZipCode = fromZipCode;
 	}
-	
+
 	public String getToZipCode() {
 		return toZipCode;
 	}
@@ -131,7 +130,7 @@ public class Route {
 	public float getCost() {
 		return cost;
 	}
-	
+
 	public void setCost(float cost) {
 		if (cost > 0) {
 			this.cost = cost;
@@ -140,7 +139,7 @@ public class Route {
 			this.cost = 0;
 		}
 	}
-	
+
 	public Evaluation getEval() {
 		return eval;
 	}
@@ -148,7 +147,7 @@ public class Route {
 	public void setEval(Evaluation eval) {
 		this.eval = eval;
 	}
-		
+
 	//methods for calculating commision and statistics
 	public void calculateCommision(){
 		if (this.cost == 0){
@@ -158,20 +157,20 @@ public class Route {
 			this.commision = this.cost*0.05f;
 		}
 	}
-	
+
 	public void calculateStatistics(){
-		
+
 	}
-	
+
 	//override of toString method from Object
-		@Override
-		public String toString() {
-	        String temp = this.id + " " + this.fromAddress + " " + this.toAddress + " " + this.fromCity + " " + this.toCity + " " + this.fromZipCode + " " + this.toZipCode + " " + this.duration + " " + this.cost + " " + this.commision;
-			
-	        if (this.eval != null){
-	        	temp += " (" + this.eval.toString() + ")";
-	        }
-	        
-	        return temp;
-	    }	
+	@Override
+	public String toString() {
+		String temp = this.id + " " + this.fromAddress + " " + this.toAddress + " " + this.fromCity + " " + this.toCity + " " + this.fromZipCode + " " + this.toZipCode + " " + this.duration + " " + this.cost + " " + this.commision;
+
+		if (this.eval != null){
+			temp += " (" + this.eval.toString() + ")";
+		}
+
+		return temp;
+	}	
 }

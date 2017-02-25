@@ -10,56 +10,56 @@ import taxi.utils.Validators;
 @Entity
 @Table(name = "TaxiDriver")
 public class TaxiDriver {
-	
+
 	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "name", length = 30, nullable = false)
 	private String name;
-	
+
 	@Column(name = "surname", length = 30, nullable = false)
 	private String surname;
-	
+
 	@Column(name = "sex", length = 20, nullable = false)
 	private String sex;
-	
+
 	@Column(name = "username", length = 30, nullable = false)
 	private String username;
-	
+
 	@Column(name = "password", length = 256, nullable = false)
 	private String password;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date dateOfBirth;
-	
+
 	@Column(name = "address", length = 100, nullable = false)
 	private String address;
-	
+
 	@Column(name = "city", length = 50, nullable = false)
 	private String city;
-	
+
 	@Column(name = "zipCode", length = 5, nullable = false)
 	private int zipCode;
-	
+
 	@Column(name = "email", length = 50, nullable = false)
 	private String email;
-	
+
 	@Column(name = "creditCardType", length = 10, nullable = false)
 	private String creditCardType;
-	
+
 	@Column(name = "creditCardNumber", length = 16, nullable = false)
 	private String creditCardNumber;
-	
+
 	@Column(name = "expiryDate", length = 5, nullable = false)
 	private String expiryDate;
-	
+
 	@Column(name = "ccv", length = 3, nullable = false)
 	private String ccv;	
-	
+
 	/* Each Taxi driver can have only one Taxi connected with him
 	 * fetch type EAGER does fetch the taxi object
 	 * cascade types used here, enable persist merge and remove for the taxi, in case taxi driver is persisted, merged or removed.
@@ -73,11 +73,11 @@ public class TaxiDriver {
 	public TaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
 			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv, Taxi owns) {
-		
-		
+
+
 		//ID is auto generated, so no need to include it here
 		//List of requests is empty when a new user is signed up
-		
+
 		//validations
 		if (Validators.validateUsername(username))
 			this.username = username;
@@ -87,39 +87,39 @@ public class TaxiDriver {
 			System.out.println("Username already in use");
 			this.username = "ERROR";
 		}
-		
+
 		if (Validators.validatePassword(password))
 			try {
 				this.password = AESEncrypt.encrypt(password); 
 			}
 		catch (Exception e){
-        	System.out.println(e.getStackTrace());
-        	//in case an exception occurs, the password will be left empty
+			System.out.println(e.getStackTrace());
+			//in case an exception occurs, the password will be left empty
 			//and the username will be set to "ERROR"
-        	//this value will be used later in order to rollback the transaction
-        	this.username = "ERROR";
-        	this.password = " ";
-        }
-	else {
-		System.out.println("Invalid password");
-		//in case the password is invalid, it will be left empty
-		//and the username will be set to "ERROR"
-    	//this value will be used later in order to rollback the transaction
-		this.username = "ERROR";
-		this.password = " ";
+			//this value will be used later in order to rollback the transaction
+			this.username = "ERROR";
+			this.password = " ";
 		}
-		
+		else {
+			System.out.println("Invalid password");
+			//in case the password is invalid, it will be left empty
+			//and the username will be set to "ERROR"
+			//this value will be used later in order to rollback the transaction
+			this.username = "ERROR";
+			this.password = " ";
+		}
+
 		if (Validators.validateEmail(email))
 			this.email = email;
 		else {
 			System.out.println("Email already in use");
 			//in case the email is already in use, it will be left empty
 			//and the username will be set to "ERROR"
-        	//this value will be used later in order to rollback the transaction
+			//this value will be used later in order to rollback the transaction
 			this.username = "ERROR";
 			this.email = " ";
 		}
-		
+
 		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
 			this.creditCardType = creditCardType;
 			this.creditCardNumber = creditCardNumber;
@@ -130,14 +130,14 @@ public class TaxiDriver {
 			System.out.println("Credit Card's details are invalid");
 			//in case any of credit card's information is invalid, they will be left empty
 			//and the username will be set to "ERROR"
-        	//this value will be used later in order to rollback the transaction
+			//this value will be used later in order to rollback the transaction
 			this.creditCardType = " ";
 			this.creditCardNumber = " ";
 			this.expiryDate = " ";
 			this.ccv = " ";	
 			this.username = "ERROR";
 		}
-		
+
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;	
@@ -235,7 +235,7 @@ public class TaxiDriver {
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -266,9 +266,9 @@ public class TaxiDriver {
 			}
 			catch (Exception e){
 				//in case an exception occurs, the password is not changed
-	        	System.out.println(e.getStackTrace());
-	        	return false;
-	        }
+				System.out.println(e.getStackTrace());
+				return false;
+			}
 			return true;
 		}
 		else {
@@ -276,7 +276,7 @@ public class TaxiDriver {
 			return false;
 		}
 	}
-	
+
 	public Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
@@ -287,18 +287,18 @@ public class TaxiDriver {
 
 	//operation methods
 	public void informTaxiDriver() {
-		
+
 	}
 
 	public void confirmRequest() {
-		
+
 	}
-	
+
 	//override of toString method from Object
-		@Override
-		public String toString() {
-	        return this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
-	        		this.address + " " + this.city + " " + this.zipCode + " "  + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
-	        		this.expiryDate + " " + this.ccv + " (" + this.owns.toString() + ")";
-	    }	
+	@Override
+	public String toString() {
+		return this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
+				this.address + " " + this.city + " " + this.zipCode + " "  + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+				this.expiryDate + " " + this.ccv + " (" + this.owns.toString() + ")";
+	}	
 }

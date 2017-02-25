@@ -16,23 +16,23 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Evaluation")
 public class Evaluation {
-	
+
 	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "rating", length = 5, nullable = false)
 	private int rating;
-	
+
 	@Column(name = "comment", length = 512, nullable = false)
 	private String comment;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date", nullable = false)
 	private Date dateOfEval;
-	
+
 	//constructors for Evaluation
 	public Evaluation() {}
 	public Evaluation(int rating, String comment, Date dateOfEval) {
@@ -62,7 +62,7 @@ public class Evaluation {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+
 	public Date getDateOfEval() {
 		return this.dateOfEval;
 	}
@@ -70,11 +70,11 @@ public class Evaluation {
 	public void setDateOfEval(Date dateOfEval) {
 		this.dateOfEval = dateOfEval;
 	}
-	
+
 	//override of toString method from Object
-		@Override
-		public String toString() {
-	        return this.id + " " + this.rating + " " + this.comment + " " + this.dateOfEval;
-	    }	
+	@Override
+	public String toString() {
+		return this.id + " " + this.rating + " " + this.comment + " " + this.dateOfEval;
+	}	
 
 }

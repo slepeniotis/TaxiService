@@ -13,75 +13,75 @@ import java.util.Date;
 @Entity
 @Table(name = "Customer")
 public class Customer {
-	
+
 	//Declaring Primary surrogate Key as autoincrement
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "name", length = 30, nullable = false)
 	private String name;
-	
+
 	@Column(name = "surname", length = 30, nullable = false)
 	private String surname;
-	
+
 	@Column(name = "sex", length = 20, nullable = false)
 	private String sex;
-	
+
 	@Column(name = "username", length = 30, nullable = false)
 	private String username;
-	
+
 	@Column(name = "password", length = 256, nullable = false)
 	private String password;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date dateOfBirth;
-	
+
 	@Column(name = "location", length = 30, nullable = false)
 	private String location;
-	
+
 	@Column(name = "address", length = 100, nullable = false)
 	private String address;
-	
+
 	@Column(name = "city", length = 50, nullable = false)
 	private String city;
-	
+
 	@Column(name = "zipCode", length = 5, nullable = false)
 	private int zipCode;
-	
+
 	@Column(name = "email", length = 50, nullable = false)
 	private String email;
 
 	@Column(name = "creditCardType", length = 10, nullable = false)
 	private String creditCardType;
-	
+
 	@Column(name = "creditCardNumber", length = 16, nullable = false)
 	private String creditCardNumber;
-	
+
 	@Column(name = "expiryDate", length = 5, nullable = false)
 	private String expiryDate;
-	
+
 	@Column(name = "ccv", length = 3, nullable = false)
 	private String ccv;	
-	
+
 	/* every customer has a list of requests done, since he can make several requests
 	 * fetch type lazy does not fetch all the list. fetching is done only if we ask for it
 	 * cascade types used here, enable persist merge and remove for the whole list, in case Customer is persisted, merged or removed.
 	 */
 	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Request> req = new ArrayList<Request>();
-	
+
 	//constructors for Customer
 	public Customer(){}
 	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
 			String location, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv) {
-		
+
 		//ID is auto generated, so no need to include it here
 		//List of requests is empty when a new user is signed up
-		
+
 		//validations
 		if (Validators.validateUsername(username))
 			this.username = username;
@@ -91,39 +91,39 @@ public class Customer {
 			System.out.println("Username already in use");
 			this.username = "ERROR";
 		}
-		
+
 		if (Validators.validatePassword(password))
 			try {
 				this.password = AESEncrypt.encrypt(password); 
 			}
-			catch (Exception e){
-	        	System.out.println(e.getStackTrace());
-	        	//in case an exception occurs, the password will be left empty
-				//and the username will be set to "ERROR"
-	        	//this value will be used later in order to rollback the transaction
-	        	this.username = "ERROR";
-	        	this.password = " ";
-	        }
+		catch (Exception e){
+			System.out.println(e.getStackTrace());
+			//in case an exception occurs, the password will be left empty
+			//and the username will be set to "ERROR"
+			//this value will be used later in order to rollback the transaction
+			this.username = "ERROR";
+			this.password = " ";
+		}
 		else {
 			System.out.println("Invalid password");
 			//in case the password is invalid, it will be left empty
 			//and the username will be set to "ERROR"
-        	//this value will be used later in order to rollback the transaction
+			//this value will be used later in order to rollback the transaction
 			this.username = "ERROR";
 			this.password = " ";
 		}
-		
+
 		if (Validators.validateEmail(email))
 			this.email = email;
 		else {
 			System.out.println("Email already in use");
 			//in case the email is already in use, it will be left empty
 			//and the username will be set to "ERROR"
-        	//this value will be used later in order to rollback the transaction
+			//this value will be used later in order to rollback the transaction
 			this.username = "ERROR";
 			this.email = " ";
 		}
-		
+
 		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
 			this.creditCardType = creditCardType;
 			this.creditCardNumber = creditCardNumber;
@@ -134,14 +134,14 @@ public class Customer {
 			System.out.println("Credit Card's details are invalid");
 			//in case any of credit card's information is invalid, they will be left empty
 			//and the username will be set to "ERROR"
-        	//this value will be used later in order to rollback the transaction
+			//this value will be used later in order to rollback the transaction
 			this.creditCardType = " ";
 			this.creditCardNumber = " ";
 			this.expiryDate = " ";
 			this.ccv = " ";	
 			this.username = "ERROR";
 		}
-		
+
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;	
@@ -150,9 +150,9 @@ public class Customer {
 		this.address = address;
 		this.city = city;
 		this.zipCode = zipCode;		
-		
+
 	}
-	
+
 	/* get/set methods in order to have access in private attributes
 	 * set method for username does not exist. we assume that the customer cannot change username
 	 * set methods of password and email, are of type boolean in order to check if the validation was ok
@@ -177,7 +177,7 @@ public class Customer {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 	public String getUsername() {
 		return this.username;
 	}
@@ -193,9 +193,9 @@ public class Customer {
 			}
 			catch (Exception e){
 				//in case an exception occurs, the password is not changed
-	        	System.out.println(e.getStackTrace());
-	        	return false;
-	        }
+				System.out.println(e.getStackTrace());
+				return false;
+			}
 			return true;
 		}
 		else {
@@ -220,7 +220,7 @@ public class Customer {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	
+
 	public String getLocation() {
 		return this.location;
 	}
@@ -256,7 +256,7 @@ public class Customer {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public boolean setEmail(String email) {
 		if (Validators.validateEmail(email)) {
 			this.email = email;
@@ -268,7 +268,7 @@ public class Customer {
 			return false;
 		}
 	}
-	
+
 	public String getCreditCardType() {
 		return this.creditCardType;
 	}
@@ -307,31 +307,31 @@ public class Customer {
 	public void addRequest(Request req) {
 		this.req.add(req);
 	}
-	
+
 	//operation methods
 	public void taxiSearch() {
-		
+
 	}
 
 	public void chooseTaxi() {
-		
+
 	}
 
 	public void informCustomer() {
-		
+
 	}
-	
+
 	//override of toString method from Object
 	@Override
 	public String toString() {
-        String temp = this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
-        		this.location + " " + this.address + " " + this.city + " " + this.zipCode + " " + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
-        		this.expiryDate + " " + this.ccv;
-        
-        for(Request r : req) {
-            temp += " (" + r.toString() + ")";
-        }  
-        
-        return temp;
-    }	
+		String temp = this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
+				this.location + " " + this.address + " " + this.city + " " + this.zipCode + " " + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+				this.expiryDate + " " + this.ccv;
+
+		for(Request r : req) {
+			temp += " (" + r.toString() + ")";
+		}  
+
+		return temp;
+	}	
 }
