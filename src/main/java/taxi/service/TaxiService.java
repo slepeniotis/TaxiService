@@ -15,7 +15,38 @@ public class TaxiService {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 
-	public Customer createCustomer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
+	//ΕΓΓΡΑΦΗ
+	public Taxi createTaxi(String carModel, String carType, String licensePlate, String carModelDate, String location){
+
+		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || location == null)
+			return null;
+		
+		Taxi taxi = new Taxi(carModel, carType, licensePlate, carModelDate, location);
+
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(taxi);
+		tx.commit();
+
+		return taxi;
+	}
+	
+	public TaxiDriver registerTaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
+			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
+			String expiryDate, String ccv, Taxi owns){
+		
+		TaxiDriver taxidr = new TaxiDriver(name, surname, sex, username, password, dateOfBirth, address, city, zipCode, email, creditCardType, creditCardNumber, expiryDate, ccv, owns);
+
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(taxidr);
+		tx.commit();
+
+		return taxidr;			
+
+	}
+	
+	public Customer registerCustomer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
 			String location, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv){
 		
@@ -31,38 +62,34 @@ public class TaxiService {
 		return customer;
 
 	}
+	
+	//ΤΑΥΤΟΠΟΙΗΣΗ
+	public boolean login(String userType, String username, String password){}
+	
+	
+	//ΕΚΤΕΛΕΣΗ ΔΙΑΔΡΟΜΗΣ
+	public Request startRequest(Date dateTime, Taxi taxi, Customer customer){
 
-	public TaxiDriver createTaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
-			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
-			String expiryDate, String ccv, Taxi owns){
-
-		TaxiDriver taxidr = new TaxiDriver(name, surname, sex, username, password, dateOfBirth, address, city, zipCode, email, creditCardType, creditCardNumber, expiryDate, ccv, owns);
-
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.persist(taxidr);
-		tx.commit();
-
-		return taxidr;			
-
-	}
-
-	public Taxi createTaxi(String carModel, String carType, String licensePlate, Date carModelDate, String location){
-
-		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", "09/2012", "fdafadfaea");
-
-
+		Request req = new Request(dateTime, taxi, customer);
+		//call informtaxidriver()	
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.persist(taxi);
+		em.persist(req);
 		tx.commit();
 
-		return taxi;	
+		return req;	
 
 	}
 
-	public Route createRoute(String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {
+	public boolean handleRequest(Request req, Taxi taxi, String decision){
+		
+		//if positive, update status request, inform customer
+	}
+	
+	public Route createRoute(Request req, String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {
+
+		//connect route with request
 
 		Route route = new Route(fromAddress, toAddress, fromCity, toCity, fromZipCode, toZipCode);
 
@@ -76,20 +103,32 @@ public class TaxiService {
 
 	}
 
-	public Request createRequest(Date dateTime, Taxi taxi, Customer customer){
+	public boolean stopRequest(Request req, Taxi taxi){
 
-		Request req = new Request(dateTime, taxi, customer);
+		//update status (flag 1|0)
+		//call method for changing taxi status
+		//inform customer(cost)
+		//inform customer(evaluation)
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.persist(req);
 		tx.commit();
 
-		return req;	
+		return true;	
 
 	}
 
-	public Evaluation createEvaluation(int rating, String comment, Date dateOfEval){
+	//ΑΞΙΟΛΟΓΗΣΗ
+	public Evaluation createEvaluation(Route route, int rating, String comment, Date dateOfEval){
+		
+		//inform taxidriver(evaluation)
 		return new Evaluation();
 	}
+	
+	//ΣΤΑΤΙΣΤΙΚΑ
+	public String produceStatistics(int selection, Date fromRange, Date toRange){}
+	
+	public String produceStatistics(int selection, String city){}
+	
 }
