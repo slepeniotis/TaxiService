@@ -3,6 +3,9 @@ package taxi.model;
 //imports for using persistence, List, ArrayList, date
 import java.util.List;
 import javax.persistence.*;
+
+import taxi.utils.Validators;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,7 +52,17 @@ public class Taxi {
 		//ID is auto generated, so no need to include it here
 		this.carModel = carModel;
 		this.carType = carType;
-		this.licensePlate = licensePlate;
+		
+		//validations
+		if (Validators.validateLicensePlate(licensePlate))
+			this.licensePlate = licensePlate;
+		else {
+			//in case licensePlate already exists, we put there the string "ERROR"
+			//this value will be used later in order to rollback the transaction
+			System.out.println("Car already connected with other driver, or license plate is invalid");
+			this.licensePlate = "ERROR";
+		}
+		
 		this.carModelDate = carModelDate;
 		this.location = location;
 		this.status = true;
