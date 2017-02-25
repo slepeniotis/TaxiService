@@ -129,7 +129,7 @@ public class Initializer  {
 		}
 		
 		tx.begin();
-		Route route = new Route("from", "to");
+		Route route = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345");
 		em.persist(route);
 		tx.commit();
 		
