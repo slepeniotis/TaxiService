@@ -190,4 +190,40 @@ public class Validators {
 
 		return true;
 	}
+
+	/* Method validating taxi.
+	 * This method receives as parameter the license plate of a taxi.
+	 * We assume that a license plate consists of 3 capital letters and 4 numbers
+	 * At first step we are checking the length of the license plate. It has to be 7 and not empty
+	 * Secondly, we split the license plate to its letters and numbers
+	 * We then assure that the letters variable has no numbers, and that the numbers variable has only numbers
+	 *   
+	 * If the checks are passed, the validation was completed successfully (true) 
+	 */
+	public static boolean validateCarModelDate(String carModelDate){
+
+		if(carModelDate == null || carModelDate.length() != 7)
+			return false;
+
+		String month = carModelDate.substring(0, 2);
+		String year = carModelDate.substring(3, 7);	
+
+		if (!month.matches("[0-9]+"))
+			return false;
+		else if (!year.matches("[0-9]+"))
+			return false;
+
+		if(Integer.parseInt(month) < 1 && Integer.parseInt(month) > 12)
+			return false;
+
+		//getting current month and year in two digits
+		Calendar now = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		String curYear = sdf.format(Calendar.getInstance().getTime());
+
+		if(Integer.parseInt(curYear) < Integer.parseInt(year))
+			return false;
+		
+		return true;
+	}
 }
