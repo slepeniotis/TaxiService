@@ -1,18 +1,13 @@
 package taxi.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-
-import gr.aueb.mscis.sample.model.Movie;
 import taxi.model.*;
 import taxi.persistence.JPAUtil;
 
 public class TaxiService {
-
 
 	EntityManager em;
 
@@ -21,19 +16,12 @@ public class TaxiService {
 	}
 
 	public Customer createCustomer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
-			String location, String address, String city, int zipCode, String creditCardType, String creditCardNumber, 
-			String expiryDate, String ccv) throws ParseException{
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d;
-		try {
-			d = sdf.parse("21/12/2012");
-		}
-		catch (ParseException e){
-			d = sdf.parse("21/12/2012");
-		}
-
-		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "mak", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "email@email.com", "mastercard", "1234567891234567", "01/19", "123");
+			String location, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
+			String expiryDate, String ccv){
+		
+		Customer customer = new Customer(name, surname, sex, username, password, dateOfBirth, 
+				location, address, city, zipCode, email, creditCardType, creditCardNumber, 
+				expiryDate, ccv);
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -46,18 +34,9 @@ public class TaxiService {
 
 	public TaxiDriver createTaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
 			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
-			String expiryDate, String ccv, Taxi owns) throws ParseException{
+			String expiryDate, String ccv, Taxi owns){
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d;
-		try {
-			d = sdf.parse("21/12/2012");
-		}
-		catch (ParseException e){
-			d = sdf.parse("21/12/2012");
-		}
-
-		TaxiDriver taxidr = new TaxiDriver("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, "dfaggaadfadsfada", "fdaafdfa", 13671, "vlabrakakis@aueb.gr", "mastercard", "1234567891234567", "01/45", "123", owns);
+		TaxiDriver taxidr = new TaxiDriver(name, surname, sex, username, password, dateOfBirth, address, city, zipCode, email, creditCardType, creditCardNumber, expiryDate, ccv, owns);
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -68,18 +47,9 @@ public class TaxiService {
 
 	}
 
-	public Taxi createTaxi(String carModel, String carType, String licensePlate, Date carModelDate, String location)  throws ParseException{
+	public Taxi createTaxi(String carModel, String carType, String licensePlate, Date carModelDate, String location){
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d;
-		try {
-			d = sdf.parse("21/12/2012");
-		}
-		catch (ParseException e) {
-			d = sdf.parse("21/12/2012");
-		}
-
-		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", d, "fdafadfaea");
+		Taxi taxi = new Taxi("dfadad", "fdafda", "347932", "09/2012", "fdafadfaea");
 
 
 
@@ -92,18 +62,9 @@ public class TaxiService {
 
 	}
 
-	public Route createRoute(String from, String to){
+	public Route createRoute(String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d;
-		try {
-			d = sdf.parse("21/12/2012");
-		}
-		catch (ParseException e){
-			System.out.println("Η ημερομηνία δεν είναι σωστή");
-		}
-
-		Route route = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345");
+		Route route = new Route(fromAddress, toAddress, fromCity, toCity, fromZipCode, toZipCode);
 
 
 		EntityTransaction tx = em.getTransaction();
@@ -115,21 +76,9 @@ public class TaxiService {
 
 	}
 
-	public Request createRequest(Date dateTime, Taxi taxi, Customer customer) throws ParseException{
+	public Request createRequest(Date dateTime, Taxi taxi, Customer customer){
 
-		//creating a date for the scope of our testing
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d;
-		try {
-			d = sdf.parse("21/12/2012");
-		}
-		catch (ParseException e){
-			d = sdf.parse("21/12/2012");
-		}
-
-		Request req = new Request(d, taxi, customer);
-
-
+		Request req = new Request(dateTime, taxi, customer);
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -140,4 +89,7 @@ public class TaxiService {
 
 	}
 
+	public Evaluation createEvaluation(int rating, String comment, Date dateOfEval){
+		return new Evaluation();
+	}
 }
