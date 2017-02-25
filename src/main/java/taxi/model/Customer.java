@@ -317,8 +317,8 @@ public class Customer {
 
 	}
 
-	public void informCustomer() {
-
+	public void informCustomer(String message){
+		System.out.println(message);
 	}
 
 	//override of toString method from Object

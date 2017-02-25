@@ -156,6 +156,17 @@ public class Initializer  {
 		tx.begin();
 		Route route = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345");
 		em.persist(route);
+		Route route1 = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345");
+		em.persist(route1);
+		req.setRoute(route);
+		req2.setRoute(route1);
+		tx.commit();
+		
+		tx.begin();
+		route.setCost(12041);
+		route.calculateCommision();
+		route1.setCost(123);
+		route1.calculateCommision();
 		tx.commit();
 
 		route.setEval(eval);

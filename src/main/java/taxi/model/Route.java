@@ -130,6 +130,10 @@ public class Route {
 	public float getCost() {
 		return cost;
 	}
+	
+	public float getCommision() {
+		return commision;
+	}
 
 	public void setCost(float cost) {
 		if (cost > 0) {

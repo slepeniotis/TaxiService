@@ -286,8 +286,8 @@ public class TaxiDriver {
 	}
 
 	//operation methods
-	public void informTaxiDriver() {
-
+	public void informTaxiDriver(String message) {
+		System.out.println(message);
 	}
 
 	public void confirmRequest() {
