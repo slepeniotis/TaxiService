@@ -14,11 +14,26 @@ public class Route {
 	private long id;
 	
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
-	@Column(name = "origin", length = 256, nullable = false)
-	private String from;
+	@Column(name = "fromAddress", length = 256, nullable = false)
+	private String fromAddress;
 	
-	@Column(name = "destination", length = 256, nullable = false)
-	private String to;
+	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
+	@Column(name = "fromCity", length = 256, nullable = false)
+	private String fromCity;
+	
+	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
+	@Column(name = "fromZipCode", length = 256, nullable = false)
+	private String fromZipCode;
+	
+	@Column(name = "toAddress", length = 256, nullable = false)
+	private String toAddress;
+	
+	@Column(name = "toCity", length = 256, nullable = false)
+	private String toCity;
+	
+	@Column(name = "toZipCode", length = 256, nullable = false)
+	private String toZipCode;
+	
 	
 	@Column(name = "duration", length = 5, nullable = true)
 	private int duration;
@@ -37,15 +52,19 @@ public class Route {
 	
 	//constructors for Route
 	public Route(){}
-	public Route(String from, String to) {	
+	public Route(String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {	
 		//ID is auto generated, so no need to include it here
 		//Route will have origin and destination
 		//duration, cost and commission have to be zero since the request is not yet done
-		this.from = from;
-		this.to = to;
+		this.fromAddress = fromAddress;
+		this.toAddress = toAddress;
 		this.duration = 0;
 		this.cost = 0;
 		this.calculateCommision();
+		this.fromCity = fromCity;
+		this.toCity = toCity;
+		this.fromZipCode = fromZipCode;
+		this.toZipCode = toZipCode;
 		}
 	
 	//get/set methods in order to have access in private attributes
@@ -53,20 +72,52 @@ public class Route {
 		return id;
 	}
 
-	public String getFrom() {
-		return from;
+	public String getFromAddress() {
+		return fromAddress;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setFromAddress(String fromAddress) {
+		this.fromAddress = fromAddress;
+	}
+	
+	public String getToAddress() {
+		return toAddress;
 	}
 
-	public String getTo() {
-		return to;
+	public void setToAddress(String toAddress) {
+		this.toAddress = toAddress;
+	}
+	
+	public String getFromCity() {
+		return fromCity;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	public void setFromCity(String fromCity) {
+		this.fromCity = fromCity;
+	}
+
+	public String getToCity() {
+		return fromCity;
+	}
+
+	public void setToCity(String toCity) {
+		this.toCity = toCity;
+	}
+	
+	public String getFromZipCode() {
+		return fromZipCode;
+	}
+
+	public void setFromZipCode(String fromZipCode) {
+		this.fromZipCode = fromZipCode;
+	}
+	
+	public String getToZipCode() {
+		return toZipCode;
+	}
+
+	public void setToZipCode(String toZipCode) {
+		this.toZipCode = toZipCode;
 	}
 
 	public int getDuration() {
@@ -97,8 +148,7 @@ public class Route {
 	public void setEval(Evaluation eval) {
 		this.eval = eval;
 	}
-	
-	
+		
 	//methods for calculating commision and statistics
 	public void calculateCommision(){
 		if (this.cost == 0){
@@ -116,7 +166,7 @@ public class Route {
 	//override of toString method from Object
 		@Override
 		public String toString() {
-	        String temp = this.id + " " + this.from + " " + this.to + " " + this.duration + " " + this.cost + " " + this.commision;
+	        String temp = this.id + " " + this.fromAddress + " " + this.toAddress + " " + this.fromCity + " " + this.toCity + " " + this.fromZipCode + " " + this.toZipCode + " " + this.duration + " " + this.cost + " " + this.commision;
 			
 	        if (this.eval != null){
 	        	temp += " (" + this.eval.toString() + ")";
