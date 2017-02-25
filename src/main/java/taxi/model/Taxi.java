@@ -30,9 +30,8 @@ public class Taxi {
 	@Column(name = "licensePlate", length = 7, nullable = false)
 	private String licensePlate;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name = "carModelDate", nullable = false)
-	private Date carModelDate;
+	private String carModelDate;
 
 	@Column(name = "location", length = 30, nullable = false)
 	private String location;
@@ -48,7 +47,7 @@ public class Taxi {
 
 	//constructors for Taxi
 	public Taxi(){}
-	public Taxi(String carModel, String carType, String licensePlate, Date carModelDate, String location) {
+	public Taxi(String carModel, String carType, String licensePlate, String carModelDate, String location) {
 		//ID is auto generated, so no need to include it here
 		this.carModel = carModel;
 		this.carType = carType;
@@ -62,8 +61,16 @@ public class Taxi {
 			System.out.println("Car already connected with other driver, or license plate is invalid");
 			this.licensePlate = "ERROR";
 		}
-
-		this.carModelDate = carModelDate;
+		
+		if (Validators.validateCarModelDate(carModelDate))
+			this.carModelDate = carModelDate;
+		else {
+			//in case carModelDate validation fails, we put in licensePlate the string "ERROR"
+			//this value will be used later in order to rollback the transaction
+			System.out.println("Car model date is invalid");
+			this.licensePlate = "ERROR";
+		}		
+		
 		this.location = location;
 		this.status = true;
 	}
@@ -94,7 +101,13 @@ public class Taxi {
 	}
 
 	public void setLicensePlate(String licensePlate) {
-		this.licensePlate = licensePlate;
+		//validations
+		if (Validators.validateLicensePlate(licensePlate))
+			this.licensePlate = licensePlate;
+		else {
+			//in case licensePlate validation is false, we do not change the existing
+			System.out.println("Car already connected with other driver, or license plate is invalid");
+		}
 	}
 
 	public String getLocation() {
@@ -113,12 +126,17 @@ public class Taxi {
 		this.status = status;
 	}
 
-	public Date getCarModelDate() {
+	public String getCarModelDate() {
 		return this.carModelDate;
 	}
 
-	public void setCarModelDate(Date carModelDate) {
-		this.carModelDate = carModelDate;
+	public void setCarModelDate(String carModelDate) {
+		//validations
+		if (Validators.validateCarModelDate(carModelDate))
+			this.carModelDate = carModelDate;
+		else {
+			//in case carModelDate validation is false, we do not change the existing
+			System.out.println("Car model date is invalid");			}
 	}
 
 	public List<Request> getRequest() {
