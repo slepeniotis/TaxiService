@@ -1,5 +1,6 @@
 package taxi.utils;
 
+//calculating distance between coordinates
 public class CoordinateCalc {
 	public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
 	

@@ -229,6 +229,12 @@ public class Validators {
 		return true;
 	}
 	
+	/* Method validating taxi is not already defined.
+	 * This method receives as parameter the taxi object.
+	 * Then we check in the table Taxi that this object is not already defined, using the equals method
+	 *   
+	 * If the checks are passed, the validation was completed successfully (true) 
+	 */
 	public static boolean validateTaxi(Taxi taxi){
 		
 		EntityManager em = JPAUtil.getCurrentEntityManager();

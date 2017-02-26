@@ -14,17 +14,26 @@ import taxi.model.*;
 import taxi.persistence.JPAUtil;
 import taxi.utils.AESEncrypt;
 import taxi.utils.CoordinateCalc;
-import taxi.utils.RequestState;
+import taxi.utils.RequestStatus;
 
 public class TaxiService {
 
 	EntityManager em;
 
+	//getting the current entity manager
 	public TaxiService() {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 
-	//ΕΓΓΡΑΦΗ
+	//REGISTRATION METHODS
+	
+	/* Registration for Taxi and TaxiDriver
+	 * we receive all the information needed for the creation of a taxi.
+	 * we check if any value is empty/null. we assume that location is fetched from GPS
+	 * The taxi is then created and inserted in the DB.
+	 * 
+	 * the object taxi which was created is returned as a result
+	 */
 	public Taxi createTaxi(String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon){
 
 		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || locationLat == 0 || locationLon == 0)
@@ -40,6 +49,12 @@ public class TaxiService {
 		return taxi;
 	}
 
+	/* We receive all the information needed for the creation of a taxi driver.
+	 * we check if any value is empty/null. we assume that taxi of the driver is already created
+	 * The taxi driver is then created and inserted in the DB.
+	 * 
+	 * the object taxi driver which was created is returned as a result
+	 */
 	public TaxiDriver registerTaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
 			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv, Taxi owns){
@@ -61,6 +76,13 @@ public class TaxiService {
 
 	}
 
+	/* Registration for Customer
+	 * we receive all the information needed for the creation of a customer.
+	 * we check if any value is empty/null. we assume that location is fetched from GPS
+	 * The customer is then created and inserted in the DB.
+	 * 
+	 * the object customer which was created is returned as a result
+	 */
 	public Customer registerCustomer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
 			double locationLat, double locationLon, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv){
@@ -84,7 +106,18 @@ public class TaxiService {
 
 	}
 
-	//ΤΑΥΤΟΠΟΙΗΣΗ
+	/* Identification Method
+	 * We are receiving as input the user type which wants to be signed in (selected by the user).
+	 * We also receive the username and password
+	 * we check if any of the inputs is empty/null
+	 * then we check the login type. 
+	 * - In case it is for customer, then we search in the table of customers 
+	 *   to find the customer with the specific username and password (encrypted)
+	 * - In case it is for taxi driver, then we search in the table of taxi drivers 
+	 *   to find the customer with the specific username and password (encrypted)
+	 * If the user is not found, or any exception is raised, the return object is null, 
+	 * or else the found user object
+	 */	
 	public Object login(String userType, String username, String password){
 		Object result = null;
 
@@ -136,8 +169,24 @@ public class TaxiService {
 		return result;
 	}
 
-	//ΑΝΑΖΗΤΗΣΗ ΤΑΞΙ, we can check for lat/lon from google maps and see also the distance between
-	//we do not need seperate method for "selecting taxi" since its function is similar with startRequest
+	/* Search Taxi method
+	 * (we can check for lat/lon from google maps and see also the distance between)
+	 * we do not need seperate method for "selecting taxi" since its function is 
+	 * similar with startRequest
+	 * 
+	 * we are receiving as input the customer who is searching for a taxi 
+	 * and the range in kilometers in which the search is applicable
+	 * if none of the inputs is null, we are creating an empty list to store the results,
+	 * and an object of type CoordinateCalc which we will use 
+	 * for calculating the distance between two set of coordinates
+	 * 
+	 * Then we retrieve from the DB all the contents of table taxi.
+	 * we check if the result is empty.
+	 * then we run into the result checking first of all if the taxi is free,
+	 * and then its distance from the customer.
+	 * If the distance is within the range set by the customer, 
+	 * this taxi is inserted in the list result
+	 */
 	public List<Taxi> searchTaxi(Customer customer, int range){
 		if(customer == null || range == 0)
 			return null;
@@ -150,14 +199,30 @@ public class TaxiService {
 			return null;
 		
 		for(Taxi t : taxirslt)
-			if(cc.calculateDistanceInKilometer(customer.getLocationLat(), customer.getLocationLon(), 
-					t.getLocationLat(), t.getLocationLon()) <= range)
-				taxlst.add(t);
+			if(t.getStatus())
+				if(cc.calculateDistanceInKilometer(customer.getLocationLat(), customer.getLocationLon(), 
+						t.getLocationLat(), t.getLocationLon()) <= range)
+					taxlst.add(t);
 		
 		return taxlst;
 	}
 
-	//ΕΚΤΕΛΕΣΗ ΔΙΑΔΡΟΜΗΣ
+	//REQUEST EXECUTION METHODS
+	
+	/* startRequest is triggered by the customer.
+	 * we are getting as input the current date, 
+	 * the taxi selected by the customer for this request an the customer
+	 * we check if any of the inputs is empty/null
+	 * 
+	 * then we are creating a Request object with the inputs.
+	 * using the taxi object, we are retrieving its driver. 
+	 * This information will be used later in order to inform taxi driver 
+	 * about this new request.
+	 * 
+	 * we insert the new request in the DB, 
+	 * and also in the list of Requests made by the customer in general
+	 * At the end we communicate with the driver, and return the request object created
+	 */
 	public Request startRequest(Date dateTime, Taxi taxi, Customer customer){
 
 		if(dateTime == null || taxi == null || customer == null)
@@ -180,6 +245,20 @@ public class TaxiService {
 
 	}
 
+	/* handleRequest is triggered by the taxi driver
+	 * it gets as inputs the request send previously by the customer, 
+	 * the taxi and the decision (accept or deny the request) of the taxi driver
+	 * 
+	 *  the method returns true in case the request was accepted 
+	 *  or false in case it was denied or any error occured
+	 *  
+	 *  first we are checking if any of the inputs is empty/null
+	 *  we thecn check driver's decision.
+	 *  - "yes": we update the status of the request from pending to ongoing
+	 *           we update the status of the taxi from true (available) to false (booked)
+	 *           we inform customer that his request was accepted
+	 *  - "no" : we inform customer that his request was denied
+	 */
 	public boolean handleRequest(Request req, Taxi taxi, String decision){
 		if(req == null || taxi == null || decision == null)
 			return false;
@@ -190,7 +269,7 @@ public class TaxiService {
 			em = JPAUtil.getCurrentEntityManager();
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();			
-			req.setStatus(RequestState.ONGOING);
+			req.setStatus(RequestStatus.ONGOING);
 			taxi.setStatus(false);
 			taxi.addRequest(req);
 			tx.commit();	
@@ -208,6 +287,16 @@ public class TaxiService {
 		return result;
 	}
 
+	/* createRoute is triggered by the customer after his request is accepted by the driver
+	 * The inputs are the request object, and the information of the route (origin-destination)
+	 * we ensure that none of the inputs is empty/null
+	 * 
+	 * we are creating a new route and inserted in the DB
+	 * we also update the route field in object request
+	 * 
+	 * the route created is returned as a result
+	 * 
+	 */
 	public Route createRoute(Request req, String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {
 
 		if(req == null || fromAddress == null || toAddress == null || fromCity == null || toCity == null || fromZipCode == null || toZipCode == null)
@@ -225,9 +314,22 @@ public class TaxiService {
 
 	}
 
+	/* stopRequest is triggered from the driver, when the customer get aboard
+	 * it has as inputs the request object, the taxi and the cost set by the driver
+	 * we ensure none of the inputs is empty/null
+	 * 
+	 * we then change the status of the taxi from false (booked) to true (free)
+	 * we update the status of the request to done
+	 * we update the cost of the route (got from within the request object)
+	 * we calculate the commision of the route
+	 * we inform customer about the final cost and ask him to evaluate the service
+	 * 
+	 * the method returns true in case everything went ok
+	 * 
+	 */
 	public boolean stopRequest(Request req, Taxi taxi, float cost){
 
-		if(req == null || taxi == null)
+		if(req == null || taxi == null || cost == 0)
 			return false;
 
 		EntityTransaction tx = em.getTransaction();
@@ -235,7 +337,7 @@ public class TaxiService {
 		//call method for changing taxi status
 		taxi.setStatus(true);
 		//update status
-		req.setStatus(RequestState.DONE);
+		req.setStatus(RequestStatus.DONE);
 		//update cost and commision
 		req.getRoute().setCost(cost);
 		req.getRoute().calculateCommision();
@@ -248,10 +350,23 @@ public class TaxiService {
 
 	}
 
-	//ΑΞΙΟΛΟΓΗΣΗ
-	//rating can be zero
+	/* Evaluation method
+	 * createEvaluation gets as inputs the route, which customer evaluates,
+	 * the rating, comment and date of evaluation
+	 * we assume rating can be zero
+	 * 
+	 * we check that none of the inputs is empty/null (except of rating) and that the request related with this request is in status done
+	 * 
+	 * we create the object evaluation using the inputs and inserted in the DB
+	 * then we connect this evaluation with the related route
+	 * 
+	 * then we retrieve the taxi object from within the request 
+	 * and search to find its driver
+	 * we will use this object to contact the driver, 
+	 * in order to inform him that an evaluation was submitted for a route he completed
+	 */
 	public Evaluation createEvaluation(Route route, int rating, String comment, Date dateOfEval){
-		if(route == null || comment == null || dateOfEval == null || route.getReq() == null || route.getReq().getStatus() != RequestState.DONE)
+		if(route == null || comment == null || dateOfEval == null || route.getReq() == null || route.getReq().getStatus() != RequestStatus.DONE)
 			return null;
 
 		Evaluation eval = new Evaluation(rating, comment, dateOfEval);
@@ -274,10 +389,26 @@ public class TaxiService {
 		return eval;
 	}
 
-	//ΣΤΑΤΙΣΤΙΚΑ (selection 1 = date range, 2 = from city, 3 = to city
+	/* produceStatistcs method
+	 * this method is overloaded
+	 * 
+	 * This version of method, produces a float sum with all the commisions received 
+	 * from the company within a specific date range
+	 * The method gets as inputs the selection 
+	 *                   (selection 1 = date range, 2 = from city, 3 = to city
+	 * and the from range-to range (Dates)
+	 * 
+	 * we check if any of the inputs is empty/null
+	 * then we retrieve from Request table all the requests made between this range
+	 * we run into the list of the results (in case it is not empty),
+	 * we check if any route is connected with this request,
+	 * and then summarize its commision 
+	 * 
+	 */
 	public float produceStatistics(int selection, Date fromRange, Date toRange){
 		if(selection == 0 || fromRange == null || toRange == null)
 			return 0;
+		
 		float sum = 0;
 		if(selection == 1){
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -296,18 +427,39 @@ public class TaxiService {
 			}
 			catch (ParseException e){
 				System.out.println(e.getStackTrace());
+				return 0;
 			}	
 
 			List<Request> reqrslt = query.getResultList();		
-			for(Request r : reqrslt) {
-				if(r.getRoute() != null)
-					sum += r.getRoute().getCommision();
+			if(!reqrslt.isEmpty())
+				for(Request r : reqrslt) {
+					if(r.getRoute() != null)
+						sum += r.getRoute().getCommision();
 			}
 		}
 		return sum;
 
 	}
 
+	/* produceStatistcs method
+	 * this method is overloaded
+	 * 
+	 * This version of method, produces a String with information about total routes made
+	 * from a specific city or to a specific city
+	 * The method gets as inputs the selection 
+	 *                      (selection 1 = date range, 2 = from city, 3 = to city
+	 * and the city name
+	 * 
+	 * we check if any of the inputs is empty/null
+	 * then check the selection
+	 * we retrieve from Route table all the requests made from/to 
+	 * a specific city (according to the selection)
+	 * we run into the list of the results (in case it is not empty),
+	 * and we return a string containing the total number of those routes, 
+	 * along with the ID of the request related to them
+	 * 
+	 * in case the result is empty, the total number of such routes is 0
+	 */ 
 	public String produceStatistics(int selection, String city){
 		String result="";
 		if(selection == 0 || city == null)
@@ -317,18 +469,28 @@ public class TaxiService {
 
 			Query query = em.createQuery("select r from Route r where r.fromCity LIKE :ct");
 			query.setParameter("ct", city);
-			List<Route> routerslt = query.getResultList();		
-			result += "Total requests from city " + city + " is: " + routerslt.size() + "\n"; 
-			for(Route r : routerslt)
-				result += "Request ID: " + r.getReq().getId() + "\n";			
+			List<Route> routerslt = query.getResultList();	
+			if(!routerslt.isEmpty()){
+				result += "Total requests from city " + city + " is: " + routerslt.size() + "\n";
+				for(Route r : routerslt)
+					result += "Request ID: " + r.getReq().getId() + "\n";
+			}
+			else{
+				result += "Total requests from city " + city + " is: 0\n";
+			}
 		}
 		else if(selection == 3){
 			Query query = em.createQuery("select r from Route r where r.toCity LIKE :ct");
 			query.setParameter("ct", city);
-			List<Route> routerslt = query.getResultList();		
-			result += "Total requests to city " + city + " is: " + routerslt.size() + "\n"; 
-			for(Route r : routerslt)
-				result += "Request ID: " + r.getReq().getId() + "\n";
+			List<Route> routerslt = query.getResultList();	
+			if(!routerslt.isEmpty()){
+				result += "Total requests to city " + city + " is: " + routerslt.size() + "\n";
+				for(Route r : routerslt)
+					result += "Request ID: " + r.getReq().getId() + "\n";
+			}
+			else{
+				result += "Total requests to city " + city + " is: 0\n";
+			}
 		}
 
 		return result;

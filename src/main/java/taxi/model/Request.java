@@ -4,7 +4,7 @@ package taxi.model;
 import java.util.Date;
 import javax.persistence.*;
 
-import taxi.utils.RequestState;
+import taxi.utils.RequestStatus;
 
 //Declaring table id DB with name Request
 @Entity
@@ -25,7 +25,7 @@ public class Request {
 	//true represents that the request is executed
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
-	private RequestState status;
+	private RequestStatus status;
 
 	//One request has a reference to a specific taxiID, customerID and routeID. The routeID can be also null
 	//fetch type EAGER does fetch the taxi object
@@ -52,7 +52,7 @@ public class Request {
 		//also, a Route is not assigned yet from the customers
 
 		this.dateTime = dateTime;
-		this.status = RequestState.PENDING;
+		this.status = RequestStatus.PENDING;
 		this.taxi = taxi;
 		this.customer = customer;	
 	}
@@ -70,11 +70,11 @@ public class Request {
 		this.dateTime = dateTime;
 	}
 
-	public RequestState getStatus() {
+	public RequestStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(RequestState status) {
+	public void setStatus(RequestStatus status) {
 		this.status = status;
 	}
 
@@ -110,7 +110,7 @@ public class Request {
 	}
 
 	public void endRequest() {
-		this.status = RequestState.DONE;
+		this.status = RequestStatus.DONE;
 	}
 
 	//override of toString method from Object
