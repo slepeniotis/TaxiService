@@ -79,7 +79,7 @@ public class Initializer  {
 
 		//creating some objects of our model
 		//several objects of them, will need others to exist already
-		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "gnyxteridas@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
+		Customer customer = new Customer("makis", "xristodoylopoylos", "gynaika", "mak", "fdkE9skf", d, 37.9909517, 23.6682987, "dfaggaadfadsfada", "fdaafdfa", 13671, "gnyxteridas@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
 		//in case an error during validation took place, we need to rollback the transaction
 		if (customer.getUsername() != "ERROR"){
 			em.persist(customer);
@@ -92,7 +92,7 @@ public class Initializer  {
 		//each customer is added in separate transactions. this is done due to validation reasons.
 		//if we had all the customers to be added at once, it would be possible to have records with same username/email
 		tx.begin();
-		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak3", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
+		Customer customer2 = new Customer("mak", "xrist", "gynaika", "mak3", "fdkE9skf", d, 37.9868448, 23.6144057, "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "123");
 		//in case an error during validation took place, we need to rollback the transaction
 		if (customer2.getUsername() != "ERROR"){			
 			em.persist(customer2);
@@ -104,7 +104,7 @@ public class Initializer  {
 
 		tx.begin();
 		//changing the password of customer2 in order to check if it is encrypted correctly
-		Customer customer3 = new Customer("mak", "xrist", "gynaika", "mak", "fdkE9skf", d, "location", "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "1f3");
+		Customer customer3 = new Customer("mak", "xrist", "gynaika", "mak", "fdkE9skf", d, 38.098505, 23.6192865, "dfaggaadfadsfada", "fdaafdfa", 13671, "slepeniotis@gmail.com", "mastercard", "1234567891234567", "01/19", "1f3");
 		//in case an error during validation took place, we need to rollback the transaction
 		if (customer3.getUsername() != "ERROR"){
 			em.persist(customer3);
@@ -121,7 +121,7 @@ public class Initializer  {
 		tx.commit();
 
 		tx.begin();
-		Taxi taxi = new Taxi("dfadad", "fdafda", "AHX0987", "09/2010", "fdafadfaea");
+		Taxi taxi = new Taxi("dfadad", "fdafda", "AHX0987", "09/2010", 37.9925288, 23.6465103);
 		//in case an error during validation took place, we need to rollback the transaction
 		if (taxi.getLicensePlate() != "ERROR"){
 			em.persist(taxi);
@@ -154,9 +154,9 @@ public class Initializer  {
 		}
 
 		tx.begin();
-		Route route = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345");
+		Route route = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345", req);
 		em.persist(route);
-		Route route1 = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345");
+		Route route1 = new Route("Kolokotroni 42", "Patision 136", "Acharnes", "Athense", "13671", "12345", req2);
 		em.persist(route1);
 		req.setRoute(route);
 		req2.setRoute(route1);
@@ -169,8 +169,9 @@ public class Initializer  {
 		route1.calculateCommision();
 		tx.commit();
 
+		tx.begin();
 		route.setEval(eval);
-
+		tx.commit();
 
 		//we are now preparing a query in order to see that the data are correctly inserted in the Customer table.
 		//we could do this for all other tables

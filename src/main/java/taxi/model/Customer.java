@@ -39,8 +39,11 @@ public class Customer {
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date dateOfBirth;
 
-	@Column(name = "location", length = 30, nullable = false)
-	private String location;
+	@Column(name = "locationLat", length = 30, nullable = false)
+	private double locationLat;
+	
+	@Column(name = "locationLon", length = 30, nullable = false)
+	private double locationLon;
 
 	@Column(name = "address", length = 100, nullable = false)
 	private String address;
@@ -76,7 +79,7 @@ public class Customer {
 	//constructors for Customer
 	public Customer(){}
 	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
-			String location, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
+			double locationLat, double locationLon, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv) {
 
 		//ID is auto generated, so no need to include it here
@@ -146,7 +149,8 @@ public class Customer {
 		this.surname = surname;
 		this.sex = sex;	
 		this.dateOfBirth = dateOfBirth;
-		this.location = location;
+		this.locationLat = locationLat;
+		this.locationLon = locationLon;
 		this.address = address;
 		this.city = city;
 		this.zipCode = zipCode;		
@@ -221,12 +225,20 @@ public class Customer {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public String getLocation() {
-		return this.location;
+	public double getLocationLat() {
+		return this.locationLat;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocationLat(double locationLat) {
+		this.locationLat = locationLat;
+	}
+	
+	public double getLocationLon() {
+		return locationLon;
+	}
+	
+	public void setLocationLon(double locationLon) {
+		this.locationLon = locationLon;
 	}
 
 	public String getAddress() {
@@ -325,7 +337,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		String temp = this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
-				this.location + " " + this.address + " " + this.city + " " + this.zipCode + " " + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+				this.locationLat + " " + this.locationLon + " " + this.address + " " + this.city + " " + this.zipCode + " " + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
 				this.expiryDate + " " + this.ccv;
 
 		for(Request r : req) {

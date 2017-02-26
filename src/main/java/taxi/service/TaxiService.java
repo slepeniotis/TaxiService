@@ -2,6 +2,7 @@ package taxi.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.Query;
 import taxi.model.*;
 import taxi.persistence.JPAUtil;
 import taxi.utils.AESEncrypt;
+import taxi.utils.CoordinateCalc;
 import taxi.utils.RequestState;
 
 public class TaxiService {
@@ -23,12 +25,12 @@ public class TaxiService {
 	}
 
 	//ΕΓΓΡΑΦΗ
-	public Taxi createTaxi(String carModel, String carType, String licensePlate, String carModelDate, String location){
+	public Taxi createTaxi(String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon){
 
-		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || location == null)
+		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || locationLat == 0 || locationLon == 0)
 			return null;
 
-		Taxi taxi = new Taxi(carModel, carType, licensePlate, carModelDate, location);
+		Taxi taxi = new Taxi(carModel, carType, licensePlate, carModelDate, locationLat, locationLon);
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -60,17 +62,17 @@ public class TaxiService {
 	}
 
 	public Customer registerCustomer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
-			String location, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
+			double locationLat, double locationLon, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv){
 
 		if(name == null || surname == null || sex == null || username == null 
 				|| password == null || dateOfBirth == null || address == null || 
 				city == null || zipCode == 0 || email == null || creditCardType == null
-				|| creditCardNumber == null || expiryDate == null || ccv == null || location == null)
+				|| creditCardNumber == null || expiryDate == null || ccv == null || locationLat == 0 || locationLon == 0)
 			return null;
 
 		Customer customer = new Customer(name, surname, sex, username, password, dateOfBirth, 
-				location, address, city, zipCode, email, creditCardType, creditCardNumber, 
+				locationLat, locationLon, address, city, zipCode, email, creditCardType, creditCardNumber, 
 				expiryDate, ccv);
 
 		EntityTransaction tx = em.getTransaction();
@@ -129,11 +131,31 @@ public class TaxiService {
 
 			result = rslttxdr;
 
-		}	
+		}
 
 		return result;
 	}
 
+	//ΑΝΑΖΗΤΗΣΗ ΤΑΞΙ, we can check for lat/lon from google maps and see also the distance between
+	//we do not need seperate method for "selecting taxi" since its function is similar with startRequest
+	public List<Taxi> searchTaxi(Customer customer, int range){
+		if(customer == null || range == 0)
+			return null;
+		
+		CoordinateCalc cc = new CoordinateCalc();
+		List<Taxi> taxlst = new ArrayList();
+		Query query = em.createQuery("select taxi from Taxi taxi");		
+		List<Taxi> taxirslt = query.getResultList();
+		if(taxirslt.isEmpty())
+			return null;
+		
+		for(Taxi t : taxirslt)
+			if(cc.calculateDistanceInKilometer(customer.getLocationLat(), customer.getLocationLon(), 
+					t.getLocationLat(), t.getLocationLon()) <= range)
+				taxlst.add(t);
+		
+		return taxlst;
+	}
 
 	//ΕΚΤΕΛΕΣΗ ΔΙΑΔΡΟΜΗΣ
 	public Request startRequest(Date dateTime, Taxi taxi, Customer customer){
@@ -274,7 +296,7 @@ public class TaxiService {
 			}
 			catch (ParseException e){
 				System.out.println(e.getStackTrace());
-			}		
+			}	
 
 			List<Request> reqrslt = query.getResultList();		
 			for(Request r : reqrslt) {
@@ -291,29 +313,29 @@ public class TaxiService {
 		if(selection == 0 || city == null)
 			return result;		
 
-		if(selection == 2){			
+		if(selection == 2){
 
 			Query query = em.createQuery("select r from Route r where r.fromCity LIKE :ct");
 			query.setParameter("ct", city);
 			List<Route> routerslt = query.getResultList();		
 			result += "Total requests from city " + city + " is: " + routerslt.size() + "\n"; 
-			for(Route r : routerslt) {
-				result += "Request ID: " + r.getReq().getId() + "\n";
-			}
+			for(Route r : routerslt)
+				result += "Request ID: " + r.getReq().getId() + "\n";			
 		}
 		else if(selection == 3){
 			Query query = em.createQuery("select r from Route r where r.toCity LIKE :ct");
 			query.setParameter("ct", city);
 			List<Route> routerslt = query.getResultList();		
 			result += "Total requests to city " + city + " is: " + routerslt.size() + "\n"; 
-			for(Route r : routerslt) {
+			for(Route r : routerslt)
 				result += "Request ID: " + r.getReq().getId() + "\n";
-			}
 		}
 
 		return result;
 	}
-
-	//delete objects
+	
+	
+	//delete objects	
+	//test cases
 
 }

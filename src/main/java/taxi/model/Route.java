@@ -49,8 +49,7 @@ public class Route {
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
 	
-	@OneToOne(optional=false,fetch=FetchType.EAGER)
-	@JoinColumn(name="requestID")
+	@OneToOne(optional=false, mappedBy="route", fetch=FetchType.EAGER, targetEntity=Request.class)
 	private Request req; 
 
 	//constructors for Route

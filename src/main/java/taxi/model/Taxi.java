@@ -35,8 +35,11 @@ public class Taxi {
 	@Column(name = "carModelDate", nullable = false)
 	private String carModelDate;
 
-	@Column(name = "location", length = 30, nullable = false)
-	private String location;
+	@Column(name = "locationLat", length = 30, nullable = false)
+	private double locationLat;
+	
+	@Column(name = "locationLon", length = 30, nullable = false)
+	private double locationLon;
 
 	@Column(name = "status", nullable = false)
 	private boolean status;
@@ -49,7 +52,7 @@ public class Taxi {
 
 	//constructors for Taxi
 	public Taxi(){}
-	public Taxi(String carModel, String carType, String licensePlate, String carModelDate, String location) {
+	public Taxi(String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon) {
 		//ID is auto generated, so no need to include it here
 		this.carModel = carModel;
 		this.carType = carType;
@@ -73,7 +76,8 @@ public class Taxi {
 			this.licensePlate = "ERROR";
 		}		
 		
-		this.location = location;
+		this.locationLat = locationLat;
+		this.locationLon = locationLon;
 		this.status = true;
 	}
 
@@ -112,12 +116,20 @@ public class Taxi {
 		}
 	}
 
-	public String getLocation() {
-		return this.location;
+	public double getLocationLat() {
+		return this.locationLat;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocationLat(double locationLat) {
+		this.locationLat = locationLat;
+	}
+	
+	public double getLocationLon() {
+		return locationLon;
+	}
+	
+	public void setLocationLon(double locationLon) {
+		this.locationLon = locationLon;
 	}
 
 	public boolean getStatus() {
@@ -153,7 +165,7 @@ public class Taxi {
 	@Override
 	public String toString() {
 		String temp = this.id + " " + this.carModel + " " + this.carType + 
-				" " + this.licensePlate + " " + this.carModelDate + " " + this.location + " " + this.status;	        
+				" " + this.licensePlate + " " + this.carModelDate + " " + this.locationLat + " " + this.locationLon + " " + this.status;	        
 
 		for(Request r : accepts) {
 			temp += " (" + r.toString() + ")";
