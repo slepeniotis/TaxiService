@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import taxi.model.Customer;
+import taxi.model.Taxi;
+import taxi.model.TaxiDriver;
 import taxi.persistence.JPAUtil;
 import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
@@ -22,7 +24,7 @@ public class Validators {
 	 */
 	public static boolean validateUsername(String username){
 		//it is not allowed to have a username "ERROR" as this is reserved word for our implementation
-		if(username == null || username == " " || username == "ERROR")
+		if(username == " " || username == "ERROR")
 			return false;
 
 		EntityManager em = JPAUtil.getCurrentEntityManager();
@@ -85,7 +87,7 @@ public class Validators {
 	 * If the email does not exist, then the validation was completed successfully (true) 
 	 */
 	public static boolean validateEmail(String email){
-		if(email == null || email == " ")
+		if(email == " ")
 			return false;
 
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -136,7 +138,7 @@ public class Validators {
 	 */
 	public static boolean validateCreditCard(String creditCardNumber, String expiryDate, String ccv){
 
-		if(creditCardNumber == null || ccv == null || creditCardNumber.length() != 16 || ccv.length() != 3)
+		if(creditCardNumber.length() != 16 || ccv.length() != 3)
 			return false;
 		if (!creditCardNumber.matches("[0-9]+"))
 			return false;
@@ -177,7 +179,7 @@ public class Validators {
 	 */
 	public static boolean validateLicensePlate(String licensePlate){
 
-		if (licensePlate == null || licensePlate.length() != 7)
+		if (licensePlate.length() != 7)
 			return false;
 
 		String letters = licensePlate.substring(0, 3);
@@ -202,7 +204,7 @@ public class Validators {
 	 */
 	public static boolean validateCarModelDate(String carModelDate){
 
-		if(carModelDate == null || carModelDate.length() != 7)
+		if(carModelDate.length() != 7)
 			return false;
 
 		String month = carModelDate.substring(0, 2);
@@ -225,5 +227,21 @@ public class Validators {
 			return false;
 		
 		return true;
+	}
+	
+	public static boolean validateTaxi(Taxi taxi){
+		
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		Query query = em.createQuery("select taxdr from TaxiDriver taxdr");		
+		List<TaxiDriver> results = query.getResultList();
+
+		if(results.isEmpty())
+			return true;
+		
+		for(TaxiDriver td : results)
+			if(td.getOwns().equals(taxi))
+				return false;
+		
+		return true;		
 	}
 }
