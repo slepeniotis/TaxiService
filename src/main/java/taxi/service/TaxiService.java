@@ -9,9 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import org.junit.Assert;
-
-import gr.aueb.mscis.sample.model.Movie;
 import taxi.model.*;
 import taxi.persistence.JPAUtil;
 import taxi.utils.AESEncrypt;
@@ -86,13 +83,13 @@ public class TaxiService {
 	}
 
 	//ΤΑΥΤΟΠΟΙΗΣΗ
-	public boolean login(String userType, String username, String password){
-		boolean result = false;
+	public Object login(String userType, String username, String password){
+		Object result = null;
 
 		if(userType == null || username == null || password == null)
 			return result;
 
-		if(userType == "customer"){
+		if(userType == "Customer"){
 			String pasEncr;
 			Query query = em.createQuery("select cust from Customer cust where username like :usrnm AND password like :passwd");
 			query.setParameter("usrnm", username);
@@ -104,15 +101,15 @@ public class TaxiService {
 			}
 
 			query.setParameter("passwd", pasEncr);
-			List<Customer> results = query.getResultList();
+			Customer rsltcst = (Customer)query.getSingleResult();
 
-			if(results.isEmpty()){
+			if(rsltcst.equals(null)){
 				return result;
 			}
 
-			result = true;
+			result = rsltcst;
 		}
-		else if(userType == "taxidriver"){
+		else if(userType == "Taxi Driver"){
 			String pasEncr;
 			Query query = em.createQuery("select taxidr from taxidriver taxidr where username like :usrnm AND password like :passwd");
 			query.setParameter("usrnm", username);
@@ -124,13 +121,13 @@ public class TaxiService {
 			}
 
 			query.setParameter("passwd", pasEncr);
-			List<TaxiDriver> results = query.getResultList();
+			TaxiDriver rslttxdr = (TaxiDriver)query.getSingleResult();
 
-			if(results.isEmpty()){
+			if(rslttxdr.equals(null)){
 				return result;
 			}
 
-			result = true;
+			result = rslttxdr;
 
 		}	
 
@@ -152,6 +149,7 @@ public class TaxiService {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.persist(req);
+		customer.addRequest(req);
 		tx.commit();
 
 		txdrrslt.informTaxiDriver("New Request from " + customer.getName() + "!");
@@ -172,8 +170,8 @@ public class TaxiService {
 			tx.begin();			
 			req.setStatus(RequestState.ONGOING);
 			taxi.setStatus(false);
-			tx.commit();
-			em.close();		
+			taxi.addRequest(req);
+			tx.commit();	
 
 			req.getCustomer().informCustomer("Request accepted from Taxi " + taxi.getId());
 
@@ -193,7 +191,7 @@ public class TaxiService {
 		if(req == null || fromAddress == null || toAddress == null || fromCity == null || toCity == null || fromZipCode == null || toZipCode == null)
 			return null;
 
-		Route route = new Route(fromAddress, toAddress, fromCity, toCity, fromZipCode, toZipCode);
+		Route route = new Route(fromAddress, toAddress, fromCity, toCity, fromZipCode, toZipCode, req);
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -229,8 +227,9 @@ public class TaxiService {
 	}
 
 	//ΑΞΙΟΛΟΓΗΣΗ
+	//rating can be zero
 	public Evaluation createEvaluation(Route route, int rating, String comment, Date dateOfEval){
-		if(route == null || comment == null || dateOfEval == null)
+		if(route == null || comment == null || dateOfEval == null || route.getReq() == null || route.getReq().getStatus() != RequestState.DONE)
 			return null;
 
 		Evaluation eval = new Evaluation(rating, comment, dateOfEval);
@@ -238,26 +237,22 @@ public class TaxiService {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.persist(eval);
-		route.setEval(eval);
+		route.setEval(eval);		
 		tx.commit();
 
-		Query query = em.createQuery("select req from request req where routeid = :rtid");
-		query.setParameter("rtid", route.getId());
-		Request reqrslt = (Request)query.getSingleResult();
+		Taxi taxeval = route.getReq().getTaxi();
 
-		Taxi taxeval = reqrslt.getTaxi();
-
-		query = em.createQuery("select taxidr from taxidriver taxidr where taxiid = :txid");
+		Query query = em.createQuery("select taxidr from taxidriver taxidr where taxiid = :txid");
 		query.setParameter("txid", taxeval.getId());
 		TaxiDriver taxdrrslt = (TaxiDriver)query.getSingleResult();
 
 		//inform taxidriver(evaluation)
-		taxdrrslt.informTaxiDriver("Customer " + reqrslt.getCustomer().getName() + " submitted an evaluation for request: " + reqrslt.getId());
+		taxdrrslt.informTaxiDriver("Customer " + route.getReq().getCustomer().getName() + " submitted an evaluation for request: " + route.getReq().getId());
 
 		return eval;
 	}
 
-	//ΣΤΑΤΙΣΤΙΚΑ
+	//ΣΤΑΤΙΣΤΙΚΑ (selection 1 = date range, 2 = from city, 3 = to city
 	public float produceStatistics(int selection, Date fromRange, Date toRange){
 		if(selection == 0 || fromRange == null || toRange == null)
 			return 0;
@@ -267,6 +262,9 @@ public class TaxiService {
 
 			Date d;
 
+			/* we could alternatively fetch the contents of Route and then check the dates from the object Request
+			 * we prefer this way instead, to avoid the overhead
+			 */
 			Query query = em.createQuery("select r from Request r where r.dateTime between :frRange and :tRange");
 			try {
 				d = sdf.parse("1/12/2012");
@@ -280,54 +278,42 @@ public class TaxiService {
 
 			List<Request> reqrslt = query.getResultList();		
 			for(Request r : reqrslt) {
-				sum += r.getRoute().getCommision();
+				if(r.getRoute() != null)
+					sum += r.getRoute().getCommision();
 			}
 		}
 		return sum;
 
 	}
 
-	public int produceStatistics(int selection, String city){
+	public String produceStatistics(int selection, String city){
+		String result="";
 		if(selection == 0 || city == null)
-			return 0;
-		
-		int sum =0;
-		
+			return result;		
+
 		if(selection == 2){			
-			
-			Query query = em.createQuery("select r from Request r, Route rt where r.Route.id = rt.id AND rt.fromCity LIKE :ct");
-			query.setParameter("ct", "Acharnes");
-			List<Request> reqrslt = query.getResultList();		
-			for(Request r : reqrslt) {
-				System.out.println(r.toString());
+
+			Query query = em.createQuery("select r from Route r where r.fromCity LIKE :ct");
+			query.setParameter("ct", city);
+			List<Route> routerslt = query.getResultList();		
+			result += "Total requests from city " + city + " is: " + routerslt.size() + "\n"; 
+			for(Route r : routerslt) {
+				result += "Request ID: " + r.getReq().getId() + "\n";
 			}
-		}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		}
 		else if(selection == 3){
-			
+			Query query = em.createQuery("select r from Route r where r.toCity LIKE :ct");
+			query.setParameter("ct", city);
+			List<Route> routerslt = query.getResultList();		
+			result += "Total requests to city " + city + " is: " + routerslt.size() + "\n"; 
+			for(Route r : routerslt) {
+				result += "Request ID: " + r.getReq().getId() + "\n";
+			}
 		}
-		
-		return sum;
 
-
-
-
-
-
+		return result;
 	}
+
+	//delete objects
 
 }
