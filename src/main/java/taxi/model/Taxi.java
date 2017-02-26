@@ -4,6 +4,8 @@ package taxi.model;
 import java.util.List;
 import javax.persistence.*;
 
+import gr.aueb.mscis.sample.model.Category;
+import gr.aueb.mscis.sample.model.Movie;
 import taxi.utils.Validators;
 
 import java.util.ArrayList;
@@ -143,8 +145,8 @@ public class Taxi {
 		return this.accepts;
 	}
 
-	public void addRequest(Request req) {
-		this.accepts.add(req);
+	public void addRequest(Request accepts) {
+		this.accepts.add(accepts);
 	}
 
 	//override of toString method from Object
@@ -158,6 +160,38 @@ public class Taxi {
 		}  
 
 		return temp;
-	}	
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Taxi other = (Taxi) obj;
+		if (carModel == null) {
+			if (other.carModel != null)
+				return false;
+		} else if (!carModel.equals(other.carModel))
+			return false;
+		if (carType == null) {
+			if (other.carType != null)
+				return false;
+		} else if (!carType.equals(other.carType))
+			return false;
+		if (licensePlate == null) {
+			if (other.licensePlate != null)
+				return false;
+		} else if (!licensePlate.equals(other.licensePlate))
+			return false;
+		if (carModelDate == null) {
+			if (other.carModelDate != null)
+				return false;
+		} else if (!carModelDate.equals(other.carModelDate))
+			return false;	
+		return true;
+	}
 
 }

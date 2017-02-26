@@ -30,18 +30,18 @@ public class Request {
 	//One request has a reference to a specific taxiID, customerID and routeID. The routeID can be also null
 	//fetch type EAGER does fetch the taxi object
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="taxiId")
+	@JoinColumn(name="taxiId", nullable = false)
 	private Taxi taxi;
 
 	//fetch type EAGER does fetch the customer object
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="customerId")
+	@JoinColumn(name="customerId", nullable = false)
 	private Customer customer;
 
 	//fetch type lazy does not fetch the object Route
 	//we don't use any kind of cascade here, since the route is not necessarily set
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="routeId")
+	@JoinColumn(name="routeId", nullable = true)
 	private Route route;
 
 	//constructors for Request

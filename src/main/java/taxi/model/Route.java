@@ -48,10 +48,14 @@ public class Route {
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
+	
+	@OneToOne(optional=false,fetch=FetchType.EAGER)
+	@JoinColumn(name="requestID")
+	private Request req; 
 
 	//constructors for Route
 	public Route(){}
-	public Route(String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {	
+	public Route(String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode, Request req) {	
 		//ID is auto generated, so no need to include it here
 		//Route will have origin and destination
 		//duration, cost and commission have to be zero since the request is not yet done
@@ -64,6 +68,7 @@ public class Route {
 		this.duration = 0;
 		this.cost = 0;
 		this.calculateCommision();
+		this.req = req;
 	}
 
 	//get/set methods in order to have access in private attributes
@@ -150,6 +155,14 @@ public class Route {
 
 	public void setEval(Evaluation eval) {
 		this.eval = eval;
+	}
+	
+	public Request getReq() {
+		return req;
+	}
+	
+	public void setReq(Request req) {
+		this.req = req;
 	}
 
 	//methods for calculating commision and statistics

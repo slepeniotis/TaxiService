@@ -67,7 +67,7 @@ public class TaxiDriver {
 	@OneToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="taxiID")
 	private Taxi owns;
-
+	
 	//constructors for Customer
 	public TaxiDriver(){}
 	public TaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
@@ -145,7 +145,18 @@ public class TaxiDriver {
 		this.address = address;
 		this.city = city;
 		this.zipCode = zipCode;	
-		this.owns = owns; 
+		
+		if (Validators.validateTaxi(owns))
+			this.owns = owns;
+		else {
+			System.out.println("Taxi already defined");
+			//in case the Taxi is already defined from other driver, it will be left empty
+			//and the username will be set to "ERROR"
+			//this value will be used later in order to rollback the transaction
+			this.username = "ERROR";
+			this.owns = new Taxi();
+		}
+		
 	}
 
 	/* get/set methods in order to have access in private attributes
@@ -283,6 +294,21 @@ public class TaxiDriver {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+	
+	public Taxi getOwns() {
+		return owns;
+	}
+	public boolean setOwns(Taxi owns) {
+		if (Validators.validateTaxi(owns)){
+			this.owns = owns;
+			return true;
+		}
+		else {
+			System.out.println("Taxi already defined");
+			//in case the Taxi is already defined from other driver or null, we will not change the one already defined
+			return false;
+		}
 	}
 
 	//operation methods
