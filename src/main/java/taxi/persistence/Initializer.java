@@ -582,13 +582,4 @@ public class Initializer  {
 		}*/
 
 	}
-
-	public static void main (String [] args) {
-		try {
-			prepareData();
-		}
-		catch (ParseException e){
-			System.out.println("poytana date");
-		}
-	}
 }
