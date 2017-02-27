@@ -6,7 +6,9 @@ import javax.persistence.Query;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import taxi.model.*;
+import taxi.utils.AESEncrypt;
 import taxi.utils.RequestStatus;
+import taxi.utils.Validators;
 
 import java.text.*;
 
@@ -82,8 +84,20 @@ public class Initializer  {
 			System.out.println(e.getStackTrace());
 		}
 
+		//encrypt password
+		String passwd = "fdkE9skf";
+		if (Validators.validatePassword(passwd)) {
+			try {
+				passwd = AESEncrypt.encrypt(passwd); 
+			}
+			catch (Exception e){
+				//in case an exception occurs, the password is not changed
+				System.out.println(e.getStackTrace());
+			}
+		}
+
 		//coordinates for PEIRAIAS
-		Customer c1 = new Customer("SPYROS", "LEPENIOTIS", "ANDRAS", "SLEPENIOTIS", "fdkE9skf", d, 37.9508344, 23.6510941, "AGIOY NIKOLAOY 1", "PEIRAIAS", 13671, "slepen@gmail.com", "MASTERCARD", "1234567891234567", "01/19", "123");
+		Customer c1 = new Customer("SPYROS", "LEPENIOTIS", "ANDRAS", "SLEPENIOTIS", passwd, d, 37.9508344, 23.6510941, "AGIOY NIKOLAOY 1", "PEIRAIAS", 13671, "slepen@gmail.com", "MASTERCARD", "1234567891234567", "01/19", "123");
 
 		//2nd customer
 		try {
@@ -93,8 +107,20 @@ public class Initializer  {
 			System.out.println(e.getStackTrace());
 		}
 
+		//encrypt password
+		passwd = "fdkE9skF";
+		if (Validators.validatePassword(passwd)) {
+			try {
+				passwd = AESEncrypt.encrypt(passwd); 
+			}
+			catch (Exception e){
+				//in case an exception occurs, the password is not changed
+				System.out.println(e.getStackTrace());
+			}
+		}
+
 		//coordinates for PAIANIA
-		Customer c2 = new Customer("BASILIS", "LAMPRAKAKIS", "ANDRAS", "VLAMPRAKAKIS", "fdkE9skF", d, 37.95929, 23.8397867, "LORDOY BYRONA 15", "PAIANIA", 85300, "vlamprakakis@gmail.com", "MASTERCARD", "1234567898254567", "08/20", "569");
+		Customer c2 = new Customer("BASILIS", "LAMPRAKAKIS", "ANDRAS", "VLAMPRAKAKIS", passwd, d, 37.95929, 23.8397867, "LORDOY BYRONA 15", "PAIANIA", 85300, "vlamprakakis@gmail.com", "MASTERCARD", "1234567898254567", "08/20", "569");
 
 		//3rd customer
 		try {
@@ -104,8 +130,20 @@ public class Initializer  {
 			System.out.println(e.getStackTrace());
 		}
 
+		//encrypt password
+		passwd = "fdDE9skF";
+		if (Validators.validatePassword(passwd)) {
+			try {
+				passwd = AESEncrypt.encrypt(passwd); 
+			}
+			catch (Exception e){
+				//in case an exception occurs, the password is not changed
+				System.out.println(e.getStackTrace());
+			}
+		}
+
 		//coordinates for ACHARNES
-		Customer c3 = new Customer("AFROKSILANTHI", "EYAGGELOY", "GYNAIKA", "AFREYAGGELOY", "fdDE9skF", d, 38.0983803, 23.7243561, "NATASAS KARAMANLI 22", "ACHARNES", 66666, "afreyaggeloy@gmail.com", "VISA", "1223555789802545", "10/21", "724");
+		Customer c3 = new Customer("AFROKSILANTHI", "EYAGGELOY", "GYNAIKA", "AFREYAGGELOY", passwd, d, 38.0983803, 23.7243561, "NATASAS KARAMANLI 22", "ACHARNES", 66666, "afreyaggeloy@gmail.com", "VISA", "1223555789802545", "10/21", "724");
 
 		//4th customer
 		try {
@@ -115,15 +153,26 @@ public class Initializer  {
 			System.out.println(e.getStackTrace());
 		}
 
+		//encrypt password
+		passwd = "5dDE9skF";
+		if (Validators.validatePassword(passwd)) {
+			try {
+				passwd = AESEncrypt.encrypt(passwd); 
+			}
+			catch (Exception e){
+				//in case an exception occurs, the password is not changed
+				System.out.println(e.getStackTrace());
+			}
+		}
+
 		//coordinates for PERISTERI
-		Customer c4 = new Customer("GIORGOS", "KAVVADIAS", "ANDRAS", "GKAVVADIAS", "5dDE9skF", d, 38.0155628, 23.6750659, "THEOTOKOPOYLOY 15", "PERISTERI", 54634, "gkavvadias@gmail.com", "VISA", "1223585989822545", "11/21", "984");
+		Customer c4 = new Customer("GIORGOS", "KAVVADIAS", "ANDRAS", "GKAVVADIAS", passwd, d, 38.0155628, 23.6750659, "THEOTOKOPOYLOY 15", "PERISTERI", 54634, "gkavvadias@gmail.com", "VISA", "1223585989822545", "11/21", "984");
 
 		em.persist(c1);
 		em.persist(c2);
 		em.persist(c3);
 		em.persist(c4);
-		tx.commit();
-
+		tx.commit();		
 
 		//taxi & taxi driver objects
 
@@ -135,10 +184,22 @@ public class Initializer  {
 			System.out.println(e.getStackTrace());
 		}
 
+		//encrypt password
+		passwd = "fd8E9skf";
+		if (Validators.validatePassword(passwd)) {
+			try {
+				passwd = AESEncrypt.encrypt(passwd); 
+			}
+			catch (Exception e){
+				//in case an exception occurs, the password is not changed
+				System.out.println(e.getStackTrace());
+			}
+		}
+
 		//coordinates for AGIA PARASKEYI
 		tx.begin();
 		Taxi tx1 = new Taxi("TOYOTA COROLLA", "SEDAN", "AHX0987", "09/2010", 38.0093272, 23.8176902);
-		TaxiDriver txdr1 = new TaxiDriver("MAKIS", "XRISTODOYLOPOYLOS", "ANDRAS", "MAKXRIS", "fd8E9skf", d, "SKYLADIKOY 1", "ETHNIKI ODOS", 11243, "makxris@aueb.gr", "MASTERCARD", "1223585989822541", "01/18", "321", tx1);
+		TaxiDriver txdr1 = new TaxiDriver("MAKIS", "XRISTODOYLOPOYLOS", "ANDRAS", "MAKXRIS", passwd, d, "SKYLADIKOY 1", "ETHNIKI ODOS", 11243, "makxris@aueb.gr", "MASTERCARD", "1223585989822541", "01/18", "321", tx1);
 		em.persist(txdr1);
 		tx.commit();
 
@@ -150,10 +211,22 @@ public class Initializer  {
 			System.out.println(e.getStackTrace());
 		}
 
+		//encrypt password
+		passwd = "a228E9skf";
+		if (Validators.validatePassword(passwd)) {
+			try {
+				passwd = AESEncrypt.encrypt(passwd); 
+			}
+			catch (Exception e){
+				//in case an exception occurs, the password is not changed
+				System.out.println(e.getStackTrace());
+			}
+		}
+
 		//coordinates for PETROYPOLI
 		tx.begin();
 		Taxi tx2 = new Taxi("MERCENDES CL200", "SEDAN", "AKX8987", "02/2015", 38.0406218, 23.6728584);
-		TaxiDriver txdr2 = new TaxiDriver("STAMATIS", "GONIDIS", "ANDRAS", "STGONIDIS", "a228E9skf", d, "SKYLADIKOY 2", "ETHNIKI ODOS", 15459, "stgonidis@aueb.gr", "VISA", "1223584638225412", "11/19", "331", tx2);
+		TaxiDriver txdr2 = new TaxiDriver("STAMATIS", "GONIDIS", "ANDRAS", "STGONIDIS", passwd, d, "SKYLADIKOY 2", "ETHNIKI ODOS", 15459, "stgonidis@aueb.gr", "VISA", "1223584638225412", "11/19", "331", tx2);
 		em.persist(txdr2);
 		tx.commit();
 
@@ -165,13 +238,24 @@ public class Initializer  {
 			System.out.println(e.getStackTrace());
 		}
 
+		//encrypt password
+		passwd = "21Gd8E9skf";
+		if (Validators.validatePassword(passwd)) {
+			try {
+				passwd = AESEncrypt.encrypt(passwd); 
+			}
+			catch (Exception e){
+				//in case an exception occurs, the password is not changed
+				System.out.println(e.getStackTrace());
+			}
+		}
+
 		//coordinates for AIGALEO
 		tx.begin();
 		Taxi tx3 = new Taxi("SKODA OCTAVIA", "SEDAN", "AIK2976", "10/2016", 37.9924989, 23.6640205);
-		TaxiDriver txdr3 = new TaxiDriver("KOSTAS", "KAFASIS", "ANDRAS", "KKAFASIS", "21Gd8E9skf", d, "SKYLADIKOY 3", "ETHNIKI ODOS", 35612, "kkafasis@aueb.gr", "MASTERCARD", "1241619569971231", "07/19", "442", tx3);
+		TaxiDriver txdr3 = new TaxiDriver("KOSTAS", "KAFASIS", "ANDRAS", "KKAFASIS", passwd, d, "SKYLADIKOY 3", "ETHNIKI ODOS", 35612, "kkafasis@aueb.gr", "MASTERCARD", "1241619569971231", "07/19", "442", tx3);
 		em.persist(txdr3);
 		tx.commit();
-
 
 		//request objects
 
@@ -257,36 +341,36 @@ public class Initializer  {
 		Request rq8 = new Request(d, tx1, c2);
 		em.persist(rq8);
 		tx.commit();
-		
+
 		//route objects
-		
+
 		tx.begin();
-		
+
 		//1st route
 		Route rt1 = new Route("KOLOKOTRONI 42", "PATISION 136", "ACHARNES", "ATHINA", "13671", "12345", rq1);
-		
+
 		//2nd route
 		Route rt2 = new Route("LIMNOU 79", "AGIOY NIKOLAOY 1", "AIGALEO", "KORIDALLOS", "18971", "13345", rq2);
-		
+
 		//3rd route
 		Route rt3 = new Route("PALAION PATRON GERMANOY 42", "SKOYZE 136", "ILION", "AGIOS DIMITRIOS", "11671", "12385", rq3);
-				
+
 		//4th route
 		Route rt4 = new Route("SKA 2", "MARNIS 16", "NIKAIA", "ATHINA", "65945", "12345", rq6);
-				
+
 		//5th route
 		Route rt5 = new Route("AFIDNAION 13", "VELISSARIOY 10", "KERATSINI", "KERAMEIKOS", "18756", "12567", rq8);
-				
+
 		//6th route
 		Route rt6 = new Route("GYZI 8", "THEOTOKOPOYLOY 15", "PEIRAIAS", "MAROYSI", "23661", "16987", rq4);
-				
+
 		em.persist(rt1);
 		em.persist(rt2);
 		em.persist(rt3);
 		em.persist(rt4);
 		em.persist(rt5);
 		em.persist(rt6);
-		
+
 		//connect requests with routes
 		rq1.setRoute(rt1);
 		rq2.setRoute(rt2);
@@ -295,7 +379,7 @@ public class Initializer  {
 		rq8.setRoute(rt5);
 		rq4.setRoute(rt6);		
 		tx.commit();
-		
+
 		//change status of taxi and request according to previews objects
 		tx.begin();
 		rq1.setStatus(RequestStatus.ONGOING);
@@ -304,7 +388,7 @@ public class Initializer  {
 		rq6.setStatus(RequestStatus.ONGOING);
 		rq8.setStatus(RequestStatus.ONGOING);
 		rq4.setStatus(RequestStatus.ONGOING);
-		
+
 		rq1.getTaxi().setStatus(false);
 		rq2.getTaxi().setStatus(false);
 		rq3.getTaxi().setStatus(false);
@@ -312,40 +396,40 @@ public class Initializer  {
 		rq8.getTaxi().setStatus(false);
 		rq4.getTaxi().setStatus(false);
 		tx.commit();
-		
+
 		//end requests and update taxi's and request's status
 		tx.begin();
-		
+
 		//route 1
 		rt1.setCost(60);
 		rt1.calculateCommision();
 		rt1.setDuration(60);
-		rt1.getReq().setStatus(RequestStatus.DONE);
-		
+		rt1.getReq().endRequest();
+
 		//route 2
 		rt2.setCost(15);
 		rt2.calculateCommision();
 		rt2.setDuration(30);
-		rt2.getReq().setStatus(RequestStatus.DONE);
-		
+		rt2.getReq().endRequest();
+
 		//route 3
 		rt3.setCost(5.5f);
 		rt3.calculateCommision();
 		rt3.setDuration(15);
-		rt3.getReq().setStatus(RequestStatus.DONE);
-		
+		rt3.getReq().endRequest();
+
 		//route 4
 		rt4.setCost(21.5f);
 		rt4.calculateCommision();
 		rt4.setDuration(30);
-		rt4.getReq().setStatus(RequestStatus.DONE);
+		rt4.getReq().endRequest();
 		rt4.getReq().getTaxi().setStatus(true);
-		
+
 		tx.commit();
 
 		//create evaluation		
 		tx.begin();
-		
+
 		//1st evaluation
 		try {
 			d = sdf.parse("26/02/2017");			
@@ -355,7 +439,7 @@ public class Initializer  {
 		}		
 		Evaluation eval1 = new Evaluation(3, "everything was good", d);
 		em.persist(eval1);
-		
+
 		//2nd evaluation
 		try {
 			d = sdf.parse("20/11/2016");			
@@ -365,11 +449,11 @@ public class Initializer  {
 		}
 		Evaluation eval2 = new Evaluation(0, "the scariest trip of my life", d);
 		em.persist(eval2);
-		
+
 		rt2.setEval(eval1);
 		rt4.setEval(eval2);
 		tx.commit();
-		
+
 		System.out.println("Initialization completed!");
 
 		//creating a date for the scope of our testing
@@ -484,7 +568,7 @@ public class Initializer  {
 		route.setEval(eval);
 		tx.commit();
 
-		
+
 		//we are now preparing a query in order to see that the data are correctly inserted in the Customer table.
 		//we could do this for all other tables
 		Query query = em.createQuery("select cust from Customer cust");

@@ -32,7 +32,7 @@ public class Taxi {
 
 	@Column(name = "locationLat", length = 30, nullable = false)
 	private double locationLat;
-	
+
 	@Column(name = "locationLon", length = 30, nullable = false)
 	private double locationLon;
 
@@ -51,27 +51,8 @@ public class Taxi {
 		//ID is auto generated, so no need to include it here
 		this.carModel = carModel;
 		this.carType = carType;
-
-		//validations
-		if (Validators.validateLicensePlate(licensePlate))
-			this.licensePlate = licensePlate;
-		else {
-			//in case licensePlate already exists, we put there the string "ERROR"
-			//this value will be used later in order to rollback the transaction
-			System.out.println("Car already connected with other driver, or license plate is invalid");
-			this.licensePlate = "ERROR";
-		}
-		
-		if (Validators.validateCarModelDate(carModelDate))
-			this.carModelDate = carModelDate;
-		else {
-			//in case carModelDate validation fails, we put in licensePlate the string "ERROR"
-			//this value will be used later in order to rollback the transaction
-			System.out.println("Car model date is invalid");
-			this.licensePlate = "ERROR";
-			this.carModelDate = carModelDate;
-		}		
-		
+		this.licensePlate = licensePlate;
+		this.carModelDate = carModelDate;
 		this.locationLat = locationLat;
 		this.locationLon = locationLon;
 		this.status = true;
@@ -119,11 +100,11 @@ public class Taxi {
 	public void setLocationLat(double locationLat) {
 		this.locationLat = locationLat;
 	}
-	
+
 	public double getLocationLon() {
 		return locationLon;
 	}
-	
+
 	public void setLocationLon(double locationLon) {
 		this.locationLon = locationLon;
 	}
@@ -146,7 +127,8 @@ public class Taxi {
 			this.carModelDate = carModelDate;
 		else {
 			//in case carModelDate validation is false, we do not change the existing
-			System.out.println("Car model date is invalid");			}
+			System.out.println("Car model date is invalid");			
+		}
 	}
 
 	public List<Request> getRequest() {
@@ -169,7 +151,7 @@ public class Taxi {
 
 		return temp;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -182,22 +164,26 @@ public class Taxi {
 		if (carModel == null) {
 			if (other.carModel != null)
 				return false;
-		} else if (!carModel.equals(other.carModel))
+		} 
+		else if (!carModel.equals(other.carModel))
 			return false;
 		if (carType == null) {
 			if (other.carType != null)
 				return false;
-		} else if (!carType.equals(other.carType))
+		} 
+		else if (!carType.equals(other.carType))
 			return false;
 		if (licensePlate == null) {
 			if (other.licensePlate != null)
 				return false;
-		} else if (!licensePlate.equals(other.licensePlate))
+		} 
+		else if (!licensePlate.equals(other.licensePlate))
 			return false;
 		if (carModelDate == null) {
 			if (other.carModelDate != null)
 				return false;
-		} else if (!carModelDate.equals(other.carModelDate))
+		} 
+		else if (!carModelDate.equals(other.carModelDate))
 			return false;	
 		return true;
 	}

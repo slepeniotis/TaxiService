@@ -116,9 +116,9 @@ public class Request {
 	//override of toString method from Object
 	@Override
 	public String toString() {
-		String temp = this.id + " " + this.dateTime + " " + this.status + " (" + this.taxi.toString() + ") (" + this.customer.toString() + ") ";
+		String temp = this.id + " " + this.dateTime + " " + this.status + "\n (" + this.taxi.toString() + ")\n (" + this.customer.toString() + ")";
 		if (this.route != null){
-			temp += " (" + this.route.toString() + ")";
+			temp += "\n (" + this.route.toString() + ")";
 		}
 
 		return temp;

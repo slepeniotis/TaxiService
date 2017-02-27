@@ -15,6 +15,7 @@ import taxi.persistence.JPAUtil;
 import taxi.utils.AESEncrypt;
 import taxi.utils.CoordinateCalc;
 import taxi.utils.RequestStatus;
+import taxi.utils.Validators;
 
 public class TaxiService {
 
@@ -26,7 +27,7 @@ public class TaxiService {
 	}
 
 	//REGISTRATION METHODS
-	
+
 	/* Registration for Taxi and TaxiDriver
 	 * we receive all the information needed for the creation of a taxi.
 	 * we check if any value is empty/null. we assume that location is fetched from GPS
@@ -39,14 +40,29 @@ public class TaxiService {
 		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || locationLat == 0 || locationLon == 0)
 			return null;
 
-		Taxi taxi = new Taxi(carModel, carType, licensePlate, carModelDate, locationLat, locationLon);
 
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.persist(taxi);
-		tx.commit();
+		//validations
+		if (Validators.validateLicensePlate(licensePlate))
+			if (Validators.validateCarModelDate(carModelDate)){
+				Taxi taxi = new Taxi(carModel, carType, licensePlate, carModelDate, locationLat, locationLon);
 
-		return taxi;
+				EntityTransaction tx = em.getTransaction();
+				tx.begin();
+				em.persist(taxi);
+				tx.commit();
+
+				return taxi;
+			}
+			else {
+				//in case licensePlate already exists
+				System.out.println("Car already connected with other driver, or license plate is invalid");
+				return null;
+			}
+		else{
+			//in case carModelDate validation fails
+			System.out.println("Car model date is invalid");
+			return null;
+		}
 	}
 
 	/* We receive all the information needed for the creation of a taxi driver.
@@ -65,15 +81,69 @@ public class TaxiService {
 				|| creditCardNumber == null || expiryDate == null || ccv == null || owns == null)
 			return null;
 
-		TaxiDriver taxidr = new TaxiDriver(name, surname, sex, username, password, dateOfBirth, address, city, zipCode, email, creditCardType, creditCardNumber, expiryDate, ccv, owns);
 
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.persist(taxidr);
-		tx.commit();
 
-		return taxidr;			
+		//validations
+		if (Validators.validateUsername(username)){
+			if (Validators.validatePassword(password)){
+				try {
+					password = AESEncrypt.encrypt(password);
+				}
+				catch (Exception e){
+					System.out.println(e.getStackTrace());
+					//in case an exception occurs
+					return null;
+				}
+				if (Validators.validateEmail(email)){
+					if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
+						if (Validators.validateDateOfBirth(dateOfBirth)){
+							if (Validators.validateTaxi(owns)){
+								TaxiDriver taxidr = new TaxiDriver(name, surname, sex, username, 
+										password, dateOfBirth, address, city, zipCode, email, 
+										creditCardType, creditCardNumber, expiryDate, ccv, owns);
 
+								EntityTransaction tx = em.getTransaction();
+								tx.begin();
+								em.persist(taxidr);
+								tx.commit();
+
+								return taxidr;
+							}
+							else {
+								System.out.println("Taxi already defined");
+								//in case the Taxi is already defined from other driver
+								return null;
+							}
+						}
+						else {
+							System.out.println("Date of birth is invalid");	
+							//in case Date of birth is invalid
+							return null;
+						}
+					}
+					else {
+						System.out.println("Credit Card's details are invalid");
+						//in case any of credit card's information is invalid
+						return null;
+					}
+				}
+				else {
+					System.out.println("Email already in use");
+					//in case the email is already in use
+					return null;
+				}				
+			}
+			else {
+				System.out.println("Invalid password");
+				//in case the password is invalid,
+				return null;
+			}
+		}
+		else {
+			//in case username already exists
+			System.out.println("Username already in use");
+			return null;
+		}
 	}
 
 	/* Registration for Customer
@@ -93,17 +163,60 @@ public class TaxiService {
 				|| creditCardNumber == null || expiryDate == null || ccv == null || locationLat == 0 || locationLon == 0)
 			return null;
 
-		Customer customer = new Customer(name, surname, sex, username, password, dateOfBirth, 
-				locationLat, locationLon, address, city, zipCode, email, creditCardType, creditCardNumber, 
-				expiryDate, ccv);
+		//validations
+		if (Validators.validateUsername(username)){
+			if (Validators.validatePassword(password)){
+				try {
+					password = AESEncrypt.encrypt(password); 
+				}
+				catch (Exception e){
+					System.out.println(e.getStackTrace());
+					//in case an exception occurs
+					return null;
+				}
+				if (Validators.validateEmail(email)){
+					if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
+						if (Validators.validateDateOfBirth(dateOfBirth)){
+							Customer customer = new Customer(name, surname, sex, username, password, dateOfBirth, 
+									locationLat, locationLon, address, city, zipCode, email, creditCardType, creditCardNumber, 
+									expiryDate, ccv);
 
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.persist(customer);
-		tx.commit();
+							EntityTransaction tx = em.getTransaction();
+							tx.begin();
+							em.persist(customer);
+							tx.commit();
 
-		return customer;
-
+							return customer;
+						}							
+						else {
+							System.out.println("Date of birth is invalid");
+							//in case Date of birth is invalid
+							return null;
+						}						
+					}
+					else {
+						System.out.println("Credit Card's details are invalid");
+						//in case any of credit card's information is invalid
+						return null;
+					}
+				}
+				else {
+					System.out.println("Email already in use");
+					//in case the email is already in use
+					return null;
+				}
+			}
+			else {
+				System.out.println("Invalid password");
+				//in case the password is invalid
+				return null;
+			}		
+		}
+		else {
+			System.out.println("Username already exists");
+			//in case username already exists
+			return null;
+		}
 	}
 
 	/* Identification Method
@@ -190,25 +303,25 @@ public class TaxiService {
 	public List<Taxi> searchTaxi(Customer customer, int range){
 		if(customer == null || range == 0)
 			return null;
-		
+
 		CoordinateCalc cc = new CoordinateCalc();
 		List<Taxi> taxlst = new ArrayList();
 		Query query = em.createQuery("select taxi from Taxi taxi");		
 		List<Taxi> taxirslt = query.getResultList();
 		if(taxirslt.isEmpty())
 			return null;
-		
+
 		for(Taxi t : taxirslt)
 			if(t.getStatus())
 				if(cc.calculateDistanceInKilometer(customer.getLocationLat(), customer.getLocationLon(), 
 						t.getLocationLat(), t.getLocationLon()) <= range)
 					taxlst.add(t);
-		
+
 		return taxlst;
 	}
 
 	//REQUEST EXECUTION METHODS
-	
+
 	/* startRequest is triggered by the customer.
 	 * we are getting as input the current date, 
 	 * the taxi selected by the customer for this request an the customer
@@ -337,7 +450,7 @@ public class TaxiService {
 		//call method for changing taxi status
 		taxi.setStatus(true);
 		//update status
-		req.setStatus(RequestStatus.DONE);
+		req.endRequest();
 		//update cost and commision
 		req.getRoute().setCost(cost);
 		req.getRoute().calculateCommision();
@@ -372,7 +485,7 @@ public class TaxiService {
 			return null;
 
 		Date dateOfEval = new Date();
-		
+
 		Evaluation eval = new Evaluation(rating, comment, dateOfEval);
 
 		EntityTransaction tx = em.getTransaction();
@@ -412,7 +525,7 @@ public class TaxiService {
 	public float produceStatistics(int selection, Date fromRange, Date toRange){
 		if(selection == 0 || fromRange == null || toRange == null)
 			return 0;
-		
+
 		float sum = 0;
 		if(selection == 1){
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -439,7 +552,7 @@ public class TaxiService {
 				for(Request r : reqrslt) {
 					if(r.getRoute() != null)
 						sum += r.getRoute().getCommision();
-			}
+				}
 		}
 		return sum;
 
@@ -499,8 +612,8 @@ public class TaxiService {
 
 		return result;
 	}
-	
-	
+
+
 	//delete objects	
 	//test cases
 

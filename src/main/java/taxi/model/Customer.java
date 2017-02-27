@@ -78,84 +78,24 @@ public class Customer {
 
 	//constructors for Customer
 	public Customer(){}
-	public Customer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
-			double locationLat, double locationLon, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
+	public Customer(String name, String surname, String sex, String username, String password, 
+			Date dateOfBirth, double locationLat, double locationLon, String address, String city, 
+			int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv) {
 
 		//ID is auto generated, so no need to include it here
 		//List of requests is empty when a new user is signed up
-
-		//validations
-		if (Validators.validateUsername(username))
-			this.username = username;
-		else {
-			//in case username already exists, we put there the string "ERROR"
-			//this value will be used later in order to rollback the transaction
-			System.out.println("Username already in use");
-			this.username = "ERROR";
-		}
-
-		if (Validators.validatePassword(password))
-			try {
-				this.password = AESEncrypt.encrypt(password); 
-			}
-		catch (Exception e){
-			System.out.println(e.getStackTrace());
-			//in case an exception occurs, the password will be left empty
-			//and the username will be set to "ERROR"
-			//this value will be used later in order to rollback the transaction
-			this.username = "ERROR";
-			this.password = " ";
-		}
-		else {
-			System.out.println("Invalid password");
-			//in case the password is invalid, it will be left empty
-			//and the username will be set to "ERROR"
-			//this value will be used later in order to rollback the transaction
-			this.username = "ERROR";
-			this.password = " ";
-		}
-
-		if (Validators.validateEmail(email))
-			this.email = email;
-		else {
-			System.out.println("Email already in use");
-			//in case the email is already in use, it will be left empty
-			//and the username will be set to "ERROR"
-			//this value will be used later in order to rollback the transaction
-			this.username = "ERROR";
-			this.email = " ";
-		}
-
-		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
-			this.creditCardType = creditCardType;
-			this.creditCardNumber = creditCardNumber;
-			this.expiryDate = expiryDate;
-			this.ccv = ccv;	
-		}
-		else {
-			System.out.println("Credit Card's details are invalid");
-			//in case any of credit card's information is invalid, they will be left empty
-			//and the username will be set to "ERROR"
-			//this value will be used later in order to rollback the transaction
-			this.creditCardType = " ";
-			this.creditCardNumber = " ";
-			this.expiryDate = " ";
-			this.ccv = " ";	
-			this.username = "ERROR";
-		}
-
+		this.username = username;
+		this.password = password; 
+		this.email = email;
+		this.creditCardType = creditCardType;
+		this.creditCardNumber = creditCardNumber;
+		this.expiryDate = expiryDate;
+		this.ccv = ccv;	
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;	
-		
-		if (Validators.validateDateOfBirth(dateOfBirth))
-			this.dateOfBirth = dateOfBirth;
-		else {
-			System.out.println("Date of birth is invalid");	
-			this.dateOfBirth = dateOfBirth;
-			this.username = "ERROR";
-		}
+		this.dateOfBirth = dateOfBirth;
 		this.locationLat = locationLat;
 		this.locationLon = locationLon;
 		this.address = address;
@@ -228,8 +168,16 @@ public class Customer {
 		return this.dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public boolean setDateOfBirth(Date dateOfBirth) {
+		if (Validators.validateDateOfBirth(dateOfBirth)){
+			this.dateOfBirth = dateOfBirth;
+		}
+		else {
+			System.out.println("Date of birth is invalid");
+			//in case Date of birth is invalid
+			return false;
+		}		
+		return true;
 	}
 
 	public double getLocationLat() {
@@ -328,14 +276,6 @@ public class Customer {
 	}
 
 	//operation methods
-	public void taxiSearch() {
-
-	}
-
-	public void chooseTaxi() {
-
-	}
-
 	public void informCustomer(String message){
 		System.out.println(message);
 	}
@@ -343,12 +283,12 @@ public class Customer {
 	//override of toString method from Object
 	@Override
 	public String toString() {
-		String temp = this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + " " + 
-				this.locationLat + " " + this.locationLon + " " + this.address + " " + this.city + " " + this.zipCode + " " + this.email + " " + this.creditCardType + " " + this.creditCardNumber + " " + 
+		String temp = this.id + " " + this.name + " " + this.surname + " " + this.sex + " " + this.username + " " + this.password + " " + this.dateOfBirth + "\n " + 
+				this.locationLat + " " + this.locationLon + " " + this.address + " " + this.city + " " + this.zipCode + " " + this.email + "\n " + this.creditCardType + " " + this.creditCardNumber + " " + 
 				this.expiryDate + " " + this.ccv;
 
 		for(Request r : req) {
-			temp += " (" + r.toString() + ")";
+			temp += "\n (" + r.toString() + ")";
 		}  
 
 		return temp;

@@ -66,7 +66,7 @@ public class Evaluation {
 	//override of toString method from Object
 	@Override
 	public String toString() {
-		return this.id + " " + this.rating + " " + this.comment + " " + this.dateOfEval;
+		return this.id + " " + this.rating + " " + this.comment + " " + this.dateOfEval.toString();
 	}	
 
 }

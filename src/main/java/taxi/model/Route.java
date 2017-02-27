@@ -49,6 +49,7 @@ public class Route {
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
 	
+	//each route has a request
 	@OneToOne(optional=false, mappedBy="route", fetch=FetchType.EAGER, targetEntity=Request.class)
 	private Request req; 
 
@@ -174,17 +175,13 @@ public class Route {
 		}
 	}
 
-	public void calculateStatistics(){
-
-	}
-
 	//override of toString method from Object
 	@Override
 	public String toString() {
-		String temp = this.id + " " + this.fromAddress + " " + this.toAddress + " " + this.fromCity + " " + this.toCity + " " + this.fromZipCode + " " + this.toZipCode + " " + this.duration + " " + this.cost + " " + this.commision;
+		String temp = this.id + " " + this.fromAddress + this.fromCity + " " + this.fromZipCode + " \n" + this.toAddress + " " + this.toCity + " " + this.toZipCode + " \n" + this.duration + " " + this.cost + " " + this.commision;
 
 		if (this.eval != null){
-			temp += " (" + this.eval.toString() + ")";
+			temp += "\n (" + this.eval.toString() + ")";
 		}
 
 		return temp;
