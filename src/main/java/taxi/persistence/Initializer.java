@@ -20,7 +20,7 @@ public class Initializer  {
 	 * Remove all data from database.
 	 * The functionality must be executed within the bounds of a transaction
 	 */
-	public static void eraseData() {
+	public void eraseData() {
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 
 		//starting a new transaction
@@ -59,7 +59,7 @@ public class Initializer  {
 
 	}
 
-	public static void prepareData() throws ParseException{
+	public void prepareData() throws ParseException{
 
 		//erasing data from the DB
 		eraseData();  
