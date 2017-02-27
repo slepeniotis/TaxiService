@@ -221,7 +221,7 @@ public class TaxiService {
 
 	/* Identification Method
 	 * We are receiving as input the user type which wants to be signed in (selected by the user).
-	 * We also receive the username and password
+	 * We also receive the username, password and new coordinates
 	 * we check if any of the inputs is empty/null
 	 * then we check the login type. 
 	 * - In case it is for customer, then we search in the table of customers 
@@ -231,10 +231,10 @@ public class TaxiService {
 	 * If the user is not found, or any exception is raised, the return object is null, 
 	 * or else the found user object
 	 */	
-	public Object login(String userType, String username, String password){
+	public Object login(String userType, String username, String password, double newLat, double newLon){
 		Object result = null;
 
-		if(userType == null || username == null || password == null)
+		if(userType == null || username == null || password == null || newLat ==0 || newLon == 0)
 			return result;
 
 		if(userType == "Customer"){
@@ -254,6 +254,12 @@ public class TaxiService {
 			if(rsltcst.equals(null)){
 				return result;
 			}
+			
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();				
+			rsltcst.setLocationLat(newLat);
+			rsltcst.setLocationLon(newLon);			
+			tx.commit();
 
 			result = rsltcst;
 		}
@@ -275,6 +281,12 @@ public class TaxiService {
 				return result;
 			}
 
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();				
+			rslttxdr.getOwns().setLocationLat(newLat);
+			rslttxdr.getOwns().setLocationLon(newLon);			
+			tx.commit();
+			
 			result = rslttxdr;
 
 		}
@@ -613,8 +625,104 @@ public class TaxiService {
 		return result;
 	}
 
+	/* Change of Taxi belonging to a Taxi Driver
+	 * we assume that the taxi driver requests for change for his taxi
+	 * we receive all the information needed for the creation of the new taxi and the taxi driver.
+	 * we check if any value is empty/null. we assume that location is fetched from GPS
+	 * we then create the new taxi and remove the old one
+	 * 
+	 * the object taxi which was created is returned as a result
+	 */
+	public Taxi changeTaxi(TaxiDriver taxidriver, String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon){
+		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || locationLat == 0 || locationLon == 0)
+			return null;
 
-	//delete objects	
-	//test cases
+
+		//validations
+		if (Validators.validateLicensePlate(licensePlate))
+			if (Validators.validateCarModelDate(carModelDate)){
+				Taxi newTaxi = new Taxi(carModel, carType, licensePlate, carModelDate, locationLat, locationLon);
+				Taxi oldTaxi = taxidriver.getOwns();
+
+				EntityTransaction tx = em.getTransaction();
+				tx.begin();
+				em.persist(newTaxi);
+				taxidriver.setOwns(newTaxi);
+				em.remove(oldTaxi);
+				tx.commit();				
+
+				//TI GINETAI ME TA REQUESTS EDO ?
+				
+				return newTaxi;
+			}
+			else {
+				//in case licensePlate already exists
+				System.out.println("Car already connected with other driver, or license plate is invalid");
+				return null;
+			}
+		else{
+			//in case carModelDate validation fails
+			System.out.println("Car model date is invalid");
+			return null;
+		}
+	}
+
+	/* Remove of Taxi Driver
+	 * we assume that taxi driver requests his own removal
+	 * we receive the taxi driver object
+	 *  
+	 * after the successful removal, we get true
+	 */
+	public boolean removeDriver(TaxiDriver taxidriver){	
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();				
+		em.remove(taxidriver);
+		tx.commit();
+		
+		return true;
+	}
+	
+	/* Remove of Customer
+	 * we assume that customer requests his own removal
+	 * we receive the customer object
+	 *  
+	 * after the successful removal, we get true
+	 */
+	public boolean removeCustomer(Customer customer){	
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();				
+		em.remove(customer);
+		tx.commit();
+		
+		//TI GINETAI ME TA REQUESTS EDO ?
+		
+		return true;
+	}
+	
+	/* Remove of Request
+	 * we assume that customer can only remove the request he already made
+	 * we receive the customer object and the request made
+	 *  
+	 * First of all we remove the request from the list of requests from customer and taxi
+	 * then we inform taxi driver that the request has been canceled
+	 * at the end we remove the request from the db
+	 * 
+	 * after the successful removal, we get true
+	 */
+	public boolean removeRequest(Customer customer, Request req){	
+		boolean result = false;
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();				
+		
+		if(customer.removeRequest(req)){
+			if(req.getTaxi().removeRequest(req)){
+				em.remove(req);
+			}
+			result = true;
+		}					
+		tx.commit();
+		
+		return result;
+	}
 
 }

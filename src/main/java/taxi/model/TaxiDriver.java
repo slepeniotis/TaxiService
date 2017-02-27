@@ -242,16 +242,8 @@ public class TaxiDriver {
 	public Taxi getOwns() {
 		return owns;
 	}
-	public boolean setOwns(Taxi owns) {
-		if (Validators.validateTaxi(owns)){
-			this.owns = owns;
-			return true;
-		}
-		else {
-			System.out.println("Taxi already defined");
-			//in case the Taxi is already defined from other driver or null, we will not change the one already defined
-			return false;
-		}
+	public void setOwns(Taxi owns) {
+		this.owns = owns;		
 	}
 
 	//operation methods

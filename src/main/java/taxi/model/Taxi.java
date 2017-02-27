@@ -138,6 +138,10 @@ public class Taxi {
 	public void addRequest(Request accepts) {
 		this.accepts.add(accepts);
 	}
+	
+	public boolean removeRequest(Request req){
+		return this.req.remove(req);
+	}
 
 	//override of toString method from Object
 	@Override

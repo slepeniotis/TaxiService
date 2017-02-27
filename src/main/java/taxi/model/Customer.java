@@ -274,6 +274,10 @@ public class Customer {
 	public void addRequest(Request req) {
 		this.req.add(req);
 	}
+	
+	public boolean removeRequest(Request req){
+		return this.req.remove(req);
+	}
 
 	//operation methods
 	public void informCustomer(String message){
