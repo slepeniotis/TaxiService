@@ -3,13 +3,8 @@ package taxi.model;
 //imports for using persistence, List, ArrayList, date
 import java.util.List;
 import javax.persistence.*;
-
-import gr.aueb.mscis.sample.model.Category;
-import gr.aueb.mscis.sample.model.Movie;
 import taxi.utils.Validators;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 
 //Declaring table id DB with name Taxi
@@ -23,7 +18,7 @@ public class Taxi {
 	private long id;
 
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
-	@Column(name = "carModel", length = 10, nullable = false)
+	@Column(name = "carModel", length = 30, nullable = false)
 	private String carModel;
 
 	@Column(name = "carType", length = 10, nullable = false)
@@ -74,6 +69,7 @@ public class Taxi {
 			//this value will be used later in order to rollback the transaction
 			System.out.println("Car model date is invalid");
 			this.licensePlate = "ERROR";
+			this.carModelDate = carModelDate;
 		}		
 		
 		this.locationLat = locationLat;

@@ -1,7 +1,6 @@
 package taxi.utils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import taxi.model.Customer;
 import taxi.model.Taxi;
@@ -10,6 +9,7 @@ import taxi.persistence.JPAUtil;
 import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -167,6 +167,24 @@ public class Validators {
 		return false;
 
 	}
+	
+	/* Method validating date of birth.
+	 * This method receives as parameter the date of birth of a user.
+	 * Then we check if this date is before the current date
+	 *   
+	 * If the checks are passed, the validation was completed successfully (true) 
+	 */
+	public static boolean validateDateOfBirth(Date DateOfBirth){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date currentDate = new Date();
+		
+		if(currentDate.before(DateOfBirth) || currentDate.equals(DateOfBirth))				
+			return false;
+
+		return true;
+	}
+	
 
 	/* Method validating taxi.
 	 * This method receives as parameter the license plate of a taxi.
@@ -215,16 +233,24 @@ public class Validators {
 		else if (!year.matches("[0-9]+"))
 			return false;
 
-		if(Integer.parseInt(month) < 1 && Integer.parseInt(month) > 12)
+		if(Integer.parseInt(month) < 1 || Integer.parseInt(month) > 12)
 			return false;
 
 		//getting current month and year in two digits
 		Calendar now = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		String curYear = sdf.format(Calendar.getInstance().getTime());
+		sdf = new SimpleDateFormat("MM");
+		String curMonth = sdf.format(Calendar.getInstance().getTime());
 
-		if(Integer.parseInt(curYear) < Integer.parseInt(year))
+		if(Integer.parseInt(curYear) == Integer.parseInt(year)){
+			if(Integer.parseInt(curMonth) < Integer.parseInt(month)){
+				return false;
+			}
+		}
+		else if(Integer.parseInt(curYear) < Integer.parseInt(year))
 			return false;
+			
 		
 		return true;
 	}

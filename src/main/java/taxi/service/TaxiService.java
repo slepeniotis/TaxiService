@@ -114,7 +114,7 @@ public class TaxiService {
 	 * - In case it is for customer, then we search in the table of customers 
 	 *   to find the customer with the specific username and password (encrypted)
 	 * - In case it is for taxi driver, then we search in the table of taxi drivers 
-	 *   to find the customer with the specific username and password (encrypted)
+	 *   to find the customer with the specific username and password (encrypted) 
 	 * If the user is not found, or any exception is raised, the return object is null, 
 	 * or else the found user object
 	 */	
@@ -352,8 +352,10 @@ public class TaxiService {
 
 	/* Evaluation method
 	 * createEvaluation gets as inputs the route, which customer evaluates,
-	 * the rating, comment and date of evaluation
+	 * the rating and comment
 	 * we assume rating can be zero
+	 * Since the evaluation is done when calling this method, the user has no access to the date,
+	 * the system gives always the current date
 	 * 
 	 * we check that none of the inputs is empty/null (except of rating) and that the request related with this request is in status done
 	 * 
@@ -365,10 +367,12 @@ public class TaxiService {
 	 * we will use this object to contact the driver, 
 	 * in order to inform him that an evaluation was submitted for a route he completed
 	 */
-	public Evaluation createEvaluation(Route route, int rating, String comment, Date dateOfEval){
-		if(route == null || comment == null || dateOfEval == null || route.getReq() == null || route.getReq().getStatus() != RequestStatus.DONE)
+	public Evaluation createEvaluation(Route route, int rating, String comment){
+		if(route == null || comment == null || route.getReq() == null || route.getReq().getStatus() != RequestStatus.DONE)
 			return null;
 
+		Date dateOfEval = new Date();
+		
 		Evaluation eval = new Evaluation(rating, comment, dateOfEval);
 
 		EntityTransaction tx = em.getTransaction();

@@ -148,7 +148,14 @@ public class Customer {
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;	
-		this.dateOfBirth = dateOfBirth;
+		
+		if (Validators.validateDateOfBirth(dateOfBirth))
+			this.dateOfBirth = dateOfBirth;
+		else {
+			System.out.println("Date of birth is invalid");	
+			this.dateOfBirth = dateOfBirth;
+			this.username = "ERROR";
+		}
 		this.locationLat = locationLat;
 		this.locationLon = locationLon;
 		this.address = address;

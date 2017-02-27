@@ -141,7 +141,15 @@ public class TaxiDriver {
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;	
-		this.dateOfBirth = dateOfBirth;
+
+		if (Validators.validateDateOfBirth(dateOfBirth))
+			this.dateOfBirth = dateOfBirth;
+		else {
+			System.out.println("Date of birth is invalid");	
+			this.dateOfBirth = dateOfBirth;
+			this.username = "ERROR";
+		}
+		
 		this.address = address;
 		this.city = city;
 		this.zipCode = zipCode;	

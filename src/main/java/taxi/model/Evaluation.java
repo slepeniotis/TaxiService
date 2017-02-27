@@ -4,14 +4,6 @@ package taxi.model;
 import java.util.Date;
 import javax.persistence.*;
 
-/**
- * 
- * @author nyxteridas
- * 
- * μέθοδος για εμφάνιση του evaluation
- *
- */
-
 //Declaring table id DB with name Evaluation
 @Entity
 @Table(name = "Evaluation")
