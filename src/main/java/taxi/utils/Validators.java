@@ -16,40 +16,51 @@ import java.util.regex.Matcher;
 //class which includes all the methods related to validation checks
 public class Validators {
 
-	/* Method validating username.
+	/* Method validating username of a customer.
 	 * At first checks from which class it was called, Customer or TaxiDriver
 	 * Then searches in the appropriate table of the DB to find if another user 
 	 * with the same username exists.
 	 * In case the username does not already exist, the validation was successful (true).
 	 */
-	public static boolean validateUsername(String username){
+	public static boolean validateUsernameCst(String username){
 		//it is not allowed to have a username "ERROR" as this is reserved word for our implementation
 		if(username == " " || username == "ERROR")
 			return false;
 
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 
-		StackTraceElement ste[] = Thread.currentThread().getStackTrace();
-		if(ste[2].getClassName() == "taxi.model.Customer"){
+		Query query = em.createQuery("select cust from Customer cust where username like :usrnm");
+		query.setParameter("usrnm", username); 
+		List<Customer> results = query.getResultList();
 
-			Query query = em.createQuery("select cust from Customer cust where username like :usrnm");
-			query.setParameter("usrnm", username); 
-			List<Customer> results = query.getResultList();
+		if(!results.isEmpty()){
+			return false;
+		}		
 
-			if(!results.isEmpty()){
-				return false;
-			}
+		return true;
 
-		}
-		else if(ste[2].getClassName() == "taxi.model.TaxiDriver"){
-			Query query = em.createQuery("select taxdr from TaxiDriver taxdr where username like :usrnm");
-			query.setParameter("usrnm", username);  
-			query.setMaxResults(1);
-			List<Customer> results = query.getResultList();
+	}
 
-			if(!results.isEmpty()){
-				return false;
-			}
+	/* Method validating username of a taxi driver.
+	 * At first checks from which class it was called, Customer or TaxiDriver
+	 * Then searches in the appropriate table of the DB to find if another user 
+	 * with the same username exists.
+	 * In case the username does not already exist, the validation was successful (true).
+	 */
+	public static boolean validateUsernameTx(String username){
+		//it is not allowed to have a username "ERROR" as this is reserved word for our implementation
+		if(username == " " || username == "ERROR")
+			return false;
+
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+
+		Query query = em.createQuery("select taxdr from TaxiDriver taxdr where username like :usrnm");
+		query.setParameter("usrnm", username);  
+		query.setMaxResults(1);
+		List<Customer> results = query.getResultList();
+
+		if(!results.isEmpty()){
+			return false;
 		}
 
 		return true;
@@ -167,7 +178,7 @@ public class Validators {
 		return false;
 
 	}
-	
+
 	/* Method validating date of birth.
 	 * This method receives as parameter the date of birth of a user.
 	 * Then we check if this date is before the current date
@@ -175,16 +186,16 @@ public class Validators {
 	 * If the checks are passed, the validation was completed successfully (true) 
 	 */
 	public static boolean validateDateOfBirth(Date DateOfBirth){
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date currentDate = new Date();
-		
+
 		if(currentDate.before(DateOfBirth) || currentDate.equals(DateOfBirth))				
 			return false;
 
 		return true;
 	}
-	
+
 
 	/* Method validating taxi.
 	 * This method receives as parameter the license plate of a taxi.
@@ -250,11 +261,11 @@ public class Validators {
 		}
 		else if(Integer.parseInt(curYear) < Integer.parseInt(year))
 			return false;
-			
-		
+
+
 		return true;
 	}
-	
+
 	/* Method validating taxi is not already defined.
 	 * This method receives as parameter the taxi object.
 	 * Then we check in the table Taxi that this object is not already defined, using the equals method
@@ -262,18 +273,18 @@ public class Validators {
 	 * If the checks are passed, the validation was completed successfully (true) 
 	 */
 	public static boolean validateTaxi(Taxi taxi){
-		
+
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 		Query query = em.createQuery("select taxdr from TaxiDriver taxdr");		
 		List<TaxiDriver> results = query.getResultList();
 
 		if(results.isEmpty())
 			return true;
-		
+
 		for(TaxiDriver td : results)
 			if(td.getOwns().equals(taxi))
 				return false;
-		
+
 		return true;		
 	}
 }
