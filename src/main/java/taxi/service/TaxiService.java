@@ -319,16 +319,16 @@ public class TaxiService {
 
 		CoordinateCalc cc = new CoordinateCalc();
 		List<Taxi> taxlst = new ArrayList();
-		Query query = em.createQuery("select taxi from Taxi taxi");		
+		Query query = em.createQuery("select taxi from Taxi taxi where status = :stts");
+		query.setParameter(":stts", true);
 		List<Taxi> taxirslt = query.getResultList();
 		if(taxirslt.isEmpty())
 			return null;
 
 		for(Taxi t : taxirslt)
-			if(t.getStatus())
-				if(cc.calculateDistanceInKilometer(customer.getLocationLat(), customer.getLocationLon(), 
-						t.getLocationLat(), t.getLocationLon()) <= range)
-					taxlst.add(t);
+			if(cc.calculateDistanceInKilometer(customer.getLocationLat(), customer.getLocationLon(), 
+					t.getLocationLat(), t.getLocationLon()) <= range)
+			taxlst.add(t);
 
 		return taxlst;
 	}
