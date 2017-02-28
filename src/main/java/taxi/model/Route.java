@@ -23,7 +23,7 @@ public class Route {
 
 	//Declaring columns with specific maximum length of characters and NULL/NOT NULL 
 	@Column(name = "fromZipCode", length = 256, nullable = false)
-	private String fromZipCode;
+	private int fromZipCode;
 
 	@Column(name = "toAddress", length = 256, nullable = false)
 	private String toAddress;
@@ -32,7 +32,7 @@ public class Route {
 	private String toCity;
 
 	@Column(name = "toZipCode", length = 256, nullable = false)
-	private String toZipCode;	
+	private int toZipCode;	
 
 	@Column(name = "duration", length = 5, nullable = true)
 	private int duration;
@@ -55,7 +55,7 @@ public class Route {
 
 	//constructors for Route
 	public Route(){}
-	public Route(String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode, Request req) {	
+	public Route(String fromAddress, String toAddress, String fromCity, String toCity, int fromZipCode, int toZipCode, Request req) {	
 		//ID is auto generated, so no need to include it here
 		//Route will have origin and destination
 		//duration, cost and commission have to be zero since the request is not yet done
@@ -108,19 +108,19 @@ public class Route {
 		this.toCity = toCity;
 	}
 
-	public String getFromZipCode() {
+	public int getFromZipCode() {
 		return fromZipCode;
 	}
 
-	public void setFromZipCode(String fromZipCode) {
+	public void setFromZipCode(int fromZipCode) {
 		this.fromZipCode = fromZipCode;
 	}
 
-	public String getToZipCode() {
+	public int getToZipCode() {
 		return toZipCode;
 	}
 
-	public void setToZipCode(String toZipCode) {
+	public void setToZipCode(int toZipCode) {
 		this.toZipCode = toZipCode;
 	}
 
