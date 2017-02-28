@@ -306,10 +306,9 @@ public class TaxiService {
 	 * and an object of type CoordinateCalc which we will use 
 	 * for calculating the distance between two set of coordinates
 	 * 
-	 * Then we retrieve from the DB all the contents of table taxi.
+	 * Then we retrieve from the DB all the contents of table taxi where the taxi is free.
 	 * we check if the result is empty.
-	 * then we run into the result checking first of all if the taxi is free,
-	 * and then its distance from the customer.
+	 * then we run into the result checking its distance from the customer.
 	 * If the distance is within the range set by the customer, 
 	 * this taxi is inserted in the list result
 	 */
@@ -453,9 +452,9 @@ public class TaxiService {
 	 * the method returns true in case everything went ok
 	 * 
 	 */
-	public boolean stopRequest(Request req, Taxi taxi, float cost){
+	public boolean stopRequest(Request req, Taxi taxi, float cost, int duration){
 
-		if(req == null || taxi == null || cost == 0)
+		if(req == null || taxi == null || cost == 0 || duration == 0)
 			return false;
 
 		EntityTransaction tx = em.getTransaction();
@@ -467,6 +466,7 @@ public class TaxiService {
 		//update cost and commision
 		req.getRoute().setCost(cost);
 		req.getRoute().calculateCommision();
+		req.getRoute().setDuration(duration);
 		tx.commit();		
 
 		req.getCustomer().informCustomer("The final cost of request: " + req.getId() + " was: " + req.getRoute().getCost());
