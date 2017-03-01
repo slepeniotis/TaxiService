@@ -1,11 +1,17 @@
 package taxi.service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import gr.aueb.mscis.sample.model.Movie;
+import gr.aueb.mscis.sample.service.MovieService;
+import taxi.model.Taxi;
+import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 
@@ -33,8 +39,21 @@ public class EditAccountServiceTest {
 	}
 
 	//Tests for Taxi changing
-	@Test
+	/*@Test
 	public void testChangeValidTaxi(){
+		
+		EditAccountService service = new EditAccountService();
+		
+		Query query = em.createQuery("select taxidr from TaxiDriver taxidr where taxidr.id = :tid");
+		query.setParameter("tid", 5);
+		TaxiDriver taxiDr = (TaxiDriver)query.getSingleResult();		
+		Taxi newTaxi = service.changeTaxi(taxiDr, "TOYOTA YARIS", "SPORT", "YOX4454", "10/1999", 27.094837, 35.23123);
+						
+		Assert.assertNotEquals(0, newTaxi.getId());
+		Assert.assertNotEquals(0, taxiDr.getOwns().getId());
+		em.close();
+		
+		em = JPAUtil.getCurrentEntityManager();	
 
 	}
 
@@ -76,15 +95,25 @@ public class EditAccountServiceTest {
 	@Test
 	public void testChangeInValidTaxi_noCoordinates(){
 
-	}
+	}*/
 
 	//Tests for address changing
 	@Test
 	public void testChangeValidAddress(){
-
+		EditAccountService service = new EditAccountService();
+						
+		TaxiDriver newAddr = (TaxiDriver)service.changeAddress("Taxi Driver", (long)5, "KOSTAKI 1", "PANORAMA", 12345);
+		em.close();
+		
+		// assertions
+		em = JPAUtil.getCurrentEntityManager();
+		Query query = em.createQuery("select taxidr from TaxiDriver taxidr where taxidr.id = :tid");
+		query.setParameter("tid", (long)5);
+		TaxiDriver taxiDr = (TaxiDriver)query.getSingleResult();
+		Assert.assertEquals("KOSTAKI 1", taxiDr.getAddress());
 	}
 
-	@Test
+	/*@Test
 	public void testChangeInValidAddress_emptyAddress(){
 
 	}
@@ -209,5 +238,5 @@ public class EditAccountServiceTest {
 	@Test
 	public void testChangeInValidEmail_noPatternEmail(){
 
-	}
+	}*/
 }
