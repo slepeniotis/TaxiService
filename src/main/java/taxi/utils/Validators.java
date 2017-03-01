@@ -174,6 +174,14 @@ public class Validators {
 
 		String month = expiryDate.substring(0, 2);
 		String year = expiryDate.substring(3, 5);
+		
+		if(!month.matches("[0-9]+"))
+			return false;
+		if(!year.matches("[0-9]+"))
+			return false;
+		
+		if(Integer.parseInt(month) < 1 || Integer.parseInt(month) > 12)
+			return false;
 
 		//getting current month and year in two digits
 		Calendar now = Calendar.getInstance();
