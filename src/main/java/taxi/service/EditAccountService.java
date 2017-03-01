@@ -27,7 +27,9 @@ public class EditAccountService {
 	 * the object taxi which was created is returned as a result
 	 */
 	public Taxi changeTaxi(TaxiDriver taxidriver, String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon){
-		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || locationLat == 0 || locationLon == 0)
+		if(carModel == null || carType == null || licensePlate == null || carModelDate == null 
+				|| carModel == " " || carType ==  " " || licensePlate ==  " " || carModelDate ==  " " 
+				|| locationLat == 0 || locationLon == 0)
 			return null;
 
 
@@ -68,9 +70,9 @@ public class EditAccountService {
 	 * 
 	 * The object which was changed, is returned as result 
 	 */
-	public Object changeAddress(String userType, long userId, String address, String city, int zipCode, TaxiDriver taxidriver){
+	public Object changeAddress(String userType, long userId, String address, String city, int zipCode){
 
-		if(address == null || city == null || zipCode == 0)
+		if(address == null || address == " " || city == null || city == " " || zipCode == 0)
 			return null;
 
 		if(userType == "Customer") {
@@ -111,7 +113,8 @@ public class EditAccountService {
 	public Object changeCreditCard(String userType, long userId, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv){
 
-		if(creditCardType == null || creditCardNumber == null || expiryDate == null || ccv == null)
+		if(creditCardType == null || creditCardNumber == null || expiryDate == null || ccv == null
+				|| creditCardType == " " || creditCardNumber == " " || expiryDate == " " || ccv == " ")
 			return null;
 
 		if(userType == "Customer") {
@@ -157,7 +160,7 @@ public class EditAccountService {
 	 */
 	public Object changeEmail(String userType, long userId, String email){
 
-		if(email == null)
+		if(email == null || email == " ")
 			return null;
 
 		if(userType == "Customer") {

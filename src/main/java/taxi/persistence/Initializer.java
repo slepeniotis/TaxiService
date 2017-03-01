@@ -347,22 +347,22 @@ public class Initializer  {
 		tx.begin();
 
 		//1st route
-		Route rt1 = new Route("KOLOKOTRONI 42", "PATISION 136", "ACHARNES", "ATHINA", "13671", "12345", rq1);
+		Route rt1 = new Route("KOLOKOTRONI 42", "PATISION 136", "ACHARNES", "ATHINA", 13671, 12345, rq1);
 
 		//2nd route
-		Route rt2 = new Route("LIMNOU 79", "AGIOY NIKOLAOY 1", "AIGALEO", "KORIDALLOS", "18971", "13345", rq2);
+		Route rt2 = new Route("LIMNOU 79", "AGIOY NIKOLAOY 1", "AIGALEO", "KORIDALLOS", 18971, 13345, rq2);
 
 		//3rd route
-		Route rt3 = new Route("PALAION PATRON GERMANOY 42", "SKOYZE 136", "ILION", "AGIOS DIMITRIOS", "11671", "12385", rq3);
+		Route rt3 = new Route("PALAION PATRON GERMANOY 42", "SKOYZE 136", "ILION", "AGIOS DIMITRIOS", 11671, 12385, rq3);
 
 		//4th route
-		Route rt4 = new Route("SKA 2", "MARNIS 16", "NIKAIA", "ATHINA", "65945", "12345", rq6);
+		Route rt4 = new Route("SKA 2", "MARNIS 16", "NIKAIA", "ATHINA", 65945, 12345, rq6);
 
 		//5th route
-		Route rt5 = new Route("AFIDNAION 13", "VELISSARIOY 10", "KERATSINI", "KERAMEIKOS", "18756", "12567", rq8);
+		Route rt5 = new Route("AFIDNAION 13", "VELISSARIOY 10", "KERATSINI", "KERAMEIKOS", 18756, 12567, rq8);
 
 		//6th route
-		Route rt6 = new Route("GYZI 8", "THEOTOKOPOYLOY 15", "PEIRAIAS", "MAROYSI", "23661", "16987", rq4);
+		Route rt6 = new Route("GYZI 8", "THEOTOKOPOYLOY 15", "PEIRAIAS", "MAROYSI", 23661, 16987, rq4);
 
 		em.persist(rt1);
 		em.persist(rt2);

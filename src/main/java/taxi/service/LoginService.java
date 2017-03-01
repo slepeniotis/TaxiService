@@ -33,7 +33,9 @@ public class LoginService {
 	public Object login(String userType, String username, String password, double newLat, double newLon){
 		Object result = null;
 
-		if(userType == null || username == null || password == null || newLat ==0 || newLon == 0)
+		if(userType == null || username == null || password == null 
+				|| userType == " " || username == " " || password == " " 
+				|| newLat == 0 || newLon == 0)
 			return result;
 
 		if(userType == "Customer"){

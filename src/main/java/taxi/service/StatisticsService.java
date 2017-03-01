@@ -97,7 +97,7 @@ public class StatisticsService {
 	public int produceStatistics(int selection, String city){
 		String result="";
 		List<Route> routerslt = new ArrayList(0);	
-		if(selection == 0 || city == null)
+		if(selection == 0 || city == null || city == " ")
 			return 0;		
 
 		if(selection == 2){

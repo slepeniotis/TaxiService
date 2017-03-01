@@ -119,7 +119,7 @@ public class RequestHandlingService {
 	 *           we inform customer that his request was denied
 	 */
 	public boolean handleRequest(Request req, Taxi taxi, String decision){
-		if(req == null || taxi == null || decision == null)
+		if(req == null || taxi == null || decision == null || decision == " ")
 			return false;
 
 		boolean result = false;
@@ -167,7 +167,9 @@ public class RequestHandlingService {
 	 */
 	public Route createRoute(Request req, String fromAddress, String toAddress, String fromCity, String toCity, int fromZipCode, int toZipCode) {
 
-		if(req == null || fromAddress == null || toAddress == null || fromCity == null || toCity == null || fromZipCode == 0 || toZipCode == 0)
+		if(req == null || fromAddress == null || toAddress == null || fromCity == null 
+				|| toCity == null || fromZipCode == 0 || toZipCode == 0 
+				|| fromAddress == " " || toAddress == " " || fromCity == " " || toCity == " ")
 			return null;
 
 		Route route = new Route(fromAddress, toAddress, fromCity, toCity, fromZipCode, toZipCode, req);

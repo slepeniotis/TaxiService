@@ -32,7 +32,9 @@ public class RegistrationService {
 	 */
 	public Taxi createTaxi(String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon){
 
-		if(carModel == null || carType == null || licensePlate == null || carModelDate == null || locationLat == 0 || locationLon == 0)
+		if(carModel == null || carType == null || licensePlate == null || carModelDate == null 
+				|| carModel == " " || carType == " " || licensePlate == " " || carModelDate == " " 
+				|| locationLat == 0 || locationLon == 0)
 			return null;
 
 
@@ -73,7 +75,11 @@ public class RegistrationService {
 		if(name == null || surname == null || sex == null || username == null 
 				|| password == null || dateOfBirth == null || address == null || 
 				city == null || zipCode == 0 || email == null || creditCardType == null
-				|| creditCardNumber == null || expiryDate == null || ccv == null || owns == null)
+				|| creditCardNumber == null || expiryDate == null || ccv == null 
+				|| name == " " || surname == " " || sex == " " || username == " " 
+				|| password == " " || address == " " || city == " " 
+				|| email == " " || creditCardType == " " || creditCardNumber == " " 
+				|| expiryDate == " " || ccv == " " || owns == null)
 			return null;
 
 
@@ -155,7 +161,11 @@ public class RegistrationService {
 		if(name == null || surname == null || sex == null || username == null 
 				|| password == null || dateOfBirth == null || address == null || 
 				city == null || zipCode == 0 || email == null || creditCardType == null
-				|| creditCardNumber == null || expiryDate == null || ccv == null || locationLat == 0 || locationLon == 0)
+				|| creditCardNumber == null || expiryDate == null || ccv == null 
+				|| name == " " || surname == " " || sex == " " || username == " " 
+				|| password == " " || address == " " || city == " " || email == " " 
+				|| creditCardType == " " || creditCardNumber == " " || expiryDate == " " 
+				|| ccv == " " || locationLat == 0 || locationLon == 0)
 			return null;
 
 		//validations
