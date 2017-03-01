@@ -55,7 +55,7 @@ public class EvaluationService {
 
 		Taxi taxeval = route.getReq().getTaxi();
 
-		Query query = em.createQuery("select taxidr from taxidriver taxidr where taxiid = :txid");
+		Query query = em.createQuery("select taxidr from TaxiDriver taxidr where taxiID = :txid");
 		query.setParameter("txid", taxeval.getId());
 		TaxiDriver taxdrrslt = (TaxiDriver)query.getSingleResult();
 
