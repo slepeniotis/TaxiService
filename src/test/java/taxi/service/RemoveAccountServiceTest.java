@@ -41,26 +41,6 @@ public class RemoveAccountServiceTest {
 	@Test
 	public void testRemoveAValidTaxiDriver(){
 		
-		RemoveAccountService service = new RemoveAccountService();
-		Query query = em.createQuery("select taxidr from TaxiDriver taxidr where taxidr.id = :tid");
-		query.setParameter("tid", (long)9);
-		TaxiDriver taxiDr = (TaxiDriver)query.getSingleResult();
-		Boolean rem  = service.removeDriver(taxiDr) ;
-		em.close();
-		Assert.assertEquals("SKYLADIKOY 3", taxiDr.getAddress());
-		// assertions
-		em = JPAUtil.getCurrentEntityManager();
-		
-		TaxiDriver taxiDrv = (TaxiDriver)query.getSingleResult();
-		//Assert.assertEquals("dfaggaadfadsfada", taxiDr.getAddress())
-		//Assert.assertEquals(0, author.getBooks().size());
-		
-	/*	EntityTransaction tx = em.getTransaction();
-		tx.begin();				
-		em.remove(taxiDr);
-		tx.commit();*/
-		
-		
 	}
 	
 	//Tests customer removal
