@@ -28,27 +28,24 @@ public class Initializer  {
 		tx.begin();
 		Query query = null;
 
-		//creating and executing several queries within the same transaction
-		query = em.createNativeQuery("delete from evaluation");
-		//execute the query given above
+		//creating and executing several queries within the same transaction		
+		query = em.createNativeQuery("delete from request");
 		query.executeUpdate();
-
-		query = em.createNativeQuery("delete from route");
-		query.executeUpdate();
-
+		
 		query = em.createNativeQuery("delete from customer");
-		query.executeUpdate();
-
-		query = em.createNativeQuery("delete from taxi");
 		query.executeUpdate();
 
 		query = em.createNativeQuery("delete from taxidriver");
 		query.executeUpdate();
-
-		query = em.createNativeQuery("delete from customer");
+		
+		query = em.createNativeQuery("delete from taxi");
 		query.executeUpdate();
-
-		query = em.createNativeQuery("delete from request");
+		
+		query = em.createNativeQuery("delete from route");
+		query.executeUpdate();
+		
+		query = em.createNativeQuery("delete from evaluation");
+		//execute the query given above
 		query.executeUpdate();
 
 		query = em.createNativeQuery("ALTER SEQUENCE hibernate_sequence RESTART WITH 1");

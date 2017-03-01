@@ -45,7 +45,7 @@ public class Route {
 
 	//each route can have only one evaluation or none
 	//fetch type lazy does not fetch the object evaluation
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
 	

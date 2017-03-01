@@ -40,7 +40,7 @@ public class Request {
 
 	//fetch type lazy does not fetch the object Route
 	//we don't use any kind of cascade here, since the route is not necessarily set
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinColumn(name="routeId", nullable = true)
 	private Route route;
 
