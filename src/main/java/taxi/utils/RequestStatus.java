@@ -9,5 +9,6 @@ public enum RequestStatus {
 
 	PENDING, 
 	ONGOING, 
-	DONE
+	DONE,
+	CANCELED
 }

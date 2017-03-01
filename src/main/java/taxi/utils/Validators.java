@@ -91,13 +91,12 @@ public class Validators {
 		return true;
 	}
 
-	/* Method validating email.
+	/* Method validating customer's email.
 	 * At first creates a pattern which checks that the email has the appropriate format: user@domain.xx.
-	 * If the email matches that pattern, it checks from which class it was called, Customer or TaxiDriver.
-	 * Then it checks if this email exists already in the appropriate table of the DB.
+	 * If the email matches that pattern, it checks if this email exists already in the table of the DB.
 	 * If the email does not exist, then the validation was completed successfully (true) 
 	 */
-	public static boolean validateEmail(String email){
+	public static boolean validateEmailCst(String email){
 		if(email == " ")
 			return false;
 
@@ -108,28 +107,45 @@ public class Validators {
 		StackTraceElement ste[] = Thread.currentThread().getStackTrace(); 
 
 		if(m.matches()){
-			if(ste[2].getClassName() == "taxi.model.Customer"){
+			Query query = em.createQuery("select cust from Customer cust where email = :eml");
+			query.setParameter("eml", email);  
+			query.setMaxResults(1);
+			List<Customer> results = query.getResultList();
 
-				Query query = em.createQuery("select cust from Customer cust where email = :eml");
-				query.setParameter("eml", email);  
-				query.setMaxResults(1);
-				List<Customer> results = query.getResultList();
+			if(!results.isEmpty()){
+				return false;
+			}			
+			return true;
+		}
 
-				if(!results.isEmpty()){
-					return false;
-				}
+		return false;
 
-			}
-			else if(ste[2].getClassName() == "taxi.model.TaxiDriver"){
-				Query query = em.createQuery("select taxdr from TaxiDriver taxdr where email = :eml");
-				query.setParameter("eml", email);  
-				query.setMaxResults(1);
-				List<Customer> results = query.getResultList();
+	}
 
-				if(!results.isEmpty()){
-					return false;
-				}
-			}
+	/* Method validating taxi driver's email.
+	 * At first creates a pattern which checks that the email has the appropriate format: user@domain.xx.
+	 * If the email matches that pattern, it checks if this email exists already in the table of the DB.
+	 * If the email does not exist, then the validation was completed successfully (true) 
+	 */
+	public static boolean validateEmailTx(String email){
+		if(email == " ")
+			return false;
+
+		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+		Pattern p = Pattern.compile(ePattern);
+		Matcher m = p.matcher(email);
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		StackTraceElement ste[] = Thread.currentThread().getStackTrace(); 
+
+		if(m.matches()){
+			Query query = em.createQuery("select taxdr from TaxiDriver taxdr where email = :eml");
+			query.setParameter("eml", email);  
+			query.setMaxResults(1);
+			List<Customer> results = query.getResultList();
+
+			if(!results.isEmpty()){
+				return false;
+			}			
 			return true;
 		}
 

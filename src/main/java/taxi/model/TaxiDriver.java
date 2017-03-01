@@ -67,7 +67,7 @@ public class TaxiDriver {
 	@OneToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="taxiID")
 	private Taxi owns;
-	
+
 	//constructors for Customer
 	public TaxiDriver(){}
 	public TaxiDriver(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
@@ -122,32 +122,33 @@ public class TaxiDriver {
 	public String getCreditCardType() {
 		return this.creditCardType;
 	}
+	
+	public void setCreditCardType(String creditCardType) {
+		this.creditCardType = creditCardType;
+	}
 
 	public String getCreditCardNumber() {
 		return this.creditCardNumber;
 	}
 
-	public boolean setCreditCard(String creditCardType, String creditCardNumber, String expiryDate, String ccv) {
-		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
-			this.creditCardType = creditCardType;
-			this.creditCardNumber = creditCardNumber;
-			this.expiryDate = expiryDate;
-			this.ccv = ccv;
-			return true;
-		}
-		else {
-			//in case credit card is invalid, it is not updated
-			System.out.println("Credit Card's details are invalid");			
-			return false;
-		}
-	}
-
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}	
+	
 	public String getExpiryDate() {
 		return this.expiryDate;
+	}
+	
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;		
 	}
 
 	public String getCcv() {
 		return this.ccv;
+	}
+	
+	public void setCcv(String ccv) {
+		this.ccv = ccv;
 	}
 
 	public String getSex() {
@@ -185,16 +186,8 @@ public class TaxiDriver {
 	public String getEmail() {
 		return email;
 	}
-	public boolean setEmail(String email) {
-		if (Validators.validateEmail(email)) {
-			this.email = email;
-			return true;
-		}
-		else {
-			//in case the email is invalid or in use, it is not updated
-			System.out.println("Email already in use or invalid");
-			return false;
-		}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {
@@ -205,40 +198,24 @@ public class TaxiDriver {
 		return this.password;
 	}
 
-	public boolean setPassword(String password) {
-		if (Validators.validatePassword(password)) {
-			try {
-				this.password = AESEncrypt.encrypt(password); 
-			}
-			catch (Exception e){
-				//in case an exception occurs, the password is not changed
-				System.out.println(e.getStackTrace());
-				return false;
-			}
-			return true;
+	public void setPassword(String password) {
+		try {
+			this.password = AESEncrypt.encrypt(password); 
 		}
-		else {
-			//in case the validation is unsuccessful, the password is not changed
-			return false;
-		}
+		catch (Exception e){
+			//in case an exception occurs, the password is not changed
+			System.out.println(e.getStackTrace());				
+		}		
 	}
 
 	public Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
-	public boolean setDateOfBirth(Date dateOfBirth) {
-		if (Validators.validateDateOfBirth(dateOfBirth)){
-			this.dateOfBirth = dateOfBirth;
-		}
-		else {
-			System.out.println("Date of birth is invalid");
-			//in case Date of birth is invalid
-			return false;
-		}		
-		return true;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;		
 	}
-	
+
 	public Taxi getOwns() {
 		return owns;
 	}

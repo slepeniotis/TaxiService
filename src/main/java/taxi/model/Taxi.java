@@ -3,7 +3,6 @@ package taxi.model;
 //imports for using persistence, List, ArrayList, date
 import java.util.List;
 import javax.persistence.*;
-import taxi.utils.Validators;
 import java.util.ArrayList;
 
 
@@ -83,14 +82,8 @@ public class Taxi {
 		return this.licensePlate;
 	}
 
-	public void setLicensePlate(String licensePlate) {
-		//validations
-		if (Validators.validateLicensePlate(licensePlate))
-			this.licensePlate = licensePlate;
-		else {
-			//in case licensePlate validation is false, we do not change the existing
-			System.out.println("Car already connected with other driver, or license plate is invalid");
-		}
+	public void setLicensePlate(String licensePlate) {		
+		this.licensePlate = licensePlate;
 	}
 
 	public double getLocationLat() {
@@ -122,13 +115,7 @@ public class Taxi {
 	}
 
 	public void setCarModelDate(String carModelDate) {
-		//validations
-		if (Validators.validateCarModelDate(carModelDate))
-			this.carModelDate = carModelDate;
-		else {
-			//in case carModelDate validation is false, we do not change the existing
-			System.out.println("Car model date is invalid");			
-		}
+		this.carModelDate = carModelDate;
 	}
 
 	public List<Request> getRequest() {
@@ -137,10 +124,6 @@ public class Taxi {
 
 	public void addRequest(Request accepts) {
 		this.accepts.add(accepts);
-	}
-	
-	public boolean removeRequest(Request req){
-		return this.req.remove(req);
 	}
 
 	//override of toString method from Object

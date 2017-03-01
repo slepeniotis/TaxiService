@@ -95,7 +95,7 @@ public class TaxiService {
 					//in case an exception occurs
 					return null;
 				}
-				if (Validators.validateEmail(email)){
+				if (Validators.validateEmailTx(email)){
 					if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
 						if (Validators.validateDateOfBirth(dateOfBirth)){
 							if (Validators.validateTaxi(owns)){
@@ -175,7 +175,7 @@ public class TaxiService {
 					//in case an exception occurs
 					return null;
 				}
-				if (Validators.validateEmail(email)){
+				if (Validators.validateEmailCst(email)){
 					if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
 						if (Validators.validateDateOfBirth(dateOfBirth)){
 							Customer customer = new Customer(name, surname, sex, username, password, dateOfBirth, 
@@ -255,7 +255,7 @@ public class TaxiService {
 			if(rsltcst.equals(null)){
 				return result;
 			}
-			
+
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();				
 			rsltcst.setLocationLat(newLat);
@@ -287,7 +287,7 @@ public class TaxiService {
 			rslttxdr.getOwns().setLocationLat(newLat);
 			rslttxdr.getOwns().setLocationLon(newLon);			
 			tx.commit();
-			
+
 			result = rslttxdr;
 
 		}
@@ -317,8 +317,8 @@ public class TaxiService {
 			return null;
 
 		CoordinateCalc cc = new CoordinateCalc();
-		List<Taxi> taxlst = new ArrayList();
-		Query query = em.createQuery("select taxi from Taxi taxi where status = :stts");
+		List<Taxi> taxlst = new ArrayList(0);
+		Query query = em.createQuery("select taxi from Taxi taxi where taxi.status = :stts");
 		query.setParameter(":stts", true);
 		List<Taxi> taxirslt = query.getResultList();
 		if(taxirslt.isEmpty())
@@ -327,7 +327,7 @@ public class TaxiService {
 		for(Taxi t : taxirslt)
 			if(cc.calculateDistanceInKilometer(customer.getLocationLat(), customer.getLocationLon(), 
 					t.getLocationLat(), t.getLocationLon()) <= range)
-			taxlst.add(t);
+				taxlst.add(t);
 
 		return taxlst;
 	}
@@ -335,7 +335,7 @@ public class TaxiService {
 	//REQUEST EXECUTION METHODS
 
 	/* startRequest is triggered by the customer.
-	 * we are getting as input the current date, 
+	 * we are getting as input the current date (auto from the system), 
 	 * the taxi selected by the customer for this request an the customer
 	 * we check if any of the inputs is empty/null
 	 * 
@@ -348,11 +348,12 @@ public class TaxiService {
 	 * and also in the list of Requests made by the customer in general
 	 * At the end we communicate with the driver, and return the request object created
 	 */
-	public Request startRequest(Date dateTime, Taxi taxi, Customer customer){
+	public Request startRequest(Taxi taxi, Customer customer){
 
-		if(dateTime == null || taxi == null || customer == null)
+		if(taxi == null || customer == null)
 			return null;
 
+		Date dateTime = new Date();
 		Request req = new Request(dateTime, taxi, customer);
 		Query query = em.createQuery("select taxidr from taxidriver taxidr where taxi = :taxiid");
 		query.setParameter("taxiid", taxi.getId());
@@ -378,11 +379,13 @@ public class TaxiService {
 	 *  or false in case it was denied or any error occured
 	 *  
 	 *  first we are checking if any of the inputs is empty/null
-	 *  we thecn check driver's decision.
-	 *  - "yes": we update the status of the request from pending to ongoing
+	 *  we then check driver's decision.
+	 *  - "yes": we update the status of the request from pending to ongoing 
+	 *              in case it is not already canceled by the customer
 	 *           we update the status of the taxi from true (available) to false (booked)
 	 *           we inform customer that his request was accepted
-	 *  - "no" : we inform customer that his request was denied
+	 *  - "no" : we update the status of the request from pending to canceled
+	 *           we inform customer that his request was denied
 	 */
 	public boolean handleRequest(Request req, Taxi taxi, String decision){
 		if(req == null || taxi == null || decision == null)
@@ -391,22 +394,31 @@ public class TaxiService {
 		boolean result = false;
 
 		if(decision == "yes"){
-			em = JPAUtil.getCurrentEntityManager();
-			EntityTransaction tx = em.getTransaction();
-			tx.begin();			
-			req.setStatus(RequestStatus.ONGOING);
-			taxi.setStatus(false);
-			taxi.addRequest(req);
-			tx.commit();	
+			if(req.getStatus() != RequestStatus.CANCELED){
+				em = JPAUtil.getCurrentEntityManager();
 
-			req.getCustomer().informCustomer("Request accepted from Taxi " + taxi.getId());
+				EntityTransaction tx = em.getTransaction();
+				tx.begin();
+				req.setStatus(RequestStatus.ONGOING);
+				taxi.setStatus(false);
+				taxi.addRequest(req);
+				tx.commit();
 
-			result = true;
+				req.getCustomer().informCustomer("Request accepted from Taxi " + taxi.getId());
+				result = true;
+			}
+			
 		}
 		else if(decision == "no"){
+			em = JPAUtil.getCurrentEntityManager();
+
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			req.setStatus(RequestStatus.CANCELED);			
+			tx.commit();
+			
 			req.getCustomer().informCustomer("Request denied from Taxi " + taxi.getId());
 
-			result = false;
 		}
 
 		return result;
@@ -422,9 +434,9 @@ public class TaxiService {
 	 * the route created is returned as a result
 	 * 
 	 */
-	public Route createRoute(Request req, String fromAddress, String toAddress, String fromCity, String toCity, String fromZipCode, String toZipCode) {
+	public Route createRoute(Request req, String fromAddress, String toAddress, String fromCity, String toCity, int fromZipCode, int toZipCode) {
 
-		if(req == null || fromAddress == null || toAddress == null || fromCity == null || toCity == null || fromZipCode == null || toZipCode == null)
+		if(req == null || fromAddress == null || toAddress == null || fromCity == null || toCity == null || fromZipCode == 0 || toZipCode == 0)
 			return null;
 
 		Route route = new Route(fromAddress, toAddress, fromCity, toCity, fromZipCode, toZipCode, req);
@@ -548,17 +560,19 @@ public class TaxiService {
 			/* we could alternatively fetch the contents of Route and then check the dates from the object Request
 			 * we prefer this way instead, to avoid the overhead
 			 */
-			Query query = em.createQuery("select r from Request r where r.dateTime between :frRange and :tRange");
+			Query query = em.createQuery("select r from Request r where r.status like :stts and r.dateTime "
+					+ "between :frRange and :tRange");
 			try {
 				d = sdf.parse("1/12/2012");
 				query.setParameter("frRange", d);
 				d = sdf.parse("31/12/2012");
 				query.setParameter("tRange", d);
+				query.setParameter(":stts", "DONE");
 			}
 			catch (ParseException e){
 				System.out.println(e.getStackTrace());
 				return 0;
-			}	
+			}
 
 			List<Request> reqrslt = query.getResultList();		
 			if(!reqrslt.isEmpty())
@@ -574,7 +588,7 @@ public class TaxiService {
 	/* produceStatistcs method
 	 * this method is overloaded
 	 * 
-	 * This version of method, produces a String with information about total routes made
+	 * This version of method, returns the total number of total routes made
 	 * from a specific city or to a specific city
 	 * The method gets as inputs the selection 
 	 *                      (selection 1 = date range, 2 = from city, 3 = to city
@@ -585,21 +599,21 @@ public class TaxiService {
 	 * we retrieve from Route table all the requests made from/to 
 	 * a specific city (according to the selection)
 	 * we run into the list of the results (in case it is not empty),
-	 * and we return a string containing the total number of those routes, 
-	 * along with the ID of the request related to them
+	 * and we return the total number
 	 * 
 	 * in case the result is empty, the total number of such routes is 0
 	 */ 
-	public String produceStatistics(int selection, String city){
+	public int produceStatistics(int selection, String city){
 		String result="";
+		List<Route> routerslt = new ArrayList(0);	
 		if(selection == 0 || city == null)
-			return result;		
+			return 0;		
 
 		if(selection == 2){
 
 			Query query = em.createQuery("select r from Route r where r.fromCity LIKE :ct");
 			query.setParameter("ct", city);
-			List<Route> routerslt = query.getResultList();	
+			routerslt = query.getResultList();	
 			if(!routerslt.isEmpty()){
 				result += "Total requests from city " + city + " is: " + routerslt.size() + "\n";
 				for(Route r : routerslt)
@@ -611,8 +625,8 @@ public class TaxiService {
 		}
 		else if(selection == 3){
 			Query query = em.createQuery("select r from Route r where r.toCity LIKE :ct");
-			query.setParameter("ct", city);
-			List<Route> routerslt = query.getResultList();	
+			query.setParameter("ct", city);		
+			routerslt = query.getResultList();	
 			if(!routerslt.isEmpty()){
 				result += "Total requests to city " + city + " is: " + routerslt.size() + "\n";
 				for(Route r : routerslt)
@@ -623,7 +637,8 @@ public class TaxiService {
 			}
 		}
 
-		return result;
+		System.out.println(result);
+		return routerslt.size();
 	}
 
 	/* Change of Taxi belonging to a Taxi Driver
@@ -653,7 +668,7 @@ public class TaxiService {
 				tx.commit();				
 
 				//TI GINETAI ME TA REQUESTS EDO ?
-				
+
 				return newTaxi;
 			}
 			else {
@@ -667,7 +682,7 @@ public class TaxiService {
 			return null;
 		}
 	}
-	
+
 	/* Change of address (Taxi Driver/Customer)
 	 * given the usertype and the userid, we fetch from the DB the appropriate record 
 	 * and change the address 
@@ -677,7 +692,7 @@ public class TaxiService {
 	 * The object which was changed, is returned as result 
 	 */
 	public Object changeAddress(String userType, long userId, String address, String city, int zipCode, TaxiDriver taxidriver){
-		
+
 		if(address == null || city == null || zipCode == 0)
 			return null;
 
@@ -707,7 +722,7 @@ public class TaxiService {
 		}
 		return null;
 	}
-	
+
 	/* Change of Credit card (Taxi Driver/Customer)
 	 * given the usertype and the userid, we fetch from the DB the appropriate record 
 	 * and change the credit card after its validation 
@@ -718,7 +733,7 @@ public class TaxiService {
 	 */
 	public Object changeCreditCard(String userType, long userId, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv){
-		
+
 		if(creditCardType == null || creditCardNumber == null || expiryDate == null || ccv == null)
 			return null;
 
@@ -728,7 +743,10 @@ public class TaxiService {
 			Customer savedCustomer = em.find(Customer.class, userId);
 			if(savedCustomer != null){
 				if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
-					savedCustomer.setCreditCard(creditCardType, creditCardNumber, expiryDate, ccv);
+					savedCustomer.setCreditCardType(creditCardType);
+					savedCustomer.setCreditCardNumber(creditCardNumber);
+					savedCustomer.setExpiryDate(expiryDate);
+					savedCustomer.setCcv(ccv);
 				}
 			}
 			tx.commit();
@@ -740,7 +758,50 @@ public class TaxiService {
 			TaxiDriver savedTaxiDriver = em.find(TaxiDriver.class, userId);
 			if(savedTaxiDriver != null){
 				if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
-					savedTaxiDriver.setCreditCard(creditCardType, creditCardNumber, expiryDate, ccv);
+					savedTaxiDriver.setCreditCardType(creditCardType);
+					savedTaxiDriver.setCreditCardNumber(creditCardNumber);
+					savedTaxiDriver.setExpiryDate(expiryDate);
+					savedTaxiDriver.setCcv(ccv);
+				}
+			}
+			tx.commit();
+			return savedTaxiDriver;
+		}
+		return null;
+	}
+
+	/* Change of email (Taxi Driver/Customer)
+	 * given the usertype and the userid, we fetch from the DB the appropriate record 
+	 * and change the email after its validation 
+	 * 
+	 * we assume that usertype is given automatically by the application
+	 * 
+	 * The object which was changed, is returned as result 
+	 */
+	public Object changeEmail(String userType, long userId, String email){
+
+		if(email == null)
+			return null;
+
+		if(userType == "Customer") {
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			Customer savedCustomer = em.find(Customer.class, userId);
+			if(savedCustomer != null){
+				if (Validators.validateEmailCst(email)){
+					savedCustomer.setEmail(email);
+				}
+			}
+			tx.commit();
+			return savedCustomer;			
+		}
+		else if (userType == "Taxi Driver"){
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			TaxiDriver savedTaxiDriver = em.find(TaxiDriver.class, userId);
+			if(savedTaxiDriver != null){
+				if (Validators.validateEmailTx(email)){
+					savedTaxiDriver.setEmail(email);
 				}
 			}
 			tx.commit();
@@ -760,10 +821,10 @@ public class TaxiService {
 		tx.begin();				
 		em.remove(taxidriver);
 		tx.commit();
-		
+
 		return true;
 	}
-	
+
 	/* Remove of Customer
 	 * we assume that customer requests his own removal
 	 * we receive the customer object
@@ -775,35 +836,41 @@ public class TaxiService {
 		tx.begin();				
 		em.remove(customer);
 		tx.commit();
-		
+
 		//TI GINETAI ME TA REQUESTS EDO ?
-		
+
 		return true;
 	}
-	
-	/* Remove of Request
-	 * we assume that customer can only remove the request he already made
+
+	/* Cancel Request
+	 * we assume that customer can only cancel a request he already made
+	 * and it is not already canceled or done
 	 * we receive the customer object and the request made
 	 *  
-	 * First of all we remove the request from the list of requests from customer and taxi
-	 * then we inform taxi driver that the request has been canceled
-	 * at the end we remove the request from the db
-	 * 
-	 * after the successful removal, we get true
+	 * we inform taxi driver that the request has been canceled
+	 *  
+	 * after the successful canceling, we get true
 	 */
-	public boolean removeRequest(Customer customer, Request req){	
+	public boolean cancelRequest(Customer customer, Request req){	
 		boolean result = false;
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();				
-		
-		if(customer.removeRequest(req)){
-			if(req.getTaxi().removeRequest(req)){
-				em.remove(req);
-			}
+		if(req.getStatus() != RequestStatus.CANCELED && req.getStatus() != RequestStatus.DONE){
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			req.setStatus(RequestStatus.CANCELED);
 			result = true;
-		}					
-		tx.commit();
-		
+			tx.commit();
+
+			Taxi taxi = req.getTaxi();
+
+			Query query = em.createQuery("select taxidr from taxidriver taxidr where taxiid = :txid");
+			query.setParameter("txid", taxi.getId());
+			TaxiDriver taxdrrslt = (TaxiDriver)query.getSingleResult();
+
+			//inform taxidriver(evaluation)
+			taxdrrslt.informTaxiDriver("Customer " + req.getCustomer().getName() + " canceled the request: " + req.getId());
+
+		}
+
 		return result;
 	}
 

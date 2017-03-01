@@ -4,7 +4,6 @@ package taxi.model;
 import java.util.List;
 import javax.persistence.*;
 import taxi.utils.AESEncrypt;
-import taxi.utils.Validators;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -41,7 +40,7 @@ public class Customer {
 
 	@Column(name = "locationLat", length = 30, nullable = false)
 	private double locationLat;
-	
+
 	@Column(name = "locationLon", length = 30, nullable = false)
 	private double locationLon;
 
@@ -71,9 +70,9 @@ public class Customer {
 
 	/* every customer has a list of requests done, since he can make several requests
 	 * fetch type lazy does not fetch all the list. fetching is done only if we ask for it
-	 * cascade types used here, enable persist merge and remove for the whole list, in case Customer is persisted, merged or removed.
-	 */
-	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	 * cascade type used here is ALL. Merge, persist, detach, remove, refresh
+	*/ 
+	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Request> req = new ArrayList<Request>();
 
 	//constructors for Customer
@@ -137,23 +136,14 @@ public class Customer {
 		return this.password;
 	}
 
-	public boolean setPassword(String password) {
-		if (Validators.validatePassword(password)) {
-			try {
-				this.password = AESEncrypt.encrypt(password); 
-			}
-			catch (Exception e){
-				//in case an exception occurs, the password is not changed
-				System.out.println(e.getStackTrace());
-				return false;
-			}
-			return true;
+	public void setPassword(String password) {		
+		try {
+			this.password = AESEncrypt.encrypt(password); 
 		}
-		else {
-			//in case the validation is unsuccessful, the password is not changed
-			System.out.println("Invalid password");			
-			return false;
-		}
+		catch (Exception e){
+			//in case an exception occurs, the password is not changed
+			System.out.println(e.getStackTrace());				
+		}			
 	}
 
 	public String getSex() {
@@ -168,16 +158,8 @@ public class Customer {
 		return this.dateOfBirth;
 	}
 
-	public boolean setDateOfBirth(Date dateOfBirth) {
-		if (Validators.validateDateOfBirth(dateOfBirth)){
-			this.dateOfBirth = dateOfBirth;
-		}
-		else {
-			System.out.println("Date of birth is invalid");
-			//in case Date of birth is invalid
-			return false;
-		}		
-		return true;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public double getLocationLat() {
@@ -187,11 +169,11 @@ public class Customer {
 	public void setLocationLat(double locationLat) {
 		this.locationLat = locationLat;
 	}
-	
+
 	public double getLocationLon() {
 		return locationLon;
 	}
-	
+
 	public void setLocationLon(double locationLon) {
 		this.locationLon = locationLon;
 	}
@@ -224,47 +206,40 @@ public class Customer {
 		return email;
 	}
 
-	public boolean setEmail(String email) {
-		if (Validators.validateEmail(email)) {
-			this.email = email;
-			return true;
-		}
-		else {
-			//in case the email is invalid or in use, it is not updated
-			System.out.println("Email already in use or invalid");
-			return false;
-		}
+	public void setEmail(String email) {
+		this.email = email;			
 	}
 
 	public String getCreditCardType() {
 		return this.creditCardType;
 	}
-
-	public boolean setCreditCard(String creditCardType, String creditCardNumber, String expiryDate, String ccv) {
-		if (Validators.validateCreditCard(creditCardNumber, expiryDate, ccv)){
-			this.creditCardType = creditCardType;
-			this.creditCardNumber = creditCardNumber;
-			this.expiryDate = expiryDate;
-			this.ccv = ccv;
-			return true;
-		}
-		else {
-			//in case credit card is invalid, it is not updated
-			System.out.println("Credit Card's details are invalid");			
-			return false;
-		}
+	
+	public void setCreditCardType(String creditCardType) {
+		this.creditCardType = creditCardType;
 	}
 
 	public String getCreditCardNumber() {
 		return this.creditCardNumber;
 	}
 
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}	
+	
 	public String getExpiryDate() {
 		return this.expiryDate;
+	}
+	
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;		
 	}
 
 	public String getCcv() {
 		return this.ccv;
+	}
+	
+	public void setCcv(String ccv) {
+		this.ccv = ccv;
 	}
 
 	public List<Request> getRequest() {
@@ -273,10 +248,6 @@ public class Customer {
 
 	public void addRequest(Request req) {
 		this.req.add(req);
-	}
-	
-	public boolean removeRequest(Request req){
-		return this.req.remove(req);
 	}
 
 	//operation methods
