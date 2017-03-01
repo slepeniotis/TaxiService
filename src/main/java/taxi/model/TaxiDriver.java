@@ -175,7 +175,7 @@ public class TaxiDriver {
 		this.city = city;
 	}
 
-	public int getzipCode() {
+	public int getZipCode() {
 		return this.zipCode;
 	}
 
