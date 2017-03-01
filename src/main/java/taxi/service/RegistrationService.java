@@ -39,7 +39,7 @@ public class RegistrationService {
 
 
 		//validations
-		if (Validators.validateLicensePlate(licensePlate))
+		if (Validators.validateLicensePlate(licensePlate)){
 			if (Validators.validateCarModelDate(carModelDate)){
 				Taxi taxi = new Taxi(carModel, carType, licensePlate, carModelDate, locationLat, locationLon);
 
@@ -51,13 +51,14 @@ public class RegistrationService {
 				return taxi;
 			}
 			else {
-				//in case licensePlate already exists
-				System.out.println("Car already connected with other driver, or license plate is invalid");
+				//in case carModelDate validation fails
+				System.out.println("Car model date is invalid");
 				return null;
 			}
+		}
 		else{
-			//in case carModelDate validation fails
-			System.out.println("Car model date is invalid");
+			//in case licensePlate already exists
+			System.out.println("Car already connected with other driver, or license plate is invalid");
 			return null;
 		}
 	}
