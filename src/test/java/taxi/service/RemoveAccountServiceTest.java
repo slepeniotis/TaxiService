@@ -16,7 +16,6 @@ import taxi.persistence.JPAUtil;
 public class RemoveAccountServiceTest {
 
 	protected EntityManager em;
-	private TaxiDriver taxidrv;
 
 	@Before
 	public void setup(){
@@ -39,7 +38,7 @@ public class RemoveAccountServiceTest {
 
 	//Tests taxi driver removal
 	@Test
-	public void testRemoveAValidTaxiDriver(){
+	public void testRemoveAValidTaxiDriver(){		
 		
 	}
 	
