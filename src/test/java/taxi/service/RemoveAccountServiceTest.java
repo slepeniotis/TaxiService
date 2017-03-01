@@ -51,9 +51,7 @@ public class RemoveAccountServiceTest {
 		// assertions
 		em = JPAUtil.getCurrentEntityManager();
 		
-		//Query query = em.createQuery("select taxidr from TaxiDriver taxidr where taxidr.id = :tid");
-		//query.setParameter("tid", (long)9);
-		//TaxiDriver taxiDrv = (TaxiDriver)query.getSingleResult();
+		TaxiDriver taxiDrv = (TaxiDriver)query.getSingleResult();
 		//Assert.assertEquals("dfaggaadfadsfada", taxiDr.getAddress())
 		//Assert.assertEquals(0, author.getBooks().size());
 		
