@@ -43,6 +43,8 @@ public class EditAccountService {
 				tx.begin();
 				em.persist(newTaxi);
 				taxidriver.setOwns(newTaxi);
+				tx.commit();
+				tx.begin();
 				em.remove(oldTaxi);
 				tx.commit();				
 
