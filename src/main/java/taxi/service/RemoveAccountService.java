@@ -7,12 +7,12 @@ import taxi.model.Customer;
 import taxi.model.TaxiDriver;
 import taxi.persistence.JPAUtil;
 
-public class RemoveAccount {
+public class RemoveAccountService {
 
 	EntityManager em;
 
 	//getting the current entity manager
-	public RemoveAccount() {
+	public RemoveAccountService() {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 	
