@@ -12,7 +12,7 @@ import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 
 
-public class TaxiServiceTest {
+public class olsTaxiServiceTest {
 
 	protected EntityManager em;
 	
