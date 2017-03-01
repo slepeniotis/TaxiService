@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
@@ -30,4 +31,25 @@ public class EvaluationServiceTest {
 	public void tearDown(){
 		em.close();
 	}
+	
+	@Test
+	public void testPersistValidEvaluation(){
+			
+	}
+	
+	@Test
+	public void testPersistInValidEvaluation_emptyComment(){
+			
+	}
+	
+	@Test
+	public void testPersistInValidEvaluation_nullComment(){
+			
+	}
+	
+	@Test
+	public void testPersistInValidEvaluation_requestStatus(){
+			
+	}
+	
 }
