@@ -17,52 +17,6 @@ public class EditAccountService {
 	public EditAccountService() {
 		em = JPAUtil.getCurrentEntityManager();
 	}
-	
-	/* Change of Taxi belonging to a Taxi Driver
-	 * we assume that the taxi driver requests for change for his taxi
-	 * we receive all the information needed for the creation of the new taxi and the taxi driver.
-	 * we check if any value is empty/null. we assume that location is fetched from GPS
-	 * we then create the new taxi and remove the old one
-	 * 
-	 * the object taxi which was created is returned as a result
-	 */
-	public Taxi changeTaxi(TaxiDriver taxidriver, String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon){
-		if(carModel == null || carType == null || licensePlate == null || carModelDate == null 
-				|| carModel == " " || carType ==  " " || licensePlate ==  " " || carModelDate ==  " " 
-				|| locationLat == 0 || locationLon == 0)
-			return null;
-
-
-		//validations
-		if (Validators.validateLicensePlate(licensePlate))
-			if (Validators.validateCarModelDate(carModelDate)){
-				Taxi newTaxi = new Taxi(carModel, carType, licensePlate, carModelDate, locationLat, locationLon);
-				Taxi oldTaxi = taxidriver.getOwns();
-
-				EntityTransaction tx = em.getTransaction();
-				tx.begin();
-				em.persist(newTaxi);
-				taxidriver.setOwns(newTaxi);
-				tx.commit();
-				tx.begin();
-				em.remove(oldTaxi);
-				tx.commit();				
-
-				//TI GINETAI ME TA REQUESTS EDO ?
-
-				return newTaxi;
-			}
-			else {
-				//in case licensePlate already exists
-				System.out.println("Car already connected with other driver, or license plate is invalid");
-				return null;
-			}
-		else{
-			//in case carModelDate validation fails
-			System.out.println("Car model date is invalid");
-			return null;
-		}
-	}
 
 	/* Change of address (Taxi Driver/Customer)
 	 * given the usertype and the userid, we fetch from the DB the appropriate record 
