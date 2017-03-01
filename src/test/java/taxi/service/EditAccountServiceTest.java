@@ -223,7 +223,7 @@ public class EditAccountServiceTest {
 	public void testChangeValidCreditCardTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -238,7 +238,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyTypeTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, " ", "1234567890123456", "10/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, " ", "1234567890123456", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -253,7 +253,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyNumTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", " ", "10/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", " ", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -269,7 +269,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyDateTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", " ", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", " ", "990");
 		em.close();
 
 		// assertions
@@ -285,7 +285,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyCcvTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/23", " ");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/23", " ");
 		em.close();
 
 		// assertions
@@ -302,7 +302,7 @@ public class EditAccountServiceTest {
 
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, null, "1234567890123456", "10/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, null, "1234567890123456", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -317,7 +317,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_nullNumTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", null, "10/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", null, "10/23", "990");
 		em.close();
 
 		// assertions
@@ -333,7 +333,7 @@ public class EditAccountServiceTest {
 
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", null, "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", null, "990");
 		em.close();
 
 		// assertions
@@ -349,7 +349,7 @@ public class EditAccountServiceTest {
 
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/23", null);
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/23", null);
 		em.close();
 
 		// assertions
@@ -364,7 +364,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_expiredTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/16", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "10/16", "990");
 		em.close();
 
 		// assertions
@@ -379,7 +379,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_dateFormatTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "13/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567890123456", "13/23", "990");
 		em.close();
 
 		// assertions
@@ -395,7 +395,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_numberFormatTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "12345678012342356", "10/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "12345678012342356", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -410,7 +410,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_numFormLetterTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "12345678012342f6", "10/23", "990");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "12345678012342f6", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -425,7 +425,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_ccvFormLetterTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567801234246", "10/23", "9f9");
+		TaxiDriver credit = (TaxiDriver)service.changeCreditCard("Taxi Driver", (long)5, "VISA", "1234567801234246", "10/23", "9f9");
 		em.close();
 
 		// assertions
@@ -441,7 +441,7 @@ public class EditAccountServiceTest {
 	public void testChangeValidCreditCardCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -456,7 +456,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyTypeCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, " ", "1234567890123456", "10/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, " ", "1234567890123456", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -471,7 +471,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyNumCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", " ", "10/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", " ", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -487,7 +487,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyDateCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", " ", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", " ", "990");
 		em.close();
 
 		// assertions
@@ -503,7 +503,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_emptyCcvCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/23", " ");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/23", " ");
 		em.close();
 
 		// assertions
@@ -520,7 +520,7 @@ public class EditAccountServiceTest {
 
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, null, "1234567890123456", "10/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, null, "1234567890123456", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -535,7 +535,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_nullNumCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", null, "10/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", null, "10/23", "990");
 		em.close();
 
 		// assertions
@@ -551,7 +551,7 @@ public class EditAccountServiceTest {
 
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", null, "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", null, "990");
 		em.close();
 
 		// assertions
@@ -567,7 +567,7 @@ public class EditAccountServiceTest {
 
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/23", null);
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/23", null);
 		em.close();
 
 		// assertions
@@ -582,7 +582,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_expiredCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/16", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "10/16", "990");
 		em.close();
 
 		// assertions
@@ -597,7 +597,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_dateFormatCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "13/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567890123456", "13/23", "990");
 		em.close();
 
 		// assertions
@@ -613,7 +613,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_numberFormatCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "12345678012342356", "10/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "12345678012342356", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -628,7 +628,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_numFormLetterCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "12345678012342f6", "10/23", "990");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "12345678012342f6", "10/23", "990");
 		em.close();
 
 		// assertions
@@ -643,7 +643,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidCreditCard_ccvFormLetterCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567801234246", "10/23", "9f9");
+		Customer credit = (Customer)service.changeCreditCard("Customer", (long)1, "VISA", "1234567801234246", "10/23", "9f9");
 		em.close();
 
 		// assertions
@@ -659,7 +659,7 @@ public class EditAccountServiceTest {
 	public void testChangeValidEmailTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, "gkavadias@aueb.gr");
+		TaxiDriver newEmail = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, "gkavadias@aueb.gr");
 		em.close();
 
 		// assertions
@@ -675,7 +675,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_existingEmailTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, "stgonidis@aueb.gr");
+		TaxiDriver newEmail = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, "stgonidis@aueb.gr");
 		em.close();
 
 		// assertions
@@ -690,7 +690,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_emptyEmailTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, " ");
+		TaxiDriver newEmail = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, " ");
 		em.close();
 
 		// assertions
@@ -705,7 +705,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_nullEmailTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, null);
+		TaxiDriver newEmail = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, null);
 		em.close();
 
 		// assertions
@@ -721,7 +721,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_noPatternEmailTx(){
 		EditAccountService service = new EditAccountService();
 
-		TaxiDriver newAddr = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, "stgonidisaueb.gr");
+		TaxiDriver newEmail = (TaxiDriver)service.changeEmail("Taxi Driver", (long)5, "stgonidisaueb.gr");
 		em.close();
 
 		// assertions
@@ -738,7 +738,7 @@ public class EditAccountServiceTest {
 	public void testChangeValidEmailCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeEmail("Customer", (long)1, "gkavadias@aueb.gr");
+		Customer newEmail = (Customer)service.changeEmail("Customer", (long)1, "gkavadias@aueb.gr");
 		em.close();
 
 		// assertions
@@ -754,7 +754,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_existingEmailCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeEmail("Customer", (long)1, "vlamprakakis@gmail.com");
+		Customer newEmail = (Customer)service.changeEmail("Customer", (long)1, "vlamprakakis@gmail.com");
 		em.close();
 
 		// assertions
@@ -769,7 +769,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_emptyEmailCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeEmail("Customer", (long)1, " ");
+		Customer newEmail = (Customer)service.changeEmail("Customer", (long)1, " ");
 		em.close();
 
 		// assertions
@@ -784,7 +784,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_nullEmailCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeEmail("Customer", (long)1, null);
+		Customer newEmail = (Customer)service.changeEmail("Customer", (long)1, null);
 		em.close();
 
 		// assertions
@@ -800,7 +800,7 @@ public class EditAccountServiceTest {
 	public void testChangeInValidEmail_noPatternEmailCst(){
 		EditAccountService service = new EditAccountService();
 
-		Customer newAddr = (Customer)service.changeEmail("Customer", (long)1, "vlamprakakis@gmail.com");
+		Customer newEmail = (Customer)service.changeEmail("Customer", (long)1, "vlamprakakis@gmail.com");
 		em.close();
 
 		// assertions
