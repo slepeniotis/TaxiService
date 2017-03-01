@@ -18,12 +18,12 @@ import taxi.utils.CoordinateCalc;
 import taxi.utils.RequestStatus;
 import taxi.utils.Validators;
 
-public class TaxiService {
+public class oldTaxiService {
 
 	EntityManager em;
 
 	//getting the current entity manager
-	public TaxiService() {
+	public oldTaxiService() {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 
