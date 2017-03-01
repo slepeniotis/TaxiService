@@ -452,6 +452,7 @@ public class Initializer  {
 		tx.commit();
 
 		System.out.println("Initialization completed!");
+	}
 
 		//creating a date for the scope of our testing
 		/*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -578,5 +579,4 @@ public class Initializer  {
 			System.out.println(c.toString());
 		}*/
 
-	}
 }
