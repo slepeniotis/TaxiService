@@ -21,7 +21,7 @@ public class EditAccountService {
 	 * given the usertype and the userid, we fetch from the DB the appropriate record 
 	 * and change the address 
 	 * 
-	 * we assume that usertype is given automatically by the application
+	 * we assume that usertype and userid is given automatically by the application
 	 * 
 	 * The object which was changed, is returned as result 
 	 */
@@ -61,7 +61,7 @@ public class EditAccountService {
 	 * given the usertype and the userid, we fetch from the DB the appropriate record 
 	 * and change the credit card after its validation 
 	 * 
-	 * we assume that usertype is given automatically by the application
+	 * we assume that usertype and userid is given automatically by the application
 	 * 
 	 * The object which was changed, is returned as result 
 	 */
@@ -109,7 +109,7 @@ public class EditAccountService {
 	 * given the usertype and the userid, we fetch from the DB the appropriate record 
 	 * and change the email after its validation 
 	 * 
-	 * we assume that usertype is given automatically by the application
+	 * we assume that usertype and userid is given automatically by the application
 	 * 
 	 * The object which was changed, is returned as result 
 	 */
