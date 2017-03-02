@@ -508,7 +508,7 @@ public class RequestHandlingServiceTest {
 		Taxi tx = em.find(Taxi.class, (long)10);
 
 		Customer cust = em.find(Customer.class, (long)1);
-		Assert.assertTrue(service.cancelRequest(cust, req));		
+		Assert.assertFalse(service.handleRequest(req, tx, "no"));		
 		Assert.assertEquals(RequestStatus.CANCELED, req.getStatus());
 		
 		Assert.assertFalse(service.cancelRequest(cust, req));		
