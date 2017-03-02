@@ -1,5 +1,7 @@
 package taxi.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -50,23 +52,23 @@ public class LoginService {
 			}
 
 			query.setParameter("passwd", pasEncr);
-			Customer rsltcst = (Customer)query.getSingleResult();
+			List<Customer> rsltcst = query.getResultList();
 
-			if(rsltcst.equals(null)){
+			if(rsltcst.isEmpty()){
 				return result;
 			}
 
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();				
-			rsltcst.setLocationLat(newLat);
-			rsltcst.setLocationLon(newLon);			
+			rsltcst.get(0).setLocationLat(newLat);
+			rsltcst.get(0).setLocationLon(newLon);			
 			tx.commit();
 
-			result = rsltcst;
+			result = rsltcst.get(0);
 		}
 		else if(userType == "Taxi Driver"){
 			String pasEncr;
-			Query query = em.createQuery("select taxidr from taxidriver taxidr where username like :usrnm AND password like :passwd");
+			Query query = em.createQuery("select taxidr from TaxiDriver taxidr where username like :usrnm AND password like :passwd");
 			query.setParameter("usrnm", username);
 			try{
 				pasEncr = AESEncrypt.encrypt(password);
@@ -76,19 +78,19 @@ public class LoginService {
 			}
 
 			query.setParameter("passwd", pasEncr);
-			TaxiDriver rslttxdr = (TaxiDriver)query.getSingleResult();
+			List<TaxiDriver> rslttxdr = query.getResultList();
 
-			if(rslttxdr.equals(null)){
+			if(rslttxdr.isEmpty()){
 				return result;
 			}
 
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();				
-			rslttxdr.getOwns().setLocationLat(newLat);
-			rslttxdr.getOwns().setLocationLon(newLon);			
+			rslttxdr.get(0).getOwns().setLocationLat(newLat);
+			rslttxdr.get(0).getOwns().setLocationLon(newLon);			
 			tx.commit();
 
-			result = rslttxdr;
+			result = rslttxdr.get(0);
 
 		}
 
