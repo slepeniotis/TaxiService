@@ -50,7 +50,7 @@ public class RequestHandlingService {
 		CoordinateCalc cc = new CoordinateCalc();
 		List<Taxi> taxlst = new ArrayList(0);
 		Query query = em.createQuery("select taxi from Taxi taxi where taxi.status = :stts");
-		query.setParameter(":stts", true);
+		query.setParameter("stts", true);
 		List<Taxi> taxirslt = query.getResultList();
 		if(taxirslt.isEmpty())
 			return null;
@@ -86,7 +86,7 @@ public class RequestHandlingService {
 
 		Date dateTime = new Date();
 		Request req = new Request(dateTime, taxi, customer);
-		Query query = em.createQuery("select taxidr from taxidriver taxidr where taxi = :taxiid");
+		Query query = em.createQuery("select taxidr from TaxiDriver taxidr where taxiID = :taxiid");
 		query.setParameter("taxiid", taxi.getId());
 		TaxiDriver txdrrslt = (TaxiDriver)query.getSingleResult();
 
@@ -241,7 +241,7 @@ public class RequestHandlingService {
 
 			Taxi taxi = req.getTaxi();
 
-			Query query = em.createQuery("select taxidr from taxidriver taxidr where taxiid = :txid");
+			Query query = em.createQuery("select taxidr from TaxiDriver taxidr where taxiID = :txid");
 			query.setParameter("txid", taxi.getId());
 			TaxiDriver taxdrrslt = (TaxiDriver)query.getSingleResult();
 
