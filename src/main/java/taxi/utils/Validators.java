@@ -231,19 +231,30 @@ public class Validators {
 	 * If the checks are passed, the validation was completed successfully (true) 
 	 */
 	public static boolean validateLicensePlate(String licensePlate){
-
+		final Pattern hasNumber = Pattern.compile("\\d");
+		final Pattern hasLowercase = Pattern.compile("[a-z]");
+		final Pattern hasUppercase = Pattern.compile("[A-Z]");
+		
 		if (licensePlate.length() != 7)
 			return false;
 
 		String letters = licensePlate.substring(0, 3);
 		String numbers = licensePlate.substring(3,7);		
 
-		if (letters.matches("[0-9]+"))
+		if (hasNumber.matcher(letters).find())
 			return false;
-		else if (!numbers.matches("[0-9]+"))
-			return false;		
+		else if (hasLowercase.matcher(numbers).find() || hasUppercase.matcher(numbers).find())
+			return false;	
+		
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		Query query = em.createQuery("select taxi from Taxi taxi where licensePlate like :licplt");	
+		query.setParameter("licplt", licensePlate);
+		List<Taxi> result = query.getResultList();
+		
+		if(result.isEmpty())
+			return true;
 
-		return true;
+		return false;
 	}
 
 	/* Method validating taxi.
