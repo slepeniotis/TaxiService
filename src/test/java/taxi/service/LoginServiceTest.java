@@ -49,7 +49,7 @@ public class LoginServiceTest {
 				
 		LoginService service = new LoginService();	
 		Customer cust = (Customer) service.login("Customer"  , "SLEPENIOTIS", "fdkE9skf", 37.9508344, 23.6510941);		
-		Assert.assertEquals(cust, cust);
+		Assert.assertEquals(cust.getId(), (long)1);
 		
 	}
 	
@@ -57,8 +57,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginCustomer_userType(){
 		
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("TaxiDriver"  , "svlachopoulos", "1234", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("TaDriver", "SLEPENIOTIS", "fdkE9skf", 37.9508344, 23.6510941);		
+		Assert.assertNull(cust);
 			
 	}
 	
@@ -66,8 +66,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginCustomer_emptyUserType(){
 
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login(""  , "svlachopoulos", "1234", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login(" "  , "SLEPENIOTIS", "fdkE9skf", 37.9508344, 23.6510941);		
+		Assert.assertNull(cust);
 		
 	}
 	
@@ -75,16 +75,16 @@ public class LoginServiceTest {
 	public void testInvalidLoginCustomer_nullUserType(){
 		
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("NULL"  , "svlachopoulos", "1234", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login(null  , "SLEPENIOTIS", "fdkE9skf", 37.9508344, 23.6510941);		
+		Assert.assertNull(cust);
 	}
 	
 	@Test
 	public void testInvalidLoginCustomer_username(){
 		
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("Vlachos"  , "xaritos", "1234", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("Customer"  , "xaritos", "fdkE9skf", 37.9508344, 23.6510941);		
+		Assert.assertNull(cust);
 			
 	}
 	
@@ -92,48 +92,48 @@ public class LoginServiceTest {
 	public void testInvalidLoginCustomer_emptyUsername(){
 		
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("Vlachos"  , " ", "1234", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("Customer"  , " ", "fdkE9skf", 37.9508344, 23.6510941);		
+		Assert.assertNull(cust);
 	}
 	
 	@Test
 	public void testInvalidLoginCustomer_nullUsername(){
 			
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("Vlachos"  , "NULL", "1234", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("Customer"  , null, "fdkE9skf", 37.9508344, 23.6510941);		
+		Assert.assertNull(cust);
 	}
 	
 	@Test
 	public void testInvalidLoginCustomer_password(){
 		
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("Vlachos"  , "xaritos", "123qwe!@#", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("Customer"  , "SLEPENIOTIS", "fdk9skf", 37.9508344, 23.6510941);		
+		Assert.assertNull(cust);
 	}
 	
 	@Test
 	public void testInvalidLoginCustomer_emptyPassword(){
 			
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("Vlachos"  , "xaritos", "", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("Customer"  , "SLEPENIOTIS", " ", 37.9508344, 23.6510941);
+		Assert.assertNull(cust);
 	}
 	
 	@Test
 	public void testInvalidLoginCustomer_nullPassword(){
 			
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("Vlachos"  , "xaritos", "NULL", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("Customer"  , "SLEPENIOTIS", null, 37.9508344, 23.6510941);
+		Assert.assertNull(cust);
 	}
 	
 	@Test
 	public void testInvalidLoginCustomer_noCoordinates(){
 		
 		LoginService service = new LoginService();		
-		Customer cust = (Customer) service.login("Vlachos"  , "xaritos", "NULL", 0, 0);		
-		Assert.assertEquals(cust, cust);
+		Customer cust = (Customer) service.login("Customer"  , "SLEPENIOTIS", "fdk9skf", 0, 0);	
+		Assert.assertNull(cust);
 			
 	}
 	//Tests for Taxi Driver
@@ -141,32 +141,32 @@ public class LoginServiceTest {
 	public void testValidLoginTaxiDr(){
 			
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
+		Assert.assertEquals(taxiDriver.getId(), (long)5);
 	}
 	
 	@Test
 	public void testInvalidLoginTaxiDr_userType(){
 			
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Tariver", "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 	}
 	
 	@Test
 	public void testInvalidLoginTaxiDr_emptyUserType(){
 			
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("", "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login(" ", "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 	}
 	
 	@Test
 	public void testInvalidLoginTaxiDr_nullUserType(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("NULL", "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login(null, "MAKXRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 			
 	}
 	
@@ -174,8 +174,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginTaxiDr_username(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "SPYROS" , "fd8E9skf", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", "MAKRIS" , "fd8E9skf", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 			
 	}
 	
@@ -183,8 +183,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginTaxiDr_emptyUsername(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "" , "fd8E9skf", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", " " , "fd8E9skf", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 			
 	}
 	
@@ -192,8 +192,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginTaxiDr_nullUsername(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "NULL" , "fd8E9skf", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", null , "fd8E9skf", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 			
 	}
 	
@@ -201,8 +201,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginTaxiDr_password(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "MAKXRIS" , "123qwe!@#", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", "MAKXRIS" , "fd8E9kf", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 			
 	}
 	
@@ -210,8 +210,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginTaxiDr_emptyPassword(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "MAKXRIS" , "", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", "MAKXRIS" , " ", 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 			
 	}
 	
@@ -219,8 +219,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginTaxiDr_nullPassword(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "MAKXRIS" , "NULL", 38.0093272, 23.8176902);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", "MAKXRIS" , null, 38.0093272, 23.8176902);	
+		Assert.assertNull(taxiDriver);
 			
 	}
 	
@@ -228,8 +228,8 @@ public class LoginServiceTest {
 	public void testInvalidLoginTaxiDr_noCoordinates(){
 		
 		LoginService service = new LoginService();		
-		TaxiDriver taxiDriver = (TaxiDriver) service.login("TaxiDriver", "MAKXRIS" , "fd8E9skf", 0, 0);	
-		Assert.assertEquals(taxiDriver, taxiDriver);
+		TaxiDriver taxiDriver = (TaxiDriver) service.login("Taxi Driver", "MAKXRIS" , "fd8E9skf", 0, 0);
+		Assert.assertNull(taxiDriver);
 			
 	}
 }
