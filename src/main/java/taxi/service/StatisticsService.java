@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import taxi.model.Request;
 import taxi.model.Route;
 import taxi.persistence.JPAUtil;
+import taxi.utils.RequestStatus;
 
 public class StatisticsService {
 
@@ -38,43 +39,35 @@ public class StatisticsService {
 	 * and then summarize its commision 
 	 * 
 	 */
-	public float produceStatistics(int selection, Date fromRange, Date toRange){
+	public double produceStatistics(int selection, Date fromRange, Date toRange){
 		if(selection == 0 || fromRange == null || toRange == null)
 			return 0;
 
-		float sum = 0;
-		if(selection == 1){
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-			Date d;
+		double sum = 0;
+		if(selection == 1){			
 
 			/* we could alternatively fetch the contents of Route and then check the dates from the object Request
 			 * we prefer this way instead, to avoid the overhead
 			 */
 			Query query = em.createQuery("select r from Request r where r.status like :stts and r.dateTime "
 					+ "between :frRange and :tRange");
-			try {
-				d = sdf.parse("1/12/2012");
-				query.setParameter("frRange", d);
-				d = sdf.parse("31/12/2012");
-				query.setParameter("tRange", d);
-				query.setParameter(":stts", "DONE");
-			}
-			catch (ParseException e){
-				System.out.println(e.getStackTrace());
-				return 0;
-			}
+			
+				query.setParameter("frRange", fromRange);			
+				query.setParameter("tRange", toRange);
+				query.setParameter("stts", RequestStatus.DONE);			
 
 			List<Request> reqrslt = query.getResultList();		
 			if(!reqrslt.isEmpty())
 				for(Request r : reqrslt) {
-					if(r.getRoute() != null)
+					if(r.getRoute() != null){
+						System.out.println(r.getRoute().getCommision());
 						sum += r.getRoute().getCommision();
+						System.out.println(sum);
+					}						
 				}
-		}
+			}
 		return sum;
-
-	}
+		}
 
 	/* produceStatistcs method
 	 * this method is overloaded
