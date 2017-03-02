@@ -41,98 +41,108 @@ public class StatisticsServiceTest {
 	//Tests for 1st type of statistics
 	@Test
 	public void testProduceValidStatistics1(){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dFrom = new Date();
+		Date dTo = new Date();
+		try {
+			dFrom = sdf.parse("01/01/2010");
+			dTo = sdf.parse("01/03/2017");
+		}
+		catch (ParseException e){
+			System.out.println(e.getStackTrace());
+		}	
 		
 		StatisticsService service = new StatisticsService();	
-		int ps =   service.produceStatistics(1, "Athens");		
-		Assert.assertEquals(ps, ps);
+		double ps = service.produceStatistics(1, dFrom, dTo);		
+		Assert.assertEquals(5.10000005364418, ps, 0.001);
 
 	}
 
 	@Test
 	public void testProduceInValidStatistics1_nullDateFrom(){
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d = new Date();
+		Date dTo = new Date();
 		try {
-			d = sdf.parse("21/12/1980");			
+			dTo = sdf.parse("01/03/2017");
 		}
 		catch (ParseException e){
 			System.out.println(e.getStackTrace());
-		}
+		}	
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(1, null, d);
-		Assert.assertEquals(produceStatistics, produceStatistics);
-
+		double ps = service.produceStatistics(1, null, dTo);		
+		Assert.assertEquals(0, ps, 0.001);
 	}
 
 	@Test
 	public void testProduceInValidStatistics1_nullDateTo(){
-
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d = new Date();
+		Date dFrom = new Date();
 		try {
-			d = sdf.parse("21/12/1980");			
+			dFrom = sdf.parse("01/03/2017");
 		}
 		catch (ParseException e){
 			System.out.println(e.getStackTrace());
-		}
+		}	
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(1, d, null);
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		double ps = service.produceStatistics(1, dFrom, null);		
+		Assert.assertEquals(0, ps, 0.001);
 	}
 
 	@Test
 	public void testProduceInValidStatistics1_otherSelection0(){
-
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d = new Date();
+		Date dFrom = new Date();
+		Date dTo = new Date();
 		try {
-			d = sdf.parse("21/12/1980");			
+			dFrom = sdf.parse("01/01/2010");
+			dTo = sdf.parse("01/03/2017");
 		}
 		catch (ParseException e){
 			System.out.println(e.getStackTrace());
-		}
+		}	
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(0, d, null);
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		double ps = service.produceStatistics(0, dFrom, dTo);		
+		Assert.assertEquals(0, ps, 0.001);
 	}
 
 	@Test
 	public void testProduceInValidStatistics1_otherSelection2(){
-				
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d = new Date();
+		Date dFrom = new Date();
+		Date dTo = new Date();
 		try {
-			d = sdf.parse("21/12/1980");			
+			dFrom = sdf.parse("01/01/2010");
+			dTo = sdf.parse("01/03/2017");
 		}
 		catch (ParseException e){
 			System.out.println(e.getStackTrace());
-		}
+		}	
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(2, d, null);
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		double ps = service.produceStatistics(2, dFrom, dTo);		
+		Assert.assertEquals(0, ps, 0.001);
 
 	}
 
 	@Test
 	public void testProduceInValidStatistics1_otherSelection3(){
-			
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d = new Date();
+		Date dFrom = new Date();
+		Date dTo = new Date();
 		try {
-			d = sdf.parse("21/12/1980");			
+			dFrom = sdf.parse("01/01/2010");
+			dTo = sdf.parse("01/03/2017");
 		}
 		catch (ParseException e){
 			System.out.println(e.getStackTrace());
-		}
+		}	
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(3, d, null);
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		double ps = service.produceStatistics(3, dFrom, dTo);		
+		Assert.assertEquals(0, ps, 0.001);
 
 	}
 
@@ -141,8 +151,8 @@ public class StatisticsServiceTest {
 	public void testProduceValidStatistics2(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(1, "Athens");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(2, "ACHARNES");
+		Assert.assertEquals(1, result);
 
 	}
 
@@ -150,8 +160,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics2_emptyCity(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(1, "");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(2, " ");
+		Assert.assertEquals(0, result);
 
 	}
 
@@ -159,8 +169,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics2_nullCity(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(1, null);
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(2, null);
+		Assert.assertEquals(0, result);
 
 	}
 
@@ -168,8 +178,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics2_cityNotInDB(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(1, "Larisa");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(2, "LARISA");
+		Assert.assertEquals(0, result);
 
 	}
 
@@ -178,8 +188,8 @@ public class StatisticsServiceTest {
 	public void testProduceValidStatistics3(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(3, "Athens");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(3, "ATHINA");
+		Assert.assertEquals(2, result);
 
 	}
 
@@ -187,8 +197,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics3_emptyCity(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(3, "");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(3, " ");
+		Assert.assertEquals(0, result);
 
 	}
 
@@ -196,8 +206,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics3_nullCity(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(3, null);
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(3, null);
+		Assert.assertEquals(0, result);
 
 	}	
 
@@ -205,8 +215,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics3_cityNotInDB(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(3, "Lianokladi");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(3, "LARISA");
+		Assert.assertEquals(0, result);
 
 	}
 
@@ -215,8 +225,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics23_otherSelection0(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(0, "Athens");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(0, "ATHINA");
+		Assert.assertEquals(0, result);
 
 	}
 
@@ -224,8 +234,8 @@ public class StatisticsServiceTest {
 	public void testProduceInValidStatistics23_otherSelection1(){
 		
 		StatisticsService service = new StatisticsService();	
-		Object produceStatistics  =  service.produceStatistics(1, "Athens");
-		Assert.assertEquals(produceStatistics, produceStatistics);
+		int result  =  service.produceStatistics(1, "ATHINA");
+		Assert.assertEquals(0, result);
 
 	}
 }
