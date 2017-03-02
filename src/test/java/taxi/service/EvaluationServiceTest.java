@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import gr.aueb.mscis.sample.model.Movie;
 import taxi.model.Customer;
 import taxi.model.Evaluation;
 import taxi.model.Route;
