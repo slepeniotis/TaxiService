@@ -17,8 +17,7 @@ import java.util.regex.Matcher;
 public class Validators {
 
 	/* Method validating username of a customer.
-	 * At first checks from which class it was called, Customer or TaxiDriver
-	 * Then searches in the appropriate table of the DB to find if another user 
+	 * Searches in the appropriate table of the DB to find if another user 
 	 * with the same username exists.
 	 * In case the username does not already exist, the validation was successful (true).
 	 */
@@ -42,8 +41,7 @@ public class Validators {
 	}
 
 	/* Method validating username of a taxi driver.
-	 * At first checks from which class it was called, Customer or TaxiDriver
-	 * Then searches in the appropriate table of the DB to find if another user 
+	 * Searches in the appropriate table of the DB to find if another user 
 	 * with the same username exists.
 	 * In case the username does not already exist, the validation was successful (true).
 	 */
