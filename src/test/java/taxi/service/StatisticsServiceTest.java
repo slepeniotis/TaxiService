@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import taxi.model.Customer;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 
@@ -39,6 +38,11 @@ public class StatisticsServiceTest {
 	}
 
 	//Tests for 1st type of statistics
+	
+	/* produce statictics, type 1
+	 * valid creation of statistics
+	 * checks total commisions received in a specific date range
+	 */
 	@Test
 	public void testProduceValidStatistics1(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -58,6 +62,7 @@ public class StatisticsServiceTest {
 
 	}
 
+	//invalid request for production, null from date 
 	@Test
 	public void testProduceInValidStatistics1_nullDateFrom(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -74,6 +79,7 @@ public class StatisticsServiceTest {
 		Assert.assertEquals(0, ps, 0.001);
 	}
 
+	//invalid request for production, null to date
 	@Test
 	public void testProduceInValidStatistics1_nullDateTo(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -89,7 +95,27 @@ public class StatisticsServiceTest {
 		double ps = service.produceStatistics(1, dFrom, null);		
 		Assert.assertEquals(0, ps, 0.001);
 	}
+	
+	//invalid request for production, empty result in the specific range
+	@Test
+	public void testProduceInValidStatistics1_emptyDateFromTo(){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dTo = new Date();
+		Date dFrom = new Date();
+		try {
+			dTo = sdf.parse("01/03/1990");
+			dFrom = sdf.parse("01/03/1980");
+		}
+		catch (ParseException e){
+			System.out.println(e.getStackTrace());
+		}	
+		
+		StatisticsService service = new StatisticsService();	
+		double ps = service.produceStatistics(1, dFrom, dTo);		
+		Assert.assertEquals(0, ps, 0.001);
+	}
 
+	//invalid request for production, wrong selection = 0
 	@Test
 	public void testProduceInValidStatistics1_otherSelection0(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -108,6 +134,7 @@ public class StatisticsServiceTest {
 		Assert.assertEquals(0, ps, 0.001);
 	}
 
+	//invalid request for production, wrong selection = 2
 	@Test
 	public void testProduceInValidStatistics1_otherSelection2(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -127,6 +154,7 @@ public class StatisticsServiceTest {
 
 	}
 
+	//invalid request for production, wrong selection = 3
 	@Test
 	public void testProduceInValidStatistics1_otherSelection3(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -147,6 +175,11 @@ public class StatisticsServiceTest {
 	}
 
 	//Tests for 2nd type of statistics
+	
+	/* produce statictics, type 2
+	 * valid creation of statistics
+	 * checks total routes from a specific city
+	 */
 	@Test
 	public void testProduceValidStatistics2(){
 		
@@ -156,6 +189,7 @@ public class StatisticsServiceTest {
 
 	}
 
+	//invalid production, empty city
 	@Test
 	public void testProduceInValidStatistics2_emptyCity(){
 		
@@ -165,6 +199,7 @@ public class StatisticsServiceTest {
 
 	}
 
+	//invalid production, null city
 	@Test
 	public void testProduceInValidStatistics2_nullCity(){
 		
@@ -174,6 +209,7 @@ public class StatisticsServiceTest {
 
 	}
 
+	//invalid production, city does not exist in DB
 	@Test
 	public void testProduceInValidStatistics2_cityNotInDB(){
 		
@@ -184,6 +220,11 @@ public class StatisticsServiceTest {
 	}
 
 	//Tests for 3rd type of statistics
+	
+	/* produce statictics, type 3
+	 * valid creation of statistics
+	 * checks total routes to a specific city
+	 */
 	@Test
 	public void testProduceValidStatistics3(){
 		
@@ -193,6 +234,7 @@ public class StatisticsServiceTest {
 
 	}
 
+	//invalid production, empty city
 	@Test
 	public void testProduceInValidStatistics3_emptyCity(){
 		
@@ -201,7 +243,8 @@ public class StatisticsServiceTest {
 		Assert.assertEquals(0, result);
 
 	}
-
+	
+	//invalid production, null city
 	@Test
 	public void testProduceInValidStatistics3_nullCity(){
 		
@@ -211,6 +254,7 @@ public class StatisticsServiceTest {
 
 	}	
 
+	//invalid production, city does not exist in DB
 	@Test
 	public void testProduceInValidStatistics3_cityNotInDB(){
 		
@@ -221,6 +265,8 @@ public class StatisticsServiceTest {
 	}
 
 	//Tests for 2nd and 3rd type of statistics
+	
+	//invalid production, wrong selection = 0
 	@Test
 	public void testProduceInValidStatistics23_otherSelection0(){
 		
@@ -230,6 +276,7 @@ public class StatisticsServiceTest {
 
 	}
 
+	//invalid production, wrong selection = 1
 	@Test
 	public void testProduceInValidStatistics23_otherSelection1(){
 		

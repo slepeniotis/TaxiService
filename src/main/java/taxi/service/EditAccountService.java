@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import taxi.model.Customer;
-import taxi.model.Taxi;
 import taxi.model.TaxiDriver;
 import taxi.persistence.JPAUtil;
 import taxi.utils.Validators;

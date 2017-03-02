@@ -4,7 +4,6 @@ package taxi.model;
 import java.util.Date;
 import javax.persistence.*;
 import taxi.utils.AESEncrypt;
-import taxi.utils.Validators;
 
 //Declaring table id DB with name TaxiDriver
 @Entity

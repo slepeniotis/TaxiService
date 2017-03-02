@@ -1,7 +1,5 @@
 package taxi.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,9 +58,7 @@ public class StatisticsService {
 			if(!reqrslt.isEmpty())
 				for(Request r : reqrslt) {
 					if(r.getRoute() != null){
-						System.out.println(r.getRoute().getCommision());
 						sum += r.getRoute().getCommision();
-						System.out.println(sum);
 					}						
 				}
 			}

@@ -1,12 +1,6 @@
 package taxi.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -17,8 +11,6 @@ import taxi.model.Customer;
 import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
-import taxi.utils.AESEncrypt;
-import taxi.utils.Validators;
 
 public class LoginServiceTest {
 
@@ -44,6 +36,8 @@ public class LoginServiceTest {
 	}
 	
 	//Tests for Customer
+	
+	//Login for valid customer
 	@Test
 	public void testValidLoginCustomer(){
 				
@@ -53,6 +47,7 @@ public class LoginServiceTest {
 		
 	}
 	
+	//Invalid login with wrong user type
 	@Test
 	public void testInvalidLoginCustomer_userType(){
 		
@@ -62,6 +57,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with empty user type
 	@Test
 	public void testInvalidLoginCustomer_emptyUserType(){
 
@@ -71,6 +67,7 @@ public class LoginServiceTest {
 		
 	}
 	
+	//Invalid login with null user type
 	@Test
 	public void testInvalidLoginCustomer_nullUserType(){
 		
@@ -79,6 +76,7 @@ public class LoginServiceTest {
 		Assert.assertNull(cust);
 	}
 	
+	//Invalid login with wrong username
 	@Test
 	public void testInvalidLoginCustomer_username(){
 		
@@ -88,6 +86,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with empty username
 	@Test
 	public void testInvalidLoginCustomer_emptyUsername(){
 		
@@ -96,6 +95,7 @@ public class LoginServiceTest {
 		Assert.assertNull(cust);
 	}
 	
+	//Invalid login with null username
 	@Test
 	public void testInvalidLoginCustomer_nullUsername(){
 			
@@ -104,6 +104,7 @@ public class LoginServiceTest {
 		Assert.assertNull(cust);
 	}
 	
+	//Invalid login with wrong password
 	@Test
 	public void testInvalidLoginCustomer_password(){
 		
@@ -112,6 +113,7 @@ public class LoginServiceTest {
 		Assert.assertNull(cust);
 	}
 	
+	//Invalid login with empty password
 	@Test
 	public void testInvalidLoginCustomer_emptyPassword(){
 			
@@ -120,6 +122,7 @@ public class LoginServiceTest {
 		Assert.assertNull(cust);
 	}
 	
+	//Invalid login with null password
 	@Test
 	public void testInvalidLoginCustomer_nullPassword(){
 			
@@ -128,6 +131,7 @@ public class LoginServiceTest {
 		Assert.assertNull(cust);
 	}
 	
+	//Invalid login with 0 coordinates
 	@Test
 	public void testInvalidLoginCustomer_noCoordinates(){
 		
@@ -136,7 +140,10 @@ public class LoginServiceTest {
 		Assert.assertNull(cust);
 			
 	}
+	
 	//Tests for Taxi Driver
+	
+	//Login for valid taxi driver
 	@Test
 	public void testValidLoginTaxiDr(){
 			
@@ -145,6 +152,7 @@ public class LoginServiceTest {
 		Assert.assertEquals(taxiDriver.getId(), (long)5);
 	}
 	
+	//Invalid login with wrong user type
 	@Test
 	public void testInvalidLoginTaxiDr_userType(){
 			
@@ -153,6 +161,7 @@ public class LoginServiceTest {
 		Assert.assertNull(taxiDriver);
 	}
 	
+	//Invalid login with empty user type
 	@Test
 	public void testInvalidLoginTaxiDr_emptyUserType(){
 			
@@ -161,6 +170,7 @@ public class LoginServiceTest {
 		Assert.assertNull(taxiDriver);
 	}
 	
+	//Invalid login with null user type
 	@Test
 	public void testInvalidLoginTaxiDr_nullUserType(){
 		
@@ -170,6 +180,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with wrong username
 	@Test
 	public void testInvalidLoginTaxiDr_username(){
 		
@@ -179,6 +190,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with empty username
 	@Test
 	public void testInvalidLoginTaxiDr_emptyUsername(){
 		
@@ -188,6 +200,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with null username
 	@Test
 	public void testInvalidLoginTaxiDr_nullUsername(){
 		
@@ -197,6 +210,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with wrong password
 	@Test
 	public void testInvalidLoginTaxiDr_password(){
 		
@@ -206,6 +220,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with empty password
 	@Test
 	public void testInvalidLoginTaxiDr_emptyPassword(){
 		
@@ -215,6 +230,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with null password
 	@Test
 	public void testInvalidLoginTaxiDr_nullPassword(){
 		
@@ -224,6 +240,7 @@ public class LoginServiceTest {
 			
 	}
 	
+	//Invalid login with 0 coordinates
 	@Test
 	public void testInvalidLoginTaxiDr_noCoordinates(){
 		

@@ -40,7 +40,7 @@ public class EvaluationService {
 	 * in order to inform him that an evaluation was submitted for a route he completed
 	 */
 	public Evaluation createEvaluation(Route route, int rating, String comment){
-		if(route == null || comment == null || route.getReq() == null || route.getReq().getStatus() != RequestStatus.DONE)
+		if(route == null || comment == null || route.getReq().getStatus() != RequestStatus.DONE)
 			return null;
 
 		Date dateOfEval = new Date();

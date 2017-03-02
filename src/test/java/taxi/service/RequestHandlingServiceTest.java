@@ -42,6 +42,8 @@ public class RequestHandlingServiceTest {
 	}
 
 	//Tests for Taxi search
+	
+	//searching for available taxis. valid search
 	@Test
 	public void testValidSearchTaxi(){
 
@@ -55,6 +57,7 @@ public class RequestHandlingServiceTest {
 		Assert.assertEquals(tx, rslt.get(0));
 	}
 
+	//searching for available taxis. invalid search, range = 0
 	@Test
 	public void testInValidSearchTaxi_range0(){
 
@@ -66,6 +69,9 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(rslt);
 	}
 
+	/*searching for available taxis. invalid search, 
+	 * range very small in order to have zero available taxis
+	 */
 	@Test
 	public void testInValidSearchTaxi_rangeSmall(){
 
@@ -77,6 +83,7 @@ public class RequestHandlingServiceTest {
 		Assert.assertEquals(empty, rslt);
 	}
 
+	//searching for available taxis. invalid search, no free taxi
 	@Test
 	public void testInValidSearchTaxi_noFreeTaxi(){
 		RequestHandlingService service = new RequestHandlingService();
@@ -87,6 +94,8 @@ public class RequestHandlingServiceTest {
 	}
 
 	//Tests for start request
+	
+	//request creation from customer. valid request
 	@Test
 	public void testPersistValidRequest(){
 
@@ -100,6 +109,7 @@ public class RequestHandlingServiceTest {
 
 	}
 
+	//request creation from customer. invalid request, null taxi
 	@Test
 	public void testPersistInValidRequest_nullTaxi(){
 
@@ -112,6 +122,8 @@ public class RequestHandlingServiceTest {
 	}
 
 	//Tests for request handling
+	
+	//request accepted by taxi driver
 	@Test
 	public void testRequestHandling_accept(){
 
@@ -126,6 +138,7 @@ public class RequestHandlingServiceTest {
 
 	}
 
+	//request declined by taxi driver
 	@Test
 	public void testRequestHandling_decline(){
 
@@ -139,6 +152,7 @@ public class RequestHandlingServiceTest {
 		Assert.assertTrue(tx.getStatus());
 	}
 
+	//invalid request handling. decision invalid
 	@Test
 	public void testRequestHandling_invalidDecision(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -151,6 +165,7 @@ public class RequestHandlingServiceTest {
 		Assert.assertTrue(tx.getStatus());
 	}
 
+	//invalid request handling. decision invalid
 	@Test
 	public void testRequestHandling_accept_custAlreadyCanceled(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -167,6 +182,10 @@ public class RequestHandlingServiceTest {
 	}
 
 	//Tests for Route creating
+	
+	/*After the acceptance of the request, the route is created and the 
+	 * appropriate statuses are checked
+	 */
 	@Test
 	public void testPersistValidRoute(){
 
@@ -185,6 +204,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertEquals(req.getRoute(), route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * empty from address
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_emptyFromAddress(){
 
@@ -202,6 +225,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * empty from city
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_emptyFromCity(){
 
@@ -218,6 +245,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * from zipcode = 0
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_emptyFromZipCode(){
 
@@ -234,6 +265,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * empty to address
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_emptyToAddress(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -249,6 +284,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * empty to city
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_emptyToCity(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -264,6 +303,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * to zipcode = 0
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_emptyToZipCode(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -279,6 +322,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * null from address
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_nullFromAddress(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -294,6 +341,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * null from city
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_nullFromCity(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -309,6 +360,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * null to address
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_nullToAddress(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -324,6 +379,10 @@ public class RequestHandlingServiceTest {
 		Assert.assertNull(route);
 	}
 
+	/* After the acceptance of the request, an invalid route is created.
+	 * null to city
+	 * statuses do not change
+	 */	
 	@Test
 	public void testPersistInValidRoute_nullToCity(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -340,6 +399,10 @@ public class RequestHandlingServiceTest {
 	}
 
 	//Tests for stop request
+	
+	/*taxi driver requests to stop the request previously created/started
+	 * by stopping the request we update on route the duration, cost and commision
+	 */
 	@Test
 	public void testValidStopRequest(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -359,6 +422,9 @@ public class RequestHandlingServiceTest {
 		Assert.assertTrue(service.stopRequest(req, tx, 15f, 20));		
 	}
 
+	/*taxi driver requests to stop the request previously created/started
+	 * invalid cost = 0
+	 */
 	@Test
 	public void testInValidStopRequest_0Cost(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -378,6 +444,9 @@ public class RequestHandlingServiceTest {
 		Assert.assertFalse(service.stopRequest(req, tx, 0, 20));
 	}
 
+	/*taxi driver requests to stop the request previously created/started
+	 * invalid duration = 0
+	 */
 	@Test
 	public void testInValidStopRequest_0Duration(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -398,6 +467,8 @@ public class RequestHandlingServiceTest {
 	}
 
 	//Tests for cancel request
+	
+	//customer requests to cancel the request previously created
 	@Test
 	public void testValidCancelRequest(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -410,6 +481,9 @@ public class RequestHandlingServiceTest {
 		Assert.assertEquals(RequestStatus.CANCELED, req.getStatus());
 	}
 
+	/*customer requests to cancel the request previously created
+	 * invalid call, request already done
+	 */
 	@Test
 	public void testInValidCancelRequest_statusDone(){
 		RequestHandlingService service = new RequestHandlingService();	
@@ -422,6 +496,9 @@ public class RequestHandlingServiceTest {
 		Assert.assertEquals(RequestStatus.DONE, req.getStatus());
 	}
 
+	/*customer requests to cancel the request previously created
+	 * invalid call, request already canceled
+	 */
 	@Test
 	public void testInValidCancelRequest_statusCanceled(){
 

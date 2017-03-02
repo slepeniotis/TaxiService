@@ -1,14 +1,12 @@
 package taxi.service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import taxi.model.Customer;
 import taxi.model.Evaluation;
 import taxi.model.Route;
 import taxi.persistence.Initializer;
@@ -32,6 +30,7 @@ public class EvaluationServiceTest {
 
 	}
 
+	//create a valid Evaluation
 	@Test
 	public void testPersistValidEvaluation(){
 		EvaluationService service = new EvaluationService();
@@ -42,6 +41,7 @@ public class EvaluationServiceTest {
 		Assert.assertEquals(newEval, route.getEval());		
 	}
 
+	//create invalid Evaluation. comment field is empty
 	@Test
 	public void testPersistInValidEvaluation_emptyComment(){
 		EvaluationService service = new EvaluationService();
@@ -52,6 +52,7 @@ public class EvaluationServiceTest {
 		Assert.assertEquals(newEval, route.getEval());	
 	}
 
+	//create invalid Evaluation. comment field is null
 	@Test
 	public void testPersistInValidEvaluation_nullComment(){
 		EvaluationService service = new EvaluationService();
@@ -62,6 +63,7 @@ public class EvaluationServiceTest {
 		Assert.assertEquals(newEval, route.getEval());	
 	}
 
+	//create invalid Evaluation. the route to which the evaluation refers, is still ongoing
 	@Test
 	public void testPersistInValidEvaluation_requestStatus(){
 		EvaluationService service = new EvaluationService();
@@ -72,6 +74,15 @@ public class EvaluationServiceTest {
 		Assert.assertNull(newEval);
 		Assert.assertNull(route.getEval());
 	}
+	
+	//create invalid Evaluation. the route is null
+		@Test
+		public void testPersistInValidEvaluation_routeNull(){
+			EvaluationService service = new EvaluationService();
+
+			Evaluation newEval = service.createEvaluation(null, 4, "Test comment");
+			Assert.assertNull(newEval);
+		}
 
 	@After
 	public void tearDown(){

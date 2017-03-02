@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -13,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import taxi.model.Customer;
-import taxi.model.Route;
 import taxi.model.Taxi;
 import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
@@ -38,6 +36,8 @@ public class RegistrationServiceTest {
 	}
 
 	//Tests for Taxi
+	
+	//register a valid taxi
 	@Test
 	public void testPersistAValidTaxi(){
 		RegistrationService service = new RegistrationService();
@@ -46,6 +46,7 @@ public class RegistrationServiceTest {
 		Assert.assertNotEquals(0, newTaxi.getId());
 	}
 
+	//invalid taxi registration. empty license plate
 	@Test
 	public void testPersistAnInvalidTaxi(){
 		RegistrationService service = new RegistrationService();
@@ -54,7 +55,78 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxi);
 
 	}
+	
+	//invalid taxi registration. null license plate
+	@Test
+	public void testPersistAnInvalidTaxi_nullLicense(){
+		RegistrationService service = new RegistrationService();
 
+		Taxi newTaxi = service.createTaxi("SKODA FABIA", "SPORT", null, "11/2013", 35.2341223, 27.234325);
+		Assert.assertNull(newTaxi);
+
+	}
+	
+	//invalid taxi registration. null car model
+	@Test
+	public void testPersistAnInvalidTaxi_nullModel(){
+		RegistrationService service = new RegistrationService();
+
+		Taxi newTaxi = service.createTaxi(null, "SPORT", "IHX0989", "11/2013", 35.2341223, 27.234325);
+		Assert.assertNull(newTaxi);
+
+	}
+	
+	//invalid taxi registration. null car type
+	@Test
+	public void testPersistAnInvalidTaxi_nullType(){
+		RegistrationService service = new RegistrationService();
+
+		Taxi newTaxi = service.createTaxi("SKODA FABIA", null, "IHX0989", "11/2013", 35.2341223, 27.234325);
+		Assert.assertNull(newTaxi);
+
+	}
+	
+	//invalid taxi registration. null date
+	@Test
+	public void testPersistAnInvalidTaxi_nullDate(){
+		RegistrationService service = new RegistrationService();
+
+		Taxi newTaxi = service.createTaxi("SKODA FABIA", "SPORT", "IHX0989", null, 35.2341223, 27.234325);
+		Assert.assertNull(newTaxi);
+
+	}
+	
+	//invalid taxi registration. empty car model
+	@Test
+	public void testPersistAnInvalidTaxi_emptyModel(){
+		RegistrationService service = new RegistrationService();
+
+		Taxi newTaxi = service.createTaxi(" ", "SPORT", "IHX0989", "11/2013", 35.2341223, 27.234325);
+		Assert.assertNull(newTaxi);
+
+	}
+	
+	//invalid taxi registration. empty car type
+	@Test
+	public void testPersistAnInvalidTaxi_emptyType(){
+		RegistrationService service = new RegistrationService();
+
+		Taxi newTaxi = service.createTaxi("SKODA FABIA", " ", "IHX0989", "11/2013", 35.2341223, 27.234325);
+		Assert.assertNull(newTaxi);
+
+	}
+	
+	//invalid taxi registration. empty date
+	@Test
+	public void testPersistAnInvalidTaxi_emptyDate(){
+		RegistrationService service = new RegistrationService();
+
+		Taxi newTaxi = service.createTaxi("SKODA FABIA", "SPORT", "IHX0989", " ", 35.2341223, 27.234325);
+		Assert.assertNull(newTaxi);
+
+	}	
+
+	//invalid taxi registration. existing license plate
 	@Test
 	public void testPersistAnInvalidTaxi_exLicence(){
 		RegistrationService service = new RegistrationService();
@@ -63,6 +135,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxi);
 	}
 
+	//invalid taxi registration. invalid license plate format
 	@Test
 	public void testPersistAnInvalidTaxi_invLicence(){
 		RegistrationService service = new RegistrationService();
@@ -71,6 +144,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxi);
 	}
 
+	//invalid taxi registration. carModelDate is after the current date
 	@Test
 	public void testPersistAnInvTaxi_invDateAfter(){
 		RegistrationService service = new RegistrationService();
@@ -79,6 +153,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxi);
 	}
 
+	//invalid taxi registration. invalid date has letter
 	@Test
 	public void testPersistAnInvTaxi_invDateFormatLetter(){
 		RegistrationService service = new RegistrationService();
@@ -87,6 +162,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxi);
 	}
 
+	//invalid taxi registration. invalid date. month does not exist
 	@Test
 	public void testPersistAnInvTaxi_invDateFormatMonthNum(){
 		RegistrationService service = new RegistrationService();
@@ -95,6 +171,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxi);
 	}
 
+	//invalid taxi registration. 0 coordinates
 	@Test
 	public void testPersistAnInvTaxi_noCoordinates(){
 		RegistrationService service = new RegistrationService();
@@ -104,6 +181,8 @@ public class RegistrationServiceTest {
 	}
 
 	//Tests for Taxi Driver
+	
+	//create a valid taxi driver
 	@Test
 	public void testPersistAValidTaxiDr(){
 		RegistrationService service = new RegistrationService();
@@ -124,8 +203,9 @@ public class RegistrationServiceTest {
 				"10/23", "334", newTaxi);
 		
 		Assert.assertNotEquals(0, newTaxiDr.getId());
-	}
+	}	
 
+	//invalid taxi driver registration. null taxi
 	@Test
 	public void testPersistAnInvTaxiDr_nullTaxi(){
 		RegistrationService service = new RegistrationService();
@@ -146,6 +226,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. invalid taxi driver info
 	@Test
 	public void testPersistAnInvTaxiDr(){
 		RegistrationService service = new RegistrationService();
@@ -168,6 +249,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. taxi already connected to other taxi driver
 	@Test
 	public void testPersistAnInvTaxiDr_connectedTaxi(){
 		RegistrationService service = new RegistrationService();
@@ -190,6 +272,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. existing username
 	@Test
 	public void testPersistAnInvTaxiDr_existingUsername(){
 		RegistrationService service = new RegistrationService();
@@ -212,6 +295,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. null password
 	@Test
 	public void testPersistAnInvTaxiDr_nullPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -234,6 +318,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. small password
 	@Test
 	public void testPersistAnInvTaxiDr_smallPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -256,6 +341,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. no upper case in password
 	@Test
 	public void testPersistAnInvTaxiDr_noUpperPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -277,7 +363,8 @@ public class RegistrationServiceTest {
 		
 		Assert.assertNull(newTaxiDr);
 	}
-
+	
+	//invalid taxi driver registration. no numbers in password
 	@Test
 	public void testPersistAnInvTaxiDr_noNumPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -300,6 +387,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. existing email
 	@Test
 	public void testPersistAnInvTaxiDr_existingEmail(){
 		RegistrationService service = new RegistrationService();
@@ -322,6 +410,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. empty email
 	@Test
 	public void testPersistAnInvTaxiDr_emptyEmail(){
 		RegistrationService service = new RegistrationService();
@@ -344,6 +433,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. email format error
 	@Test
 	public void testPersistAnInvTaxiDr_noPatternEmail(){
 		RegistrationService service = new RegistrationService();
@@ -366,6 +456,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. credit card expired
 	@Test
 	public void testPersistAnInvTaxiDr_expiredCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -388,6 +479,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. credit card date format error
 	@Test
 	public void testPersistAnInvTaxiDr_dateFormatCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -410,6 +502,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. credit card number format error
 	@Test
 	public void testPersistAnInvTaxiDr_numberFormatCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -432,6 +525,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. credit card number contains letter
 	@Test
 	public void testPersistAnInvTaxiDr_numFormLetterCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -454,6 +548,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. credit card ccv contains letter
 	@Test
 	public void testPersistAnInvTaxiDr_ccvFormLetterCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -476,6 +571,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newTaxiDr);
 	}
 
+	//invalid taxi driver registration. date of birth after current date
 	@Test
 	public void testPersistAnInvTaxiDr_afterDateOfBirth(){
 		RegistrationService service = new RegistrationService();
@@ -500,6 +596,8 @@ public class RegistrationServiceTest {
 
 
 	//Tests for Customer
+	
+	//valid customer registration
 	@Test
 	public void testPersistAValidCustomer(){
 		RegistrationService service = new RegistrationService();
@@ -520,6 +618,7 @@ public class RegistrationServiceTest {
 		Assert.assertNotEquals(0, newCust.getId());
 	}
 
+	//Invalid customer registration. customer's info is invalid
 	@Test
 	public void testPersistAnInvCustomer(){
 		RegistrationService service = new RegistrationService();
@@ -540,6 +639,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. existing username
 	@Test
 	public void testPersistAnInvCustomer_existingUsername(){
 		RegistrationService service = new RegistrationService();
@@ -560,6 +660,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. null password
 	@Test
 	public void testPersistAnInvCustomer_nullPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -580,6 +681,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. small password
 	@Test
 	public void testPersistAnInvCustomer_smallPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -600,6 +702,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. no upper case letter in password
 	@Test
 	public void testPersistAnInvCustomer_noUpperPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -620,6 +723,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. no number in password
 	@Test
 	public void testPersistAnInvCustomer_noNumPasswd(){
 		RegistrationService service = new RegistrationService();
@@ -640,6 +744,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. existing email
 	@Test
 	public void testPersistAnInvCustomer_existingEmail(){
 		RegistrationService service = new RegistrationService();
@@ -660,6 +765,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. empty email
 	@Test
 	public void testPersistAnInvCustomer_emptyEmail(){
 		RegistrationService service = new RegistrationService();
@@ -680,6 +786,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. email format error
 	@Test
 	public void testPersistAnInvCustomer_noPatternEmail(){
 		RegistrationService service = new RegistrationService();
@@ -700,6 +807,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. credit card expired
 	@Test
 	public void testPersistAnInvCustomer_expiredCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -720,6 +828,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. credit card date format error
 	@Test
 	public void testPersistAnInvCustomer_dateFormatCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -740,6 +849,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. credit card number format error
 	@Test
 	public void testPersistAnInvCustomer_numberFormatCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -760,6 +870,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. credit card number contains letter
 	@Test
 	public void testPersistAnInvCustomer_numFormLetterCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -780,6 +891,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. credit card ccv contains letter
 	@Test
 	public void testPersistAnInvCustomer_ccvFormLetterCrdtCrd(){
 		RegistrationService service = new RegistrationService();
@@ -800,6 +912,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. date of birth is after current date
 	@Test
 	public void testPersistAnInvCustomer_afterDateOfBirth(){
 		RegistrationService service = new RegistrationService();
@@ -820,6 +933,7 @@ public class RegistrationServiceTest {
 		Assert.assertNull(newCust);
 	}
 
+	//Invalid customer registration. 0 coordinates
 	@Test
 	public void testPersistAnInvCustomer_noCoordinates(){
 		RegistrationService service = new RegistrationService();
