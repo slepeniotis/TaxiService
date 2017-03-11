@@ -244,6 +244,7 @@ public class Customer {
 		return this.req;
 	}
 
+	//request setter
 	public void addRequest(Request req) {
 		this.req.add(req);
 	}

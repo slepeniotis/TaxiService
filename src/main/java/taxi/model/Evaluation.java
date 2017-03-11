@@ -67,6 +67,6 @@ public class Evaluation {
 	@Override
 	public String toString() {
 		return this.id + " " + this.rating + " " + this.comment + " " + this.dateOfEval.toString();
-	}	
+	}
 
 }

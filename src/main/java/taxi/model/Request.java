@@ -109,6 +109,7 @@ public class Request {
 		this.setRoute(route);
 	}
 
+	//called from taxi driver and changes the status from ongoing to done
 	public void endRequest() {
 		this.status = RequestStatus.DONE;
 	}

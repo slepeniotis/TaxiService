@@ -121,7 +121,8 @@ public class Taxi {
 	public List<Request> getRequest() {
 		return this.accepts;
 	}
-
+	
+	//request setter
 	public void addRequest(Request accepts) {
 		this.accepts.add(accepts);
 	}
@@ -138,7 +139,7 @@ public class Taxi {
 
 		return temp;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

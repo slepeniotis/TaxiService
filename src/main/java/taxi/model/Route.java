@@ -49,7 +49,7 @@ public class Route {
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
 	
-	//each route has a request
+	//each route has one request
 	@OneToOne(optional=false, mappedBy="route", fetch=FetchType.EAGER, targetEntity=Request.class)
 	private Request req; 
 
