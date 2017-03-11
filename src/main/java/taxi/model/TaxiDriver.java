@@ -95,8 +95,6 @@ public class TaxiDriver {
 
 	/* get/set methods in order to have access in private attributes
 	 * set method for username does not exist. we assume that the taxi driver cannot change username
-	 * set methods of password and email, are of type boolean in order to check if the validation was ok
-	 * set method of credit card's information is combined to one setCreditCard. It is of type boolean in order to check if validation was ok
 	 */
 	public long getId() {
 		return this.id;
