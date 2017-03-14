@@ -3,38 +3,27 @@ package taxi.resource;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.FormParam;
-import java.net.URI;
-
 import taxi.model.Customer;
 import taxi.model.TaxiDriver;
 import taxi.service.EditAccountService;
 
-@Path("editaccount/{userId}")
+@Path("editaccount")
 public class EditAccountResource extends AbstractResource {
-
-	@Context
-	UriInfo uriInfo;
 	
 	@PUT
-	@Path("CustomerAddress")
-	@Consumes("application/x-www-form-urlencoded")
-	public Response CustomerAddress (@PathParam("userId") long userId, @FormParam("address") String address,
-			@FormParam("city") String city, @FormParam("zipCode") int zipCode){
+	@Path("CustomerAddress/{userId:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response CustomerAddress (CustomerInfo customerInfo){
 		
 		EditAccountService service = new EditAccountService();
-		Customer c1 = (Customer)service.changeAddress("Customer", userId, address, city, zipCode);
+		Customer c1 = (Customer)service.changeAddress("Customer", customerInfo.getId(), customerInfo.getAddress(), 
+				customerInfo.getCity(), customerInfo.getZipCode());
 		
 		if(c1 != null){
-			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-			URI changedCustomerAddr = ub.path(Long.toString(c1.getId())).build();
-			return Response.created(changedCustomerAddr).build();
+			return Response.ok().build();
 		}
 		else{
 			return Response.status(Status.NOT_FOUND).build();
@@ -42,18 +31,16 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("TaxiDriverAddress")
-	@Consumes("application/x-www-form-urlencoded")
-	public Response TaxiDriverAddress (@PathParam("userId") long userId, @FormParam("address") String address,
-			@FormParam("city") String city, @FormParam("zipCode") int zipCode){
+	@Path("TaxiDriverAddress/{userId:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response TaxiDriverAddress (TaxiDriverInfo taxiDriverInfo){
 		
 		EditAccountService service = new EditAccountService();
-		TaxiDriver txdr1 = (TaxiDriver)service.changeAddress("Taxi Driver", userId, address, city, zipCode);
+		TaxiDriver txdr1 = (TaxiDriver)service.changeAddress("Taxi Driver", taxiDriverInfo.getId(), taxiDriverInfo.getAddress(), 
+				taxiDriverInfo.getCity(), taxiDriverInfo.getZipCode());
 		
 		if(txdr1 != null){
-			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-			URI changedDriverAddr = ub.path(Long.toString(txdr1.getId())).build();
-			return Response.created(changedDriverAddr).build();
+			return Response.ok().build();
 		}
 		else{
 			return Response.status(Status.NOT_FOUND).build();
@@ -61,17 +48,15 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("CustomerEmail")
-	@Consumes("application/x-www-form-urlencoded")
-	public Response CustomerEmail (@PathParam("userId") long userId, @FormParam("email") String email){
+	@Path("CustomerEmail/{userId:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response CustomerEmail (CustomerInfo customerInfo){
 		
 		EditAccountService service = new EditAccountService();
-		Customer c1 = (Customer)service.changeEmail("Customer", userId, email);
+		Customer c1 = (Customer)service.changeEmail("Customer", customerInfo.getId(), customerInfo.getEmail());
 		
 		if(c1 != null){
-			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-			URI changeCustomerEmail = ub.path(Long.toString(c1.getId())).build();
-			return Response.created(changeCustomerEmail).build();
+			return Response.ok().build();
 		}
 		else{
 			return Response.status(Status.NOT_FOUND).build();
@@ -79,17 +64,15 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("TaxiDriverEmail")
-	@Consumes("application/x-www-form-urlencoded")
-	public Response TaxiDriverEmail (@PathParam("userId") long userId, @FormParam("email") String email){
+	@Path("TaxiDriverEmail/{userId:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response TaxiDriverEmail (TaxiDriverInfo taxiDriverInfo){
 		
 		EditAccountService service = new EditAccountService();
-		TaxiDriver txdr1 = (TaxiDriver)service.changeEmail("Taxi Driver", userId, email);
+		TaxiDriver txdr1 = (TaxiDriver)service.changeEmail("Taxi Driver", taxiDriverInfo.getId(), taxiDriverInfo.getEmail());
 		
 		if(txdr1 != null){
-			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-			URI changeTaxiDriverEmail = ub.path(Long.toString(txdr1.getId())).build();
-			return Response.created(changeTaxiDriverEmail).build();
+			return Response.ok().build();
 		}
 		else{
 			return Response.status(Status.NOT_FOUND).build();
@@ -97,19 +80,16 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("CustomerCreditCard")
-	@Consumes("application/x-www-form-urlencoded")
-	public Response CustomerCreditCard (@PathParam("userId") long userId, @FormParam("creditCardType") String creditCardType,
-			 @FormParam("creditCardNumber") String creditCardNumber, @FormParam("expiryDate") String expiryDate, 
-			 @FormParam("ccv") String ccv){
+	@Path("CustomerCreditCard/{userId:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response CustomerCreditCard (CustomerInfo customerInfo){
 		
 		EditAccountService service = new EditAccountService();
-		Customer c1 = (Customer)service.changeCreditCard("Customer", userId, creditCardType, creditCardNumber, expiryDate, ccv);
+		Customer c1 = (Customer)service.changeCreditCard("Customer", customerInfo.getId(), customerInfo.getCreditCardType(), 
+				customerInfo.getCreditCardNumber(), customerInfo.getExpiryDate(), customerInfo.getCcv());
 		
 		if(c1 != null){
-			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-			URI changeCustomerCredit = ub.path(Long.toString(c1.getId())).build();
-			return Response.created(changeCustomerCredit).build();
+			return Response.ok().build();
 		}
 		else{
 			return Response.status(Status.NOT_FOUND).build();
@@ -117,19 +97,16 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("TaxiDriverEmail")
-	@Consumes("application/x-www-form-urlencoded")
-	public Response TaxiDriverEmail (@PathParam("userId") long userId, @FormParam("creditCardType") String creditCardType,
-			 @FormParam("creditCardNumber") String creditCardNumber, @FormParam("expiryDate") String expiryDate, 
-			 @FormParam("ccv") String ccv){
+	@Path("TaxiDriverCreditCard/{userId:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response TaxiDriverCreditCard (TaxiDriverInfo taxiDriverInfo){
 		
 		EditAccountService service = new EditAccountService();
-		TaxiDriver txdr1 = (TaxiDriver)service.changeCreditCard("Taxi Driver", userId, creditCardType, creditCardNumber, expiryDate, ccv);
+		TaxiDriver txdr1 = (TaxiDriver)service.changeCreditCard("Taxi Driver", taxiDriverInfo.getId(), taxiDriverInfo.getCreditCardType(), 
+				taxiDriverInfo.getCreditCardNumber(), taxiDriverInfo.getExpiryDate(), taxiDriverInfo.getCcv());
 		
 		if(txdr1 != null){
-			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-			URI changeCustomerCredit = ub.path(Long.toString(txdr1.getId())).build();
-			return Response.created(changeCustomerCredit).build();
+			return Response.ok().build();
 		}
 		else{
 			return Response.status(Status.NOT_FOUND).build();
