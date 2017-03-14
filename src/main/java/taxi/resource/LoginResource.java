@@ -1,34 +1,55 @@
 package taxi.resource;
 
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.Response.Status;
-
+import javax.ws.rs.core.UriInfo;
 import taxi.model.Customer;
-import taxi.service.EditAccountService;
+import taxi.model.TaxiDriver;
+import taxi.service.LoginService;
 
 import java.net.URI;
 
-import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
+
 
 @Path("login")
 public class LoginResource extends AbstractResource {
 
-	@GET
+	@Context
+	UriInfo uriInfo;
+	
+	@POST
 	@Path("CustomerLogin")
-	@Produces("aaplication/xml")
-	@Consumes("application/x-www-form-urlencoded")
-	public Customer CustomerLogin (){
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response CustomerLogin (LoginInfo loginInfo){
 		
-		EditAccountService service = new EditAccountService();
-		Customer c1 = (Customer)service.changeAddress("Customer", userId, address, city, zipCode);
-		
+		LoginService service = new LoginService();
+		Customer c1 = (Customer)service.login(loginInfo.getUserType(), loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
+
+		UriBuilder ub = uriInfo.getAbsolutePathBuilder();
+		URI newCustomerLoginUri = ub.path(Long.toString(c1.getId())).build();
+
+		return Response.created(newCustomerLoginUri).build();		
 		
 	}
+	
+	@POST
+	@Path("TaxiDriverLogin")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response TaxiDriverLogin (LoginInfo loginInfo){
+		
+		LoginService service = new LoginService();
+		TaxiDriver txdr1 = (TaxiDriver)service.login(loginInfo.getUserType(), loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
+
+		UriBuilder ub = uriInfo.getAbsolutePathBuilder();
+		URI newTaxiDriverLoginUri = ub.path(Long.toString(txdr1.getId())).build();
+
+		return Response.created(newTaxiDriverLoginUri).build();		
+		
+	}
+	
 }
