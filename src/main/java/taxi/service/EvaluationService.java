@@ -22,22 +22,25 @@ public class EvaluationService {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 	
-	/* Evaluation method
+	/** Evaluation method
 	 * createEvaluation gets as inputs the route, which customer evaluates,
 	 * the rating and comment
 	 * we assume rating can be zero
 	 * Since the evaluation is done when calling this method, the user has no access to the date,
 	 * the system gives always the current date
-	 * 
+	 * <p>
 	 * we check that none of the inputs is empty/null (except of rating) and that the request related with this request is in status done
-	 * 
+	 * <p>
 	 * we create the object evaluation using the inputs and inserted in the DB
 	 * then we connect this evaluation with the related route
-	 * 
+	 * <p>
 	 * then we retrieve the taxi object from within the request 
 	 * and search to find its driver
 	 * we will use this object to contact the driver, 
 	 * in order to inform him that an evaluation was submitted for a route he completed
+	 * 
+	 * @return Evaluation object
+	 * @param Route object, rating (int), comment (String)
 	 */
 	public Evaluation createEvaluation(Route route, int rating, String comment){
 		if(route == null || comment == null || route.getReq().getStatus() != RequestStatus.DONE)
