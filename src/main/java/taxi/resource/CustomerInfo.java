@@ -1,8 +1,14 @@
 package taxi.resource;
 
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EntityManager;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import taxi.model.Customer;
+import taxi.utils.AESEncrypt;
 
 @XmlRootElement
 public class CustomerInfo {
@@ -34,22 +40,35 @@ public class CustomerInfo {
 		private String expiryDate;
 
 		private String ccv;	
+		
+		private String password;
+
+		private double locationLat;
+
+		private double locationLon;
+
+		
 	
 	public CustomerInfo() {
 
 	}
 
-	public CustomerInfo(long id, String name, String surname, String sex, String username, Date dateOfBirth, String address, String city, 
-			int zipCode, String email, String creditCardType, String creditCardNumber, String expiryDate, String ccv) {
-		this(name, surname, sex, username, dateOfBirth, address, city, zipCode, email, creditCardType, creditCardNumber, expiryDate, ccv);
+	public CustomerInfo(long id, String name, String surname, String sex, String username, String password, Date dateOfBirth, 
+			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, String expiryDate, 
+			String ccv, double locationLat, double locationLon) {
+		this(name, surname, sex, username, password, dateOfBirth, address, city, zipCode, email, 
+				creditCardType, creditCardNumber, expiryDate, ccv, locationLat, locationLon);
 		this.id = id;
 
 	}
 
-	public CustomerInfo(String name, String surname, String sex, String username, Date dateOfBirth, String address, String city, 
-			int zipCode, String email, String creditCardType, String creditCardNumber, String expiryDate, String ccv) {
+	public CustomerInfo(String name, String surname, String sex, String username, String password,
+			Date dateOfBirth, String address, String city, int zipCode, String email, 
+			String creditCardType, String creditCardNumber, String expiryDate, String ccv,
+			double locationLat, double locationLon) {
 		super();
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.creditCardType = creditCardType;
 		this.creditCardNumber = creditCardNumber;
@@ -62,11 +81,19 @@ public class CustomerInfo {
 		this.address = address;
 		this.city = city;
 		this.zipCode = zipCode;	
+		this.locationLat = locationLat;
+		this.locationLon = locationLon;
 	}
 
 	public CustomerInfo(Customer c) {
 		id = c.getId();
 		username = c.getUsername();
+		try {
+			password = AESEncrypt.decrypt(c.getPassword());
+		}
+		catch (Exception e){
+			password = " ";
+		}
 		email = c.getEmail();
 		creditCardType = c.getCreditCardType();
 		creditCardNumber = c.getCreditCardNumber();
@@ -79,6 +106,8 @@ public class CustomerInfo {
 		address = c.getAddress();
 		city = c.getCity();
 		zipCode = c.getZipCode();	
+		locationLat = c.getLocationLat();
+		locationLon = c.getLocationLon();
 	}
 
 	
@@ -189,34 +218,42 @@ public class CustomerInfo {
 	public long getId() {
 		return id;
 	}
-	
-	
+		
+	public double getLocationLat() {
+		return locationLat;
+	}
+
+	public void setLocationLat(double locationLat) {
+		this.locationLat = locationLat;
+	}
+
+	public double getLocationLon() {
+		return locationLon;
+	}
+
+	public void setLocationLon(double locationLon) {
+		this.locationLon = locationLon;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
 	public static CustomerInfo wrap(Customer c) {
 		return new CustomerInfo(c);
 	}
 
-	/*public Customer getCustomer(EntityManager em) {
+	public Customer getCustomer(EntityManager em) {
 
 		Customer c = null;
 
 		if (id != 0) {
 			c = em.find(Customer.class, (long)id);
-		} else {
-			c = new Customer();
 		}
-
-		c.setTitle(title);
-		c.setPublication(publication);
-		c.setPublicationYear(publicationyear);
-
-		if (book.getIsbn() == null || !book.getIsbn().getValue().equals(isbn)) {
-			book.setIsbn(new ISBN(isbn));
+		else{
+			return null;
 		}
-
-		Publisher publisher = em.getReference(Publisher.class, publisherId);
-
-		book.setPublisher(publisher);
-
-		return book;
-	}*/
+		
+		return c;
+	}
 }
