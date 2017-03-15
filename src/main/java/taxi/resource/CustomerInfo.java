@@ -1,11 +1,7 @@
 package taxi.resource;
 
 import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import taxi.model.Customer;
 import taxi.utils.AESEncrypt;
@@ -217,6 +213,10 @@ public class CustomerInfo {
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 		
 	public double getLocationLat() {

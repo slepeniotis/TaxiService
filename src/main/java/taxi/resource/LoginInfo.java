@@ -1,8 +1,7 @@
 package taxi.resource;
 
-import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
-import taxi.model.Customer;
+
 
 @XmlRootElement
 public class LoginInfo {

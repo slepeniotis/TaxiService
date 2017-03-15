@@ -1,8 +1,15 @@
 package taxi.resource;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+import taxi.model.Customer;
+import taxi.model.Taxi;
+
+@XmlRootElement
 public class TaxiInfo {
 
 	private String name;
@@ -230,5 +237,22 @@ public class TaxiInfo {
 		return password;
 	}
 	
+	public static List<TaxiInfo> wrapTaxi(List<Taxi> taxi) {
+		List<TaxiInfo> taxiInfo = new ArrayList<>(0);
+
+		for (Taxi t : taxi) {
+			TaxiInfo temp = new TaxiInfo();
+			temp.setCarModel(t.getCarModel());
+			temp.setCarModelDate(t.getCarModelDate());
+			temp.setCarType(t.getCarType());
+			temp.setLicensePlate(t.getLicensePlate());
+			temp.setLocationLat(t.getLocationLat());
+			temp.setLocationLon(t.getLocationLon());
+			
+			taxiInfo.add(temp);
+		}
+
+		return taxiInfo;
+	}
 	
 }

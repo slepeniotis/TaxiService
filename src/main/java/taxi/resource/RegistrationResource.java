@@ -7,18 +7,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
-
 import taxi.model.TaxiDriver;
 import taxi.model.Customer;
-import taxi.model.Evaluation;
-import taxi.model.Route;
 import taxi.model.Taxi;
-import taxi.service.EvaluationService;
 import taxi.service.RegistrationService;
-
 import java.net.URI;
-
-import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 

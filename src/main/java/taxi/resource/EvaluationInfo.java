@@ -3,10 +3,6 @@ package taxi.resource;
 import javax.persistence.EntityManager;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.mgiandia.library.domain.Book;
-import com.mgiandia.library.domain.ISBN;
-import com.mgiandia.library.domain.Publisher;
-
 import taxi.model.Route;
 
 @XmlRootElement
