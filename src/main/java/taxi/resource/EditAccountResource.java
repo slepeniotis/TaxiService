@@ -15,7 +15,7 @@ import javax.ws.rs.PathParam;
 public class EditAccountResource extends AbstractResource {
 	
 	@PUT
-	@Path("/customeraddress/{customerId:[0-9]+}")
+	@Path("/CustomerAddress/{customerId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response CustomerAddress (CustomerInfo customerInfo, @PathParam("customerId") long customerId){
 		
@@ -32,12 +32,12 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("TaxiDriverAddress/{userId:[0-9]+}")
+	@Path("/TaxiDriverAddress/{taxiDriverId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response TaxiDriverAddress (TaxiDriverInfo taxiDriverInfo){
+	public Response TaxiDriverAddress (TaxiDriverInfo taxiDriverInfo, @PathParam("taxiDriverId") long taxiDriverId){
 		
 		EditAccountService service = new EditAccountService();
-		TaxiDriver txdr1 = (TaxiDriver)service.changeAddress("Taxi Driver", taxiDriverInfo.getId(), taxiDriverInfo.getAddress(), 
+		TaxiDriver txdr1 = (TaxiDriver)service.changeAddress("Taxi Driver", taxiDriverId, taxiDriverInfo.getAddress(), 
 				taxiDriverInfo.getCity(), taxiDriverInfo.getZipCode());
 		
 		if(txdr1 != null){
@@ -49,12 +49,12 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("CustomerEmail/{userId:[0-9]+}")
+	@Path("CustomerEmail/{customerId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response CustomerEmail (CustomerInfo customerInfo){
+	public Response CustomerEmail (CustomerInfo customerInfo, @PathParam("customerId") long customerId){
 		
 		EditAccountService service = new EditAccountService();
-		Customer c1 = (Customer)service.changeEmail("Customer", customerInfo.getId(), customerInfo.getEmail());
+		Customer c1 = (Customer)service.changeEmail("Customer", customerId, customerInfo.getEmail());
 		
 		if(c1 != null){
 			return Response.ok().build();
@@ -65,12 +65,12 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("TaxiDriverEmail/{userId:[0-9]+}")
+	@Path("TaxiDriverEmail/{taxiDriverId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response TaxiDriverEmail (TaxiDriverInfo taxiDriverInfo){
+	public Response TaxiDriverEmail (TaxiDriverInfo taxiDriverInfo, @PathParam("taxiDriverId") long taxiDriverId){
 		
 		EditAccountService service = new EditAccountService();
-		TaxiDriver txdr1 = (TaxiDriver)service.changeEmail("Taxi Driver", taxiDriverInfo.getId(), taxiDriverInfo.getEmail());
+		TaxiDriver txdr1 = (TaxiDriver)service.changeEmail("Taxi Driver", taxiDriverId, taxiDriverInfo.getEmail());
 		
 		if(txdr1 != null){
 			return Response.ok().build();
@@ -81,12 +81,12 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("CustomerCreditCard/{userId:[0-9]+}")
+	@Path("CustomerCreditCard/{customerId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response CustomerCreditCard (CustomerInfo customerInfo){
+	public Response CustomerCreditCard (CustomerInfo customerInfo, @PathParam("customerId") long customerId){
 		
 		EditAccountService service = new EditAccountService();
-		Customer c1 = (Customer)service.changeCreditCard("Customer", customerInfo.getId(), customerInfo.getCreditCardType(), 
+		Customer c1 = (Customer)service.changeCreditCard("Customer", customerId, customerInfo.getCreditCardType(), 
 				customerInfo.getCreditCardNumber(), customerInfo.getExpiryDate(), customerInfo.getCcv());
 		
 		if(c1 != null){
@@ -98,12 +98,12 @@ public class EditAccountResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("TaxiDriverCreditCard/{userId:[0-9]+}")
+	@Path("TaxiDriverCreditCard/{taxiDriverId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response TaxiDriverCreditCard (TaxiDriverInfo taxiDriverInfo){
+	public Response TaxiDriverCreditCard (TaxiDriverInfo taxiDriverInfo, @PathParam("taxiDriverId") long taxiDriverId){
 		
 		EditAccountService service = new EditAccountService();
-		TaxiDriver txdr1 = (TaxiDriver)service.changeCreditCard("Taxi Driver", taxiDriverInfo.getId(), taxiDriverInfo.getCreditCardType(), 
+		TaxiDriver txdr1 = (TaxiDriver)service.changeCreditCard("Taxi Driver", taxiDriverId, taxiDriverInfo.getCreditCardType(), 
 				taxiDriverInfo.getCreditCardNumber(), taxiDriverInfo.getExpiryDate(), taxiDriverInfo.getCcv());
 		
 		if(txdr1 != null){
