@@ -9,17 +9,18 @@ import javax.ws.rs.core.Response.Status;
 import taxi.model.Customer;
 import taxi.model.TaxiDriver;
 import taxi.service.EditAccountService;
+import javax.ws.rs.PathParam;
 
 @Path("editaccount")
 public class EditAccountResource extends AbstractResource {
 	
 	@PUT
-	@Path("CustomerAddress/{userId:[0-9]+}")
+	@Path("customeraddress/{customerId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response CustomerAddress (CustomerInfo customerInfo){
+	public Response CustomerAddress (CustomerInfo customerInfo, @PathParam("customerId") long customerId){
 		
 		EditAccountService service = new EditAccountService();
-		Customer c1 = (Customer)service.changeAddress("Customer", customerInfo.getId(), customerInfo.getAddress(), 
+		Customer c1 = (Customer)service.changeAddress("Customer", customerId, customerInfo.getAddress(), 
 				customerInfo.getCity(), customerInfo.getZipCode());
 		
 		if(c1 != null){
