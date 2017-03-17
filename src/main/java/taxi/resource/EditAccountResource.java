@@ -11,11 +11,11 @@ import taxi.model.TaxiDriver;
 import taxi.service.EditAccountService;
 import javax.ws.rs.PathParam;
 
-@Path("editaccount")
+@Path("/editaccount")
 public class EditAccountResource extends AbstractResource {
 	
 	@PUT
-	@Path("customeraddress/{customerId:[0-9]+}")
+	@Path("/customeraddress/{customerId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response CustomerAddress (CustomerInfo customerInfo, @PathParam("customerId") long customerId){
 		

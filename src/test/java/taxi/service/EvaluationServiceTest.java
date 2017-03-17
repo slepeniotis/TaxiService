@@ -12,23 +12,7 @@ import taxi.model.Route;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 
-public class EvaluationServiceTest {
-
-	protected EntityManager em;
-
-	@Before
-	public void setup(){
-		// prepare database for each test
-		em = JPAUtil.getCurrentEntityManager();
-		Initializer dataHelper = new Initializer();
-		try{
-			dataHelper.prepareData();
-		}
-		catch (Exception e){
-			System.out.println(e.getStackTrace());
-		}
-
-	}
+public class EvaluationServiceTest extends TaxiServiceTest{
 
 	//create a valid Evaluation
 	@Test
@@ -83,10 +67,5 @@ public class EvaluationServiceTest {
 			Evaluation newEval = service.createEvaluation(null, 4, "Test comment");
 			Assert.assertNull(newEval);
 		}
-
-	@After
-	public void tearDown(){
-		em.close();
-	}
 
 }

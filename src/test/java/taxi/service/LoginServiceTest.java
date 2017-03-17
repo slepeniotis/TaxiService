@@ -12,29 +12,8 @@ import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 
-public class LoginServiceTest {
+public class LoginServiceTest extends TaxiServiceTest{
 
-	protected EntityManager em;
-	
-	@Before
-	public void setup(){
-		// prepare database for each test
-		em = JPAUtil.getCurrentEntityManager();
-		Initializer dataHelper = new Initializer();
-		try{
-			dataHelper.prepareData();
-		}
-		catch (Exception e){
-			System.out.println(e.getStackTrace());
-		}
-		
-	}
-	
-	@After
-	public void tearDown(){
-		em.close();
-	}
-	
 	//Tests for Customer
 	
 	//Login for valid customer

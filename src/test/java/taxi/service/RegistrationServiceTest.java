@@ -17,23 +17,7 @@ import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 
-public class RegistrationServiceTest {
-
-	protected EntityManager em;
-
-	@Before
-	public void setup(){
-		// prepare database for each test
-		em = JPAUtil.getCurrentEntityManager();
-		Initializer dataHelper = new Initializer();
-		try{
-			dataHelper.prepareData();
-		}
-		catch (Exception e){
-			System.out.println(e.getStackTrace());
-		}
-
-	}
+public class RegistrationServiceTest extends TaxiServiceTest{
 
 	//Tests for Taxi
 	
@@ -952,11 +936,6 @@ public class RegistrationServiceTest {
 				"10/23", "334");
 		
 		Assert.assertNull(newCust);
-	}
-
-	@After
-	public void tearDown(){
-		em.close();
 	}
 
 }

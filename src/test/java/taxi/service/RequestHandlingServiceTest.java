@@ -18,28 +18,8 @@ import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 import taxi.utils.RequestStatus;
 
-public class RequestHandlingServiceTest {
+public class RequestHandlingServiceTest extends TaxiServiceTest{
 
-	protected EntityManager em;
-
-	@Before
-	public void setup(){
-		// prepare database for each test
-		em = JPAUtil.getCurrentEntityManager();
-		Initializer dataHelper = new Initializer();
-		try{
-			dataHelper.prepareData();
-		}
-		catch (Exception e){
-			System.out.println(e.getStackTrace());
-		}
-
-	}
-
-	@After
-	public void tearDown(){
-		em.close();
-	}
 
 	//Tests for Taxi search
 	

@@ -13,24 +13,7 @@ import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
 
-public class EditAccountServiceTest {
-
-	protected EntityManager em;
-
-	//initialize of the DB
-	@Before
-	public void setup(){
-		// prepare database for each test
-		em = JPAUtil.getCurrentEntityManager();
-		Initializer dataHelper = new Initializer();
-		try{
-			dataHelper.prepareData();
-		}
-		catch (Exception e){
-			System.out.println(e.getStackTrace());
-		}
-
-	}
+public class EditAccountServiceTest extends TaxiServiceTest {
 
 	//Tests for taxi driver's address changing
 
@@ -158,8 +141,7 @@ public class EditAccountServiceTest {
 		EditAccountService service = new EditAccountService();
 
 		Customer newAddr = (Customer)service.changeAddress("Customer", (long)1, "KOSTAKI 1", "PANORAMA", 12345);
-		em.close();
-
+		
 		// assertions
 		em = JPAUtil.getCurrentEntityManager();
 		Query query = em.createQuery("select cst from Customer cst where cst.id = :tid");
@@ -979,10 +961,5 @@ public class EditAccountServiceTest {
 		Customer cust = (Customer)query.getSingleResult();
 		Assert.assertEquals("slepen@gmail.com", cust.getEmail());
 
-	}
-
-	@After
-	public void tearDown(){
-		em.close();
 	}
 }
