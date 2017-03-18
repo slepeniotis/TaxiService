@@ -21,6 +21,7 @@ public class EvaluationInfo {
 	}
 
 	public EvaluationInfo(long id, long routeId, int rating, String comment){
+		this(routeId, rating, comment);
 		this.id = id;
 	}
 
@@ -35,7 +36,7 @@ public class EvaluationInfo {
 		return routeId;
 	}
 
-	public void setRoute(long routeId) {
+	public void setRouteId(long routeId) {
 		this.routeId = routeId;
 	}
 
@@ -57,6 +58,10 @@ public class EvaluationInfo {
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public Route getRoute(EntityManager em) {
