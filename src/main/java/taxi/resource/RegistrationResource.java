@@ -27,12 +27,12 @@ public class RegistrationResource extends AbstractResource {
 	public Response registerTaxi(TaxiInfo taxiInfo){
 
 		RegistrationService service = new RegistrationService();
-		Taxi taxi = (Taxi)service.createTaxi(taxiInfo.getCarModel(), taxiInfo.getCarType(), taxiInfo.getLicensePlate(), taxiInfo.getCarModelDate(), 
+		Taxi taxi = service.createTaxi(taxiInfo.getCarModel(), taxiInfo.getCarType(), taxiInfo.getLicensePlate(), taxiInfo.getCarModelDate(), 
 				taxiInfo.getLocationLat(), taxiInfo.getLocationLon());
 		TaxiDriver taxiDriver;
 
 		if(taxi != null){
-			taxiDriver = (TaxiDriver)service.registerTaxiDriver(taxiInfo.getName(), taxiInfo.getSurname(),
+			taxiDriver = service.registerTaxiDriver(taxiInfo.getName(), taxiInfo.getSurname(),
 					taxiInfo.getSex(), taxiInfo.getUsername(), taxiInfo.getPassword(), taxiInfo.getDateOfBirth(), 
 					taxiInfo.getAddress(), taxiInfo.getCity(), taxiInfo.getZipCode(), taxiInfo.getEmail(), 
 					taxiInfo.getCreditCardType(), taxiInfo.getCreditCardNumber(), taxiInfo.getExpiryDate(), 

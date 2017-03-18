@@ -29,7 +29,7 @@ public class LoginResource extends AbstractResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response CustomerLogin (LoginInfo loginInfo){
 
-		LoginService service = new LoginService();
+		LoginService service = new LoginService();		
 		Customer c1 = (Customer)service.login(loginInfo.getUserType(), loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
 
 		if (c1 != null){
