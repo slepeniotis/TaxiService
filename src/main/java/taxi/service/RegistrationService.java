@@ -168,6 +168,7 @@ public class RegistrationService {
 				|| creditCardType == " " || creditCardNumber == " " || expiryDate == " " 
 				|| ccv == " " || locationLat == 0 || locationLon == 0)
 			return null;
+			
 
 		//validations
 		if (Validators.validateUsernameCst(username)){
