@@ -6,6 +6,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.GET;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Path("/statistics")
@@ -14,10 +17,21 @@ public class StatisticsResource extends AbstractResource {
 	@GET
 	@Path("/commision")
 	@Produces(MediaType.APPLICATION_JSON)
-	public StatisticsInfo statisticsCommision (@QueryParam("fromRange") Date fromRange,	@QueryParam("toRange") Date toRange){
+	public StatisticsInfo statisticsCommision (@QueryParam("fromRange") String fromRange, @QueryParam("toRange") String toRange){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dFrom = new Date();
+		Date dTo = new Date();
+		try {
+			dFrom = sdf.parse(fromRange);
+			dTo = sdf.parse(toRange);
+		}
+		catch (ParseException e){
+			System.out.println(e.getStackTrace());
+		}		
 
 		StatisticsService service = new StatisticsService();
-		double stats = service.produceStatistics(1, fromRange, toRange);
+		double stats = service.produceStatistics(1, dFrom, dTo);
 
 		StatisticsInfo statisticsInfo = new StatisticsInfo(stats, 1);
 
