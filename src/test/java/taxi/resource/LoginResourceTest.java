@@ -51,11 +51,11 @@ public class LoginResourceTest extends TaxiResourceTest{
 	}
 	
 	@Test
-	public void TaxiDriverLoginCst_succ() {
+	public void TaxiDriverLoginTx_succ() {
 	
 		// Create a login info object and submit
-		String passwd = "fdkE9skf";
-		LoginInfo loginInfo = new LoginInfo("XRISTODOYLOPOYLOS", passwd, 37.9508344, 23.6510941);
+		String passwd = "fd8E9skf";
+		LoginInfo loginInfo = new LoginInfo("MAKXRIS", passwd, 37.9508344, 23.6510941);
 
 		Response response = target("login/TaxiDriverLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
 
@@ -66,7 +66,7 @@ public class LoginResourceTest extends TaxiResourceTest{
 	}
 	
 	@Test
-	public void TaxiDriverLoginCst_wrongPass() {	
+	public void TaxiDriverLoginTx_wrongPass() {	
 		// Create a login info object and submit
 		
 		LoginInfo loginInfo = new LoginInfo("XRISTODOYLOPOYLOS", "pass", 37.9508344, 23.6510941);
