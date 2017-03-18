@@ -50,4 +50,33 @@ public class LoginResourceTest extends TaxiResourceTest{
 
 	}
 	
+	@Test
+	public void TaxiDriverLoginCst_succ() {
+	
+		// Create a login info object and submit
+		String passwd = "fdkE9skf";
+		LoginInfo loginInfo = new LoginInfo("XRISTODOYLOPOYLOS", passwd, 37.9508344, 23.6510941);
+
+		Response response = target("login/TaxiDriverLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
+
+		// Check status and database state
+		Assert.assertEquals(201, response.getStatus());
+	
+
+	}
+	
+	@Test
+	public void TaxiDriverLoginCst_wrongPass() {	
+		// Create a login info object and submit
+		
+		LoginInfo loginInfo = new LoginInfo("XRISTODOYLOPOYLOS", "pass", 37.9508344, 23.6510941);
+
+		Response response = target("login/TaxiDriverLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
+
+		// Check status and database state
+		Assert.assertEquals(404, response.getStatus());
+	
+
+	}
+	
 }
