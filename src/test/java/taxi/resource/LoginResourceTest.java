@@ -32,18 +32,17 @@ public class LoginResourceTest extends TaxiResourceTest{
 
 	@Override
 	protected Application configure() {
-		return new ResourceConfig(EditAccountResource.class, DebugExceptionMapper.class);
+		return new ResourceConfig(LoginResource.class, DebugExceptionMapper.class);
 	}
 	
 	@Test
-	public void CustomerLogin() {
-
+	public void CustomerLoginCst_succ() {
 	
 		// Create a login info object and submit
 		String passwd = "fdkE9skf";
-		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", passwd, 37.9508344, 23.6510941, "Customer");
+		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", passwd, 37.9508344, 23.6510941, "customer");
 
-		Response response = target("createLogin/CustomerLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
+		Response response = target("login/CustomerLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
 
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
@@ -51,52 +50,18 @@ public class LoginResourceTest extends TaxiResourceTest{
 
 	}
 	
-	@Test
-	public void CustomerLoginCst_noUID() {
-
-	
+	/*@Test
+	public void CustomerLoginCst_wrongPass() {	
 		// Create a login info object and submit
 		
 		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", "pass", 37.9508344, 23.6510941, "Customer");
 
-		Response response = target("createLogin/CustomerLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
+		Response response = target("login/CustomerLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
 
 		// Check status and database state
 		Assert.assertEquals(404, response.getStatus());
 	
 
-	}
-	
-	@Test
-	public void TaxiDriverLogin() {
-
-	
-		// Create a login info object and submit
-		String passwd = "fdkE9skf";
-		LoginInfo loginInfo = new LoginInfo("MAKXRIS", passwd,37.9508344, 23.6510941, "TaxiDriver");
-
-		Response response = target("createLogin/TaxiDriverLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
-
-		// Check status and database state
-		Assert.assertEquals(201, response.getStatus());
-	
-
-	}
-	
-	@Test
-	public void TaxiDriverLoginCst_noUID() {
-
-	
-		// Create a login info object and submit
-		
-		LoginInfo loginInfo = new LoginInfo("MAKXRIS", "pass", 37.9508344, 23.6510941,"TaxiDriver");
-
-		Response response = target("createLogin/TaxiDriverLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
-
-		// Check status and database state
-		Assert.assertEquals(404, response.getStatus());
-	
-
-	}
+	}*/
 	
 }
