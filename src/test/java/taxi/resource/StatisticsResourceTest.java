@@ -1,25 +1,11 @@
 package taxi.resource;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.Assert;
 import org.junit.Test;
-
-import taxi.model.Customer;
 import taxi.persistence.Initializer;
-import taxi.persistence.JPAUtil;
 
 public class StatisticsResourceTest extends TaxiResourceTest {
 
