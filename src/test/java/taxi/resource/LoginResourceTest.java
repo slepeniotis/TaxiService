@@ -40,7 +40,7 @@ public class LoginResourceTest extends TaxiResourceTest{
 	
 		// Create a login info object and submit
 		String passwd = "fdkE9skf";
-		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", passwd, 37.9508344, 23.6510941, "customer");
+		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", passwd, 37.9508344, 23.6510941, "Customer");
 
 		Response response = target("login/CustomerLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
 
