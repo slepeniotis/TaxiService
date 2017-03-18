@@ -59,13 +59,13 @@ public class EvaluationInfo {
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public Route getRoute(EntityManager em) {
-		
+
 		Route route = null;
 
 		if (routeId != 0) {

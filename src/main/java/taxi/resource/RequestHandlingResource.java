@@ -34,20 +34,20 @@ public class RequestHandlingResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
-	
+
 	@GET
 	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TaxiInfo> searchTaxi(@QueryParam("customerId") long customerId, @QueryParam("range") int range) {
-		
+
 		EntityManager em = getEntityManager();
 		RequestHandlingService service = new RequestHandlingService();
-		
+
 		CustomerInfo customerInfo = new CustomerInfo();
 		customerInfo.setId(customerId);
 		Customer customer = customerInfo.getCustomer(em);
 		em.close();
-				
+
 		List<Taxi> taxi = service.searchTaxi(customer, range);
 		List<TaxiInfo> taxiInfo;
 		if(taxi != null){
@@ -59,7 +59,7 @@ public class RequestHandlingResource extends AbstractResource {
 
 		return taxiInfo;
 	}	
-	
+
 	@POST
 	@Path("/startrequest")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -69,10 +69,10 @@ public class RequestHandlingResource extends AbstractResource {
 		Taxi taxi = requestHandlingInfo.getTaxi(em);
 		Customer customer = requestHandlingInfo.getCustomer(em);
 		em.close();
-		
+
 		RequestHandlingService service = new RequestHandlingService();
 		Request req = service.startRequest(taxi, customer);
-		
+
 		if(req != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newRequestUri = ub.path(Long.toString(req.getId())).build();
@@ -82,7 +82,7 @@ public class RequestHandlingResource extends AbstractResource {
 			return Response.status(Status.NOT_ACCEPTABLE).build();
 		}		
 	}
-		
+
 	@PUT
 	@Path("/handlerequest/{requestId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -98,18 +98,18 @@ public class RequestHandlingResource extends AbstractResource {
 		else{
 			Request req = requestHandlingInfo.getRequest(em);
 			em.close();
-			
+
 			RequestHandlingService service = new RequestHandlingService();
 			result = service.handleRequest(req, taxi, requestHandlingInfo.getDecision());
-			
+
 			if(result)
 				return Response.ok().build();
 			else
 				return Response.status(Status.NOT_ACCEPTABLE).build();
 		}		
 	}
-	
-	
+
+
 	@POST
 	@Path("/createRoute")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -118,11 +118,11 @@ public class RequestHandlingResource extends AbstractResource {
 		EntityManager em = getEntityManager();
 		Request req = requestHandlingInfo.getRequest(em);
 		em.close();
-		
+
 		RequestHandlingService service = new RequestHandlingService();
 		Route route = service.createRoute(req, requestHandlingInfo.getFromAddress(), requestHandlingInfo.getToAddress(),
 				requestHandlingInfo.getFromCity(), requestHandlingInfo.getToCity(), requestHandlingInfo.getFromZipCode(), requestHandlingInfo.getToZipCode());
-		
+
 		if(route != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newRouteUri = ub.path(Long.toString(route.getId())).build();
@@ -132,7 +132,7 @@ public class RequestHandlingResource extends AbstractResource {
 			return Response.status(Status.NOT_ACCEPTABLE).build();
 		}		
 	}
-	
+
 	@PUT
 	@Path("/stoprequest/{requestId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -148,17 +148,17 @@ public class RequestHandlingResource extends AbstractResource {
 		else{
 			Request req = requestHandlingInfo.getRequest(em);
 			em.close();
-			
+
 			RequestHandlingService service = new RequestHandlingService();
 			result = service.stopRequest(req, taxi, requestHandlingInfo.getCost(), requestHandlingInfo.getDuration());
-			
+
 			if(result)
 				return Response.ok().build();
 			else
 				return Response.status(Status.NOT_ACCEPTABLE).build();
 		}		
 	}
-	
+
 	@PUT
 	@Path("/cancelrequest/{requestId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -174,10 +174,10 @@ public class RequestHandlingResource extends AbstractResource {
 		else{
 			Request req = requestHandlingInfo.getRequest(em);
 			em.close();
-			
+
 			RequestHandlingService service = new RequestHandlingService();
 			result = service.cancelRequest(customer, req);
-			
+
 			if(result)
 				return Response.ok().build();
 			else

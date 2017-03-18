@@ -22,21 +22,21 @@ public class RequestHandlingInfo {
 	private String toAddress;
 	private int toZipCode;
 	private String toCity;
-	
-	
+
+
 	public RequestHandlingInfo(){}
-	
+
 	public RequestHandlingInfo(long taxiId, long customerId){
 		this.customerId = customerId;
 		this.taxiId = taxiId;
 	}
-	
+
 	public RequestHandlingInfo(long reqId, long taxiId, String decision){
 		this.reqId = reqId;
 		this.taxiId = taxiId;
 		this.decision = decision;
 	}
-	
+
 	public RequestHandlingInfo(long reqId, String fromAddress, int fromZipCode, 
 			String fromCity, String toAddress, int toZipCode, String toCity){
 		this.reqId = reqId;
@@ -47,14 +47,14 @@ public class RequestHandlingInfo {
 		this.toCity = toCity;
 		this.fromCity = fromCity;
 	}
-	
+
 	public RequestHandlingInfo(long reqId, long taxiId, float cost, int duration){
 		this.reqId = reqId;
 		this.taxiId = taxiId;
 		this.cost = cost;
 		this.duration = duration;
 	}
-	
+
 	public long getReqId() {
 		return reqId;
 	}
@@ -102,7 +102,7 @@ public class RequestHandlingInfo {
 	public void setDecision(String decision) {
 		this.decision = decision;
 	}
-	
+
 	public String getFromAddress() {
 		return fromAddress;
 	}
@@ -161,10 +161,10 @@ public class RequestHandlingInfo {
 		else{
 			return null;
 		}
-		
+
 		return c;
 	}
-	
+
 	public Taxi getTaxi(EntityManager em) {
 
 		Taxi tx = null;
@@ -175,10 +175,10 @@ public class RequestHandlingInfo {
 		else{
 			return null;
 		}
-		
+
 		return tx;
 	}
-	
+
 	public Request getRequest(EntityManager em) {
 
 		Request req = null;
@@ -189,7 +189,7 @@ public class RequestHandlingInfo {
 		else{
 			return null;
 		}
-		
+
 		return req;
 	}
 }

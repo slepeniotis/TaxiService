@@ -7,34 +7,34 @@ import taxi.model.TaxiDriver;
 @XmlRootElement
 public class TaxiDriverInfo {
 
-		private long id;
+	private long id;
 
-		private String name;
+	private String name;
 
-		private String surname;
+	private String surname;
 
-		private String sex;
+	private String sex;
 
-		private String username;
+	private String username;
 
-		private Date dateOfBirth;
+	private Date dateOfBirth;
 
-		private String address;
+	private String address;
 
-		private String city;
+	private String city;
 
-		private int zipCode;
+	private int zipCode;
 
-		private String email;
+	private String email;
 
-		private String creditCardType;
+	private String creditCardType;
 
-		private String creditCardNumber;
+	private String creditCardNumber;
 
-		private String expiryDate;
+	private String expiryDate;
 
-		private String ccv;	
-	
+	private String ccv;	
+
 	public TaxiDriverInfo() {
 
 	}
@@ -81,7 +81,7 @@ public class TaxiDriverInfo {
 		zipCode = c.getZipCode();	
 	}
 
-	
+
 	public String getName() {
 		return name;
 	}
@@ -189,34 +189,9 @@ public class TaxiDriverInfo {
 	public long getId() {
 		return id;
 	}
-	
-	
+
+
 	public static TaxiDriverInfo wrap(TaxiDriver txdr) {
 		return new TaxiDriverInfo(txdr);
 	}
-
-	/*public Customer getCustomer(EntityManager em) {
-
-		Customer c = null;
-
-		if (id != 0) {
-			c = em.find(Customer.class, (long)id);
-		} else {
-			c = new Customer();
-		}
-
-		c.setTitle(title);
-		c.setPublication(publication);
-		c.setPublicationYear(publicationyear);
-
-		if (book.getIsbn() == null || !book.getIsbn().getValue().equals(isbn)) {
-			book.setIsbn(new ISBN(isbn));
-		}
-
-		Publisher publisher = em.getReference(Publisher.class, publisherId);
-
-		book.setPublisher(publisher);
-
-		return book;
-	}*/
 }

@@ -19,7 +19,7 @@ public class TaxiInfo {
 	private String sex;
 
 	private String username;
-	
+
 	private String password;
 
 	private Date dateOfBirth;
@@ -39,7 +39,7 @@ public class TaxiInfo {
 	private String expiryDate;
 
 	private String ccv;	
-	
+
 	private String carModel;
 
 	private String carType;
@@ -51,9 +51,9 @@ public class TaxiInfo {
 	private double locationLat;
 
 	private double locationLon;
-	
+
 	TaxiInfo(){}
-	
+
 	public TaxiInfo(String name, String surname, String sex, String username, String password,
 			Date dateOfBirth, String address, String city, int zipCode, String email, 
 			String creditCardType, String creditCardNumber, String expiryDate, String ccv, 
@@ -236,7 +236,11 @@ public class TaxiInfo {
 	public String getPassword() {
 		return password;
 	}
-	
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public static List<TaxiInfo> wrapTaxi(List<Taxi> taxi) {
 		List<TaxiInfo> taxiInfo = new ArrayList<>(0);
 
@@ -248,11 +252,11 @@ public class TaxiInfo {
 			temp.setLicensePlate(t.getLicensePlate());
 			temp.setLocationLat(t.getLocationLat());
 			temp.setLocationLon(t.getLocationLon());
-			
+
 			taxiInfo.add(temp);
 		}
 
 		return taxiInfo;
 	}
-	
+
 }

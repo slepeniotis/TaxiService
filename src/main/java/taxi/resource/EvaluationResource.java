@@ -21,16 +21,16 @@ public class EvaluationResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createEval(EvaluationInfo evaluationInfo){
 		EntityManager em = getEntityManager();
 		Route route = evaluationInfo.getRoute(em);
-		
+
 		EvaluationService service = new EvaluationService();
 		Evaluation eval = service.createEvaluation(route, evaluationInfo.getRating(), evaluationInfo.getComment());
-		
+
 		if (eval != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newEvalUri = ub.path(Long.toString(eval.getId())).build();

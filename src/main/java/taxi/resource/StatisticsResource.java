@@ -15,36 +15,36 @@ public class StatisticsResource extends AbstractResource {
 	@Path("/commision")
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatisticsInfo statisticsCommision (@QueryParam("fromRange") Date fromRange,	@QueryParam("toRange") Date toRange){
-		
+
 		StatisticsService service = new StatisticsService();
 		double stats = service.produceStatistics(1, fromRange, toRange);
-		
+
 		StatisticsInfo statisticsInfo = new StatisticsInfo(stats, 1);
 
 		return statisticsInfo;
 	}
-	
+
 	@GET
 	@Path("/fromCity")
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatisticsInfo statisticsFromCity (@QueryParam("city") String city){
-		
+
 		StatisticsService service = new StatisticsService();
 		int stats = service.produceStatistics(2, city);
-		
+
 		StatisticsInfo statisticsInfo = new StatisticsInfo(stats, 2);
 
 		return statisticsInfo;
 	}
-	
+
 	@GET
 	@Path("/toCity")
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatisticsInfo statisticsToCity (@QueryParam("city") String city){
-		
+
 		StatisticsService service = new StatisticsService();
 		int stats = service.produceStatistics(3, city);
-		
+
 		StatisticsInfo statisticsInfo = new StatisticsInfo(stats, 3);
 
 		return statisticsInfo;

@@ -6,16 +6,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class LoginInfo {
 
-		private String username;
+	private String username;
 
-		private String password;	
-		
-		private String userType;
-		
-		private double lat;
-		
-		private double lon;
-	
+	private String password;	
+
+	private String userType;
+
+	private double lat;
+
+	private double lon;
+
 	public LoginInfo() {
 
 	}
@@ -30,7 +30,7 @@ public class LoginInfo {
 
 	}
 
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -38,7 +38,7 @@ public class LoginInfo {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	public String getUserType() {
 		return userType;
 	}
@@ -54,19 +54,19 @@ public class LoginInfo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public double getLat() {
 		return lat;
 	}
-	
+
 	public void setLat(double lat) {
 		this.lat = lat;
 	}
-	
+
 	public double getLon() {
 		return lon;
 	}
-	
+
 	public void setLon(double lon) {
 		this.lon = lon;
 	}

@@ -9,42 +9,42 @@ import taxi.utils.AESEncrypt;
 @XmlRootElement
 public class CustomerInfo {
 
-		private long id;
+	private long id;
 
-		private String name;
+	private String name;
 
-		private String surname;
+	private String surname;
 
-		private String sex;
+	private String sex;
 
-		private String username;
+	private String username;
 
-		private Date dateOfBirth;
+	private Date dateOfBirth;
 
-		private String address;
+	private String address;
 
-		private String city;
+	private String city;
 
-		private int zipCode;
+	private int zipCode;
 
-		private String email;
+	private String email;
 
-		private String creditCardType;
+	private String creditCardType;
 
-		private String creditCardNumber;
+	private String creditCardNumber;
 
-		private String expiryDate;
+	private String expiryDate;
 
-		private String ccv;	
-		
-		private String password;
+	private String ccv;	
 
-		private double locationLat;
+	private String password;
 
-		private double locationLon;
+	private double locationLat;
 
-		
-	
+	private double locationLon;
+
+
+
 	public CustomerInfo() {
 
 	}
@@ -106,7 +106,7 @@ public class CustomerInfo {
 		locationLon = c.getLocationLon();
 	}
 
-	
+
 	public String getName() {
 		return name;
 	}
@@ -214,11 +214,11 @@ public class CustomerInfo {
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
-		
+
 	public double getLocationLat() {
 		return locationLat;
 	}
@@ -239,6 +239,10 @@ public class CustomerInfo {
 		return password;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public static CustomerInfo wrap(Customer c) {
 		return new CustomerInfo(c);
 	}
@@ -253,7 +257,7 @@ public class CustomerInfo {
 		else{
 			return null;
 		}
-		
+
 		return c;
 	}
 }

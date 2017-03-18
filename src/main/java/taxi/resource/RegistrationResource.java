@@ -58,12 +58,12 @@ public class RegistrationResource extends AbstractResource {
 	public Response registerCustomer(CustomerInfo customerInfo){
 
 		RegistrationService service = new RegistrationService();
-		Customer customer = (Customer)service.registerCustomer(customerInfo.getName(), customerInfo.getSurname(), 
+		Customer customer = service.registerCustomer(customerInfo.getName(), customerInfo.getSurname(), 
 				customerInfo.getSex(), customerInfo.getUsername(), customerInfo.getPassword(), customerInfo.getDateOfBirth(), 
 				customerInfo.getLocationLat(), customerInfo.getLocationLon(), customerInfo.getAddress(), 
 				customerInfo.getCity(), customerInfo.getZipCode(), customerInfo.getEmail(), customerInfo.getCreditCardType(), 
-				customerInfo.getCreditCardNumber(), customerInfo.getExpiryDate(), customerInfo.getCcv());
-
+				customerInfo.getCreditCardNumber(), customerInfo.getExpiryDate(), customerInfo.getCcv());		
+		
 		if(customer != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newTaxiUri = ub.path(Long.toString(customer.getId())).build();

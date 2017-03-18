@@ -23,15 +23,15 @@ public class LoginResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
-	
+
 	@POST
 	@Path("/CustomerLogin")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response CustomerLogin (LoginInfo loginInfo){
-		
+
 		LoginService service = new LoginService();
 		Customer c1 = (Customer)service.login(loginInfo.getUserType(), loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
-		
+
 		if (c1 != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newCustomerLoginUri = ub.path(Long.toString(c1.getId())).build();
@@ -41,16 +41,16 @@ public class LoginResource extends AbstractResource {
 			return Response.status(Status.NOT_FOUND).build();
 		}		
 	}
-	
+
 	@POST
 	@Path("/TaxiDriverLogin")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response TaxiDriverLogin (LoginInfo loginInfo){
-		
+
 		LoginService service = new LoginService();
 		TaxiDriver txdr1 = (TaxiDriver)service.login(loginInfo.getUserType(), loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
 
-		
+
 		if (txdr1 != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newTaxiDriverLoginUri = ub.path(Long.toString(txdr1.getId())).build();
@@ -59,7 +59,7 @@ public class LoginResource extends AbstractResource {
 		else{
 			return Response.status(Status.NOT_FOUND).build();
 		}		
-		
+
 	}
-	
+
 }
