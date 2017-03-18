@@ -36,8 +36,6 @@ public class EvaluationResourceTest extends TaxiResourceTest {
 		Assert.assertEquals(201, response.getStatus());
 		Route route = em.find(Route.class, (long)19);
 		em.refresh(route);
-		System.out.println(route.getId());
-		System.out.println(route.getEval().getComment());
 		Assert.assertEquals("Test comment", route.getEval().getComment());
 		em.close();
 	}
