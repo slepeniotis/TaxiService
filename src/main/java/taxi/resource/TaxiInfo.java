@@ -3,10 +3,7 @@ package taxi.resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
-
-import taxi.model.Customer;
 import taxi.model.Taxi;
 
 @XmlRootElement
