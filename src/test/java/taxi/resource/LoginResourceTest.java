@@ -1,29 +1,15 @@
 package taxi.resource;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import taxi.model.Customer;
-import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
-import taxi.persistence.JPAUtil;
-import taxi.service.EditAccountService;
 
 public class LoginResourceTest extends TaxiResourceTest{
 
@@ -40,7 +26,7 @@ public class LoginResourceTest extends TaxiResourceTest{
 	
 		// Create a login info object and submit
 		String passwd = "fdkE9skf";
-		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", passwd, 37.9508344, 23.6510941, "Customer");
+		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", passwd, 37.9508344, 23.6510941);
 
 		Response response = target("login/CustomerLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
 
@@ -50,11 +36,11 @@ public class LoginResourceTest extends TaxiResourceTest{
 
 	}
 	
-	/*@Test
+	@Test
 	public void CustomerLoginCst_wrongPass() {	
 		// Create a login info object and submit
 		
-		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", "pass", 37.9508344, 23.6510941, "Customer");
+		LoginInfo loginInfo = new LoginInfo("SLEPENIOTIS", "pass", 37.9508344, 23.6510941);
 
 		Response response = target("login/CustomerLogin").request().post(Entity.entity(loginInfo, MediaType.APPLICATION_JSON));
 
@@ -62,6 +48,6 @@ public class LoginResourceTest extends TaxiResourceTest{
 		Assert.assertEquals(404, response.getStatus());
 	
 
-	}*/
+	}
 	
 }

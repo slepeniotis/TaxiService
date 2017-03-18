@@ -10,8 +10,6 @@ public class LoginInfo {
 
 	private String password;	
 
-	private String userType;
-
 	private double lat;
 
 	private double lon;
@@ -20,13 +18,12 @@ public class LoginInfo {
 
 	}
 
-	public LoginInfo(String username, String password, double lat, double lon, String userType) {
+	public LoginInfo(String username, String password, double lat, double lon) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.lat = lat;
 		this.lon = lon;
-		this.userType = userType;
 
 	}
 
@@ -37,14 +34,6 @@ public class LoginInfo {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
 	}
 
 	public String getPassword() {

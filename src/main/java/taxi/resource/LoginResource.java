@@ -30,7 +30,7 @@ public class LoginResource extends AbstractResource {
 	public Response CustomerLogin (LoginInfo loginInfo){
 
 		LoginService service = new LoginService();		
-		Customer c1 = (Customer)service.login(loginInfo.getUserType(), loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
+		Customer c1 = (Customer)service.login("Customer", loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
 
 		if (c1 != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
@@ -48,7 +48,7 @@ public class LoginResource extends AbstractResource {
 	public Response TaxiDriverLogin (LoginInfo loginInfo){
 
 		LoginService service = new LoginService();
-		TaxiDriver txdr1 = (TaxiDriver)service.login(loginInfo.getUserType(), loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
+		TaxiDriver txdr1 = (TaxiDriver)service.login("Taxi Driver", loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
 
 
 		if (txdr1 != null){
