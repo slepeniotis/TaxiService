@@ -8,11 +8,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.GET;
 import java.util.Date;
 
-@Path("statistics")
+@Path("/statistics")
 public class StatisticsResource extends AbstractResource {
 
 	@GET
-	@Path("commision")
+	@Path("/commision")
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatisticsInfo statisticsCommision (@QueryParam("fromRange") Date fromRange,	@QueryParam("toRange") Date toRange){
 		
@@ -25,7 +25,7 @@ public class StatisticsResource extends AbstractResource {
 	}
 	
 	@GET
-	@Path("fromCity")
+	@Path("/fromCity")
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatisticsInfo statisticsFromCity (@QueryParam("city") String city){
 		
@@ -38,7 +38,7 @@ public class StatisticsResource extends AbstractResource {
 	}
 	
 	@GET
-	@Path("toCity")
+	@Path("/toCity")
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatisticsInfo statisticsToCity (@QueryParam("city") String city){
 		

@@ -18,14 +18,14 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
 
-@Path("login")
+@Path("/login")
 public class LoginResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
 	
 	@POST
-	@Path("CustomerLogin")
+	@Path("/CustomerLogin")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response CustomerLogin (LoginInfo loginInfo){
 		
@@ -43,7 +43,7 @@ public class LoginResource extends AbstractResource {
 	}
 	
 	@POST
-	@Path("TaxiDriverLogin")
+	@Path("/TaxiDriverLogin")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response TaxiDriverLogin (LoginInfo loginInfo){
 		

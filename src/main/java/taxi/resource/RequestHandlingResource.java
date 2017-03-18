@@ -29,14 +29,14 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 
-@Path("request")
+@Path("/request")
 public class RequestHandlingResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
 	
 	@GET
-	@Path("search")
+	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TaxiInfo> searchTaxi(@QueryParam("customerId") long customerId, @QueryParam("range") int range) {
 		
@@ -61,7 +61,7 @@ public class RequestHandlingResource extends AbstractResource {
 	}	
 	
 	@POST
-	@Path("startrequest")
+	@Path("/startrequest")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response startRequest(RequestHandlingInfo requestHandlingInfo) {
 
@@ -84,7 +84,7 @@ public class RequestHandlingResource extends AbstractResource {
 	}
 		
 	@PUT
-	@Path("handlerequest/{requestId:[0-9]+}")
+	@Path("/handlerequest/{requestId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response handleRequest(@PathParam("requestId") long requestId, RequestHandlingInfo requestHandlingInfo) {
 
@@ -111,7 +111,7 @@ public class RequestHandlingResource extends AbstractResource {
 	
 	
 	@POST
-	@Path("createRoute")
+	@Path("/createRoute")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createRoute(RequestHandlingInfo requestHandlingInfo) {
 
@@ -134,7 +134,7 @@ public class RequestHandlingResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("stoprequest/{requestId:[0-9]+}")
+	@Path("/stoprequest/{requestId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response stopRequest(@PathParam("requestId") long requestId, RequestHandlingInfo requestHandlingInfo) {
 
@@ -160,7 +160,7 @@ public class RequestHandlingResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("cancelrequest/{requestId:[0-9]+}")
+	@Path("/cancelrequest/{requestId:[0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response cancelRequest(@PathParam("requestId") long requestId, RequestHandlingInfo requestHandlingInfo) {
 

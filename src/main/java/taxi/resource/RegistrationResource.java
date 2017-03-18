@@ -15,14 +15,14 @@ import java.net.URI;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
-@Path("register")
+@Path("/register")
 public class RegistrationResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
 
 	@POST
-	@Path("taxi")
+	@Path("/taxi")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response registerTaxi(TaxiInfo taxiInfo){
 
@@ -53,7 +53,7 @@ public class RegistrationResource extends AbstractResource {
 	}
 
 	@POST
-	@Path("customer")
+	@Path("/customer")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response registerCustomer(CustomerInfo customerInfo){
 

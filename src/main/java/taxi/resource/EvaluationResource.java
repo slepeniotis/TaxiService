@@ -16,7 +16,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
 
-@Path("evaluation")
+@Path("/evaluation")
 public class EvaluationResource extends AbstractResource {
 
 	@Context
