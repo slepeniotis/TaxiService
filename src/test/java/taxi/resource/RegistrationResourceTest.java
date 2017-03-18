@@ -3,8 +3,6 @@ package taxi.resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.ws.rs.client.Entity;
@@ -20,7 +18,6 @@ import taxi.model.Customer;
 import taxi.model.TaxiDriver;
 import taxi.persistence.Initializer;
 import taxi.persistence.JPAUtil;
-import taxi.utils.AESEncrypt;
 
 public class RegistrationResourceTest extends TaxiResourceTest {
 
