@@ -49,7 +49,7 @@ public class RequestHandlingService {
 
 		CoordinateCalc cc = new CoordinateCalc();
 		List<Taxi> taxlst = new ArrayList(0);
-		Query query = em.createQuery("select taxi from Taxi taxi where taxi.status = :stts");
+		Query query = em.createQuery("select tx from Taxi tx where tx.status = :stts");
 		query.setParameter("stts", true);
 		List<Taxi> taxirslt = query.getResultList();
 		if(taxirslt.isEmpty())

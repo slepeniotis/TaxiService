@@ -38,17 +38,19 @@ public class RequestHandlingResource extends AbstractResource {
 	@GET
 	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<TaxiInfo> searchTaxi(@QueryParam("customerId") long customerId, @QueryParam("range") int range) {
+	public List<TaxiInfo> searchTaxi(@QueryParam("customerId") String customerId, @QueryParam("range") String range) {
 
+		Long custId = Long.parseLong(customerId);
+		int rangInt = Integer.parseInt(range);
+				
 		EntityManager em = getEntityManager();
 		RequestHandlingService service = new RequestHandlingService();
 
 		CustomerInfo customerInfo = new CustomerInfo();
-		customerInfo.setId(customerId);
+		customerInfo.setId(custId);
 		Customer customer = customerInfo.getCustomer(em);
-		em.close();
-
-		List<Taxi> taxi = service.searchTaxi(customer, range);
+		
+		List<Taxi> taxi = service.searchTaxi(customer, rangInt);
 		List<TaxiInfo> taxiInfo;
 		if(taxi != null){
 			taxiInfo = TaxiInfo.wrapTaxi(taxi);
@@ -68,10 +70,10 @@ public class RequestHandlingResource extends AbstractResource {
 		EntityManager em = getEntityManager();
 		Taxi taxi = requestHandlingInfo.getTaxi(em);
 		Customer customer = requestHandlingInfo.getCustomer(em);
-		em.close();
 
 		RequestHandlingService service = new RequestHandlingService();
 		Request req = service.startRequest(taxi, customer);
+		em.close();
 
 		if(req != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
@@ -97,15 +99,43 @@ public class RequestHandlingResource extends AbstractResource {
 		}
 		else{
 			Request req = requestHandlingInfo.getRequest(em);
-			em.close();
 
 			RequestHandlingService service = new RequestHandlingService();
-			result = service.handleRequest(req, taxi, requestHandlingInfo.getDecision());
+			result = service.handleRequest(req, taxi, "yes");
 
 			if(result)
 				return Response.ok().build();
-			else
+			else{
+				em.close();			
 				return Response.status(Status.NOT_ACCEPTABLE).build();
+			}
+		}		
+	}	
+	
+	@PUT
+	@Path("/nothandlerequest/{requestId:[0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response notHandleRequest(@PathParam("requestId") long requestId, RequestHandlingInfo requestHandlingInfo) {
+
+		EntityManager em = getEntityManager();
+		Taxi taxi = requestHandlingInfo.getTaxi(em);
+		boolean result = false;
+		if(requestId != requestHandlingInfo.getReqId()){
+			em.close();
+			return Response.status(Status.NOT_ACCEPTABLE).build();
+		}
+		else{
+			Request req = requestHandlingInfo.getRequest(em);
+
+			RequestHandlingService service = new RequestHandlingService();
+			result = service.handleRequest(req, taxi, "no");
+
+			if(result)
+				return Response.ok().build();
+			else{
+				em.close();			
+				return Response.status(Status.NOT_ACCEPTABLE).build();
+			}
 		}		
 	}
 
@@ -117,18 +147,18 @@ public class RequestHandlingResource extends AbstractResource {
 
 		EntityManager em = getEntityManager();
 		Request req = requestHandlingInfo.getRequest(em);
-		em.close();
 
 		RequestHandlingService service = new RequestHandlingService();
 		Route route = service.createRoute(req, requestHandlingInfo.getFromAddress(), requestHandlingInfo.getToAddress(),
 				requestHandlingInfo.getFromCity(), requestHandlingInfo.getToCity(), requestHandlingInfo.getFromZipCode(), requestHandlingInfo.getToZipCode());
-
+		
 		if(route != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newRouteUri = ub.path(Long.toString(route.getId())).build();
 			return Response.created(newRouteUri).build();
 		}
 		else{
+			em.close();
 			return Response.status(Status.NOT_ACCEPTABLE).build();
 		}		
 	}
@@ -147,15 +177,16 @@ public class RequestHandlingResource extends AbstractResource {
 		}
 		else{
 			Request req = requestHandlingInfo.getRequest(em);
-			em.close();
 
 			RequestHandlingService service = new RequestHandlingService();
 			result = service.stopRequest(req, taxi, requestHandlingInfo.getCost(), requestHandlingInfo.getDuration());
 
 			if(result)
 				return Response.ok().build();
-			else
+			else {
+				em.close();
 				return Response.status(Status.NOT_ACCEPTABLE).build();
+			}
 		}		
 	}
 
@@ -173,15 +204,16 @@ public class RequestHandlingResource extends AbstractResource {
 		}
 		else{
 			Request req = requestHandlingInfo.getRequest(em);
-			em.close();
 
 			RequestHandlingService service = new RequestHandlingService();
 			result = service.cancelRequest(customer, req);
 
 			if(result)
 				return Response.ok().build();
-			else
+			else{
+				em.close();
 				return Response.status(Status.NOT_ACCEPTABLE).build();
+			}				
 		}		
 	}
 }

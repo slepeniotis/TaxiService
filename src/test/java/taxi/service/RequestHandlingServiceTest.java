@@ -461,7 +461,7 @@ public class RequestHandlingServiceTest extends TaxiServiceTest{
 		Assert.assertEquals(RequestStatus.CANCELED, req.getStatus());
 	}
 
-	/*customer requests to cancel the request previously created
+	/* customer requests to cancel the request previously created
 	 * invalid call, request already done
 	 */
 	@Test
@@ -476,7 +476,7 @@ public class RequestHandlingServiceTest extends TaxiServiceTest{
 		Assert.assertEquals(RequestStatus.DONE, req.getStatus());
 	}
 
-	/*customer requests to cancel the request previously created
+	/* customer requests to cancel the request previously created
 	 * invalid call, request already canceled
 	 */
 	@Test

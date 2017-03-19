@@ -26,28 +26,33 @@ public class RequestHandlingInfo {
 
 	public RequestHandlingInfo(){}
 
-	public RequestHandlingInfo(long taxiId, long customerId){
+	//used from start request
+	public RequestHandlingInfo(long customerId, long taxiId){
 		this.customerId = customerId;
 		this.taxiId = taxiId;
 	}
 
+	//used for handle request
 	public RequestHandlingInfo(long reqId, long taxiId, String decision){
 		this.reqId = reqId;
 		this.taxiId = taxiId;
 		this.decision = decision;
+		this.decision = decision;
 	}
 
-	public RequestHandlingInfo(long reqId, String fromAddress, int fromZipCode, 
-			String fromCity, String toAddress, int toZipCode, String toCity){
+	//used for create route
+	public RequestHandlingInfo(long reqId, String fromAddress, String fromCity, 
+			int fromZipCode, String toAddress, String toCity, int toZipCode){
 		this.reqId = reqId;
 		this.fromAddress = fromAddress;
-		this.toAddress = toAddress;
-		this.toZipCode = toZipCode;
 		this.fromZipCode = fromZipCode;
-		this.toCity = toCity;
 		this.fromCity = fromCity;
+		this.toAddress = toAddress;
+		this.toZipCode = toZipCode;		
+		this.toCity = toCity;		
 	}
 
+	//used for stop request
 	public RequestHandlingInfo(long reqId, long taxiId, float cost, int duration){
 		this.reqId = reqId;
 		this.taxiId = taxiId;
@@ -183,7 +188,7 @@ public class RequestHandlingInfo {
 
 		Request req = null;
 
-		if (taxiId != 0) {
+		if (reqId != 0) {
 			req = em.find(Request.class, (long)reqId);
 		}
 		else{

@@ -101,7 +101,7 @@ public class Route {
 	}
 
 	public String getToCity() {
-		return fromCity;
+		return toCity;
 	}
 
 	public void setToCity(String toCity) {
