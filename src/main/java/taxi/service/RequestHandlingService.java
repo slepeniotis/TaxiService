@@ -182,15 +182,30 @@ public class RequestHandlingService {
 		return result;
 	}
 
-	/* createRoute is triggered by the customer after his request is accepted by the driver
-	 * The inputs are the request object, and the information of the route (origin-destination)
-	 * we ensure that none of the inputs is empty/null
+	/** createRoute method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the request object made by the customer,
+	 * <li>the origin address,
+	 * <li>the origin city,
+	 * <li>the origin zip code,
+	 * <li>the destination address,
+	 * <li>the destination city and
+	 * <li>the destination zip code
+	 * </ul>
+	 * <p> 
+	 * This method creates a route with information given by the customer.
+	 * After successful creation of the route, it is connected to the request made by the customer. 
+	 * The Route object is returned.
 	 * 
-	 * we are creating a new route and inserted in the DB
-	 * we also update the route field in object request
-	 * 
-	 * the route created is returned as a result
-	 * 
+	 * @param req type Request
+	 * @param fromAddress type String
+	 * @param toAddress type String
+	 * @param fromCity type String
+	 * @param toCity type String
+	 * @param fromZipCode type int
+	 * @param toZipCode type int
+	 * @return Route
 	 */
 	public Route createRoute(Request req, String fromAddress, String toAddress, String fromCity, String toCity, int fromZipCode, int toZipCode) {
 
@@ -211,18 +226,30 @@ public class RequestHandlingService {
 
 	}
 
-	/* stopRequest is triggered from the driver, when the customer get aboard
-	 * it has as inputs the request object, the taxi and the cost set by the driver
-	 * we ensure none of the inputs is empty/null
+	/** stopRequest method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the request object made by the customer,
+	 * <li>the taxi object which handled the request,
+	 * <li>the cost of the route and
+	 * <li>the duration of the route
+	 * </ul>
+	 * The method:
+	 * <ul>
+	 * <li>Is called when the route has finished
+	 * <li>It changes the status of the taxi from false (booked) to true (free)
+	 * <li>It updates the status of the request to done
+	 * <li>It updates the cost and the duration of the route (got from within the request object)
+	 * <li>It calculates the commission for this route
+	 * <li>And finally the customer is informed about the final cost and is asked to evaluate the service
+	 * <li>Returns true in case everything went ok
+	 * </ul>
 	 * 
-	 * we then change the status of the taxi from false (booked) to true (free)
-	 * we update the status of the request to done
-	 * we update the cost of the route (got from within the request object)
-	 * we calculate the commision of the route
-	 * we inform customer about the final cost and ask him to evaluate the service
-	 * 
-	 * the method returns true in case everything went ok
-	 * 
+	 * @param req type Request
+	 * @param taxi type Taxi
+	 * @param cost type float
+	 * @param duration type int
+	 * @return boolean
 	 */
 	public boolean stopRequest(Request req, Taxi taxi, float cost, int duration){
 
@@ -248,14 +275,22 @@ public class RequestHandlingService {
 
 	}
 	
-	/* Cancel Request
-	 * we assume that customer can only cancel a request he already made
-	 * and it is not already canceled or done
-	 * we receive the customer object and the request made
+	/** cancelRequest method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the request object made by the customer and
+	 * <li>the customer object which cancels the request
+	 * </ul>
+	 * The method:
+	 * <ul>
+	 * <li>Assumes that customer can only cancel a request he already made and it is not already canceled or done
+	 * <li>Updates the status of request to CANCELED 
+	 * <li>Informs taxi driver that the request has been canceled
+	 * </ul>
 	 *  
-	 * we inform taxi driver that the request has been canceled
-	 *  
-	 * after the successful canceling, we get true
+	 * @param customer type Customer
+	 * @param req type Request
+	 * @return boolean
 	 */
 	public boolean cancelRequest(Customer customer, Request req){	
 		boolean result = false;
@@ -263,8 +298,8 @@ public class RequestHandlingService {
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			req.setStatus(RequestStatus.CANCELED);
-			result = true;
 			tx.commit();
+			result = true;
 
 			Taxi taxi = req.getTaxi();
 
