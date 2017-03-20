@@ -1,11 +1,24 @@
 package taxi.utils;
 
-//calculating distance between coordinates
+/**The CoordinateCalc class implements the calculation of the distance between to sets of coordinates
+ * 
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
+ */
+
 public class CoordinateCalc {
 	public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
 	
 	public CoordinateCalc(){}
 		
+	/**<h2>calculateDistanceInKilometer method</h2>
+	 * This method implements the calculation of the distance between to sets of coordinates
+	 * @param userLat origin latitude, type double
+	 * @param userLng origin longtitude, type double
+	 * @param venueLat destination latitude, type double
+	 * @param venueLng destination longtitude, type double
+	 * @return int
+	 */	
 	public int calculateDistanceInKilometer(double userLat, double userLng,
 	  double venueLat, double venueLng) {
 

@@ -12,6 +12,12 @@ import taxi.model.Route;
 import taxi.persistence.JPAUtil;
 import taxi.utils.RequestStatus;
 
+/**
+* The StatisticsService class implements the functions regarding statistics production.
+* 
+* @author  Team 4
+* @since   Academic Year 2016-2017 
+*/
 public class StatisticsService {
 
 	EntityManager em;
@@ -21,21 +27,29 @@ public class StatisticsService {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 	
-	/* produceStatistcs method
-	 * this method is overloaded
+	/** produceStatistcs method
+	 * This method is overloaded
+	 * <p>
+	 * This version of method, produces a float which holds the total of all the commissions 
+	 * received from the company within a specific date range.
+	 * The method gets as inputs:
+	 * <ul>
+	 * <li>the selection (1 = date range, 2 = from city, 3 = to city)
+	 * <li>the from range (Date) and
+	 * <li>to range (Date)
+	 * </ul>
+	 * <b>Note:</b> For this version of method, only selection = 1 is applicable
+	 * <p>
+	 * The method:
+	 * <ul>
+	 * <li>At first, all the requests made within the given range are fetched from Request table
+	 * <li>In case the result set is not empty, the route connected with the request is fetched,
+	 * <li>from the route, the commission is fetched and summarized with the final result.
 	 * 
-	 * This version of method, produces a float sum with all the commisions received 
-	 * from the company within a specific date range
-	 * The method gets as inputs the selection 
-	 *                   (selection 1 = date range, 2 = from city, 3 = to city
-	 * and the from range-to range (Dates)
-	 * 
-	 * we check if any of the inputs is empty/null
-	 * then we retrieve from Request table all the requests made between this range
-	 * we run into the list of the results (in case it is not empty),
-	 * we check if any route is connected with this request,
-	 * and then summarize its commision 
-	 * 
+	 * @param selection type int
+	 * @param fromRange type Date
+	 * @param toRange type Date
+	 * @return double
 	 */
 	public double produceStatistics(int selection, Date fromRange, Date toRange){
 		if(selection == 0 || fromRange == null || toRange == null)
@@ -65,23 +79,28 @@ public class StatisticsService {
 		return sum;
 		}
 
-	/* produceStatistcs method
-	 * this method is overloaded
+	/** produceStatistcs method
+	 * This method is overloaded
+	 * <p>
+	 * This version of method, returns the total number of total routes made from a specific city or to a specific city
+	 * he method gets as inputs:
+	 * <ul>
+	 * <li>the selection (1 = date range, 2 = from city, 3 = to city)
+	 * <li>the city
+	 * </ul>
+	 * <b>Note:</b> For this version of method, only selection = 2 & 3 are applicable
+	 * <p>
+	 * The method:
+	 * <ul>
+	 * <li>Checks the selection
+	 * <li>according to the selection (2 or 3) the method fetches from route table all the routes made from or to a specific city accordingly.
+	 * <li>in case the result set is empty, then the result is 0. Else... 
+	 * <li>from those routes, the request connected with them (if any) is fetched and counted.
+	 * </ul>
 	 * 
-	 * This version of method, returns the total number of total routes made
-	 * from a specific city or to a specific city
-	 * The method gets as inputs the selection 
-	 *                      (selection 1 = date range, 2 = from city, 3 = to city
-	 * and the city name
-	 * 
-	 * we check if any of the inputs is empty/null
-	 * then check the selection
-	 * we retrieve from Route table all the requests made from/to 
-	 * a specific city (according to the selection)
-	 * we run into the list of the results (in case it is not empty),
-	 * and we return the total number
-	 * 
-	 * in case the result is empty, the total number of such routes is 0
+	 * @param selection type int
+	 * @param city type String
+	 * @return int
 	 */ 
 	public int produceStatistics(int selection, String city){
 		String result="";

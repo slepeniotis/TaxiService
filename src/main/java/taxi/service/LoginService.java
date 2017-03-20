@@ -11,6 +11,13 @@ import taxi.model.TaxiDriver;
 import taxi.persistence.JPAUtil;
 import taxi.utils.AESEncrypt;
 
+/**
+* The LoginService class implements the functions regarding customer and taxi driver login.
+* 
+* @author  Team 4
+* @since   Academic Year 2016-2017 
+*/
+
 public class LoginService {
 	
 	EntityManager em;
@@ -20,17 +27,32 @@ public class LoginService {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 	
-	/* Identification Method
-	 * We are receiving as input the user type which wants to be signed in (selected by the user).
-	 * We also receive the username, password and new coordinates
-	 * we check if any of the inputs is empty/null
-	 * then we check the login type. 
-	 * - In case it is for customer, then we search in the table of customers 
-	 *   to find the customer with the specific username and password (encrypted)
-	 * - In case it is for taxi driver, then we search in the table of taxi drivers 
-	 *   to find the customer with the specific username and password (encrypted) 
-	 * If the user is not found, or any exception is raised, the return object is null, 
-	 * or else the found user object
+	/** login Method, applicable for both Taxi Driver and Customer
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the usertype (Customer or Taxi Driver)
+	 * <li>the username
+	 * <li>the password
+	 * <li>the latitude and
+	 * <li>the longtitude
+	 * </ul>
+	 * The method:
+	 * <ul>
+	 * <li>Checks whether the usertype is customer or taxi driver
+	 * <li>Fetches from the appropriate table the customer or taxi driver object having the given username.
+	 * <li>If the username does not exist, returns a null object
+	 * <li>In case the username is found, it checks whether the given password mathces with the stored.
+	 * <li>If the passwords match do not match, returns a null object. Else...
+	 * <li>The login is successful and the latitude/longtitude of the customer or taxi are updated
+	 * </ul>
+	 * <b>Note:</b> The method returns object in order to avoid several similar methods for TaxiDriver and Customer objects
+	 * 
+	 * @param userType type String
+	 * @param username type String
+	 * @param password type String
+	 * @param newLat type double
+	 * @param newLon type double
+	 * @return Object
 	 */	
 	public Object login(String userType, String username, String password, double newLat, double newLon){
 		Object result = null;

@@ -17,6 +17,14 @@ import taxi.persistence.JPAUtil;
 import taxi.utils.CoordinateCalc;
 import taxi.utils.RequestStatus;
 
+
+/**
+* The RequestHandlingService class implements the functions regarding the request's life cycle.
+* 
+* @author  Team 4
+* @since   Academic Year 2016-2017 
+*/
+
 public class RequestHandlingService {
 
 	EntityManager em;
@@ -26,22 +34,25 @@ public class RequestHandlingService {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 	
-	/* Search Taxi method
-	 * (we can check for lat/lon from google maps and see also the distance between)
-	 * we do not need seperate method for "selecting taxi" since its function is 
-	 * similar with startRequest
+	/** searchTaxi method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the customer object and
+	 * <li>the range in kilometers
+	 * </ul>
+	 * The method:
+	 * <ul>  
+	 * <li>Creates an empty list of Taxis to store the results of the search
+	 * <li>Creates a CoordinateCalc object, which will be used to calculate the distance between customer and taxi
+	 * <li>Fetches from the table Taxi all the taxis which are free (status = true)
+	 * <li>In case the result set is empty, the list of results has 0 elements
+	 * <li>Otherwise, the distance between customer and each taxi is calculated.
+	 * <li>If the distance is less or equal to the given range, then this taxi is inserted in the result list.
+	 * </ul>
 	 * 
-	 * we are receiving as input the customer who is searching for a taxi 
-	 * and the range in kilometers in which the search is applicable
-	 * if none of the inputs is null, we are creating an empty list to store the results,
-	 * and an object of type CoordinateCalc which we will use 
-	 * for calculating the distance between two set of coordinates
-	 * 
-	 * Then we retrieve from the DB all the contents of table taxi where the taxi is free.
-	 * we check if the result is empty.
-	 * then we run into the result checking its distance from the customer.
-	 * If the distance is within the range set by the customer, 
-	 * this taxi is inserted in the list result
+	 * @param customer type Customer
+	 * @param range type int
+	 * @return List<Taxi>
 	 */
 	public List<Taxi> searchTaxi(Customer customer, int range){
 		if(customer == null || range == 0)
@@ -63,21 +74,25 @@ public class RequestHandlingService {
 		return taxlst;
 	}
 
-	//REQUEST EXECUTION METHODS
 
-	/* startRequest is triggered by the customer.
-	 * we are getting as input the current date (auto from the system), 
-	 * the taxi selected by the customer for this request an the customer
-	 * we check if any of the inputs is empty/null
-	 * 
-	 * then we are creating a Request object with the inputs.
-	 * using the taxi object, we are retrieving its driver. 
-	 * This information will be used later in order to inform taxi driver 
-	 * about this new request.
-	 * 
-	 * we insert the new request in the DB, 
-	 * and also in the list of Requests made by the customer in general
-	 * At the end we communicate with the driver, and return the request object created
+	/** startRequest method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the taxi object selected by the customer for this request and
+	 * <li>the customer object
+	 * </ul>
+	 * The method:
+	 * <ul>  
+	 * <li>Uses the current date as the date that the request was made
+	 * <li>Creates a request with that date, the taxi and the customer and inserts it to the DB
+	 * <li>Fetches from the table TaxiDriver the taxi driver to whom the given taxi belongs
+	 * <li>Informs taxi driver for this request
+	 * <li>The created request is returned
+	 * </ul>
+	 *  
+	 * @param taxi type Taxi
+	 * @param customer type Customer
+	 * @return Request
 	 */
 	public Request startRequest(Taxi taxi, Customer customer){
 
@@ -102,21 +117,33 @@ public class RequestHandlingService {
 
 	}
 
-	/* handleRequest is triggered by the taxi driver
-	 * it gets as inputs the request send previously by the customer, 
-	 * the taxi and the decision (accept or deny the request) of the taxi driver
-	 * 
-	 *  the method returns true in case the request was accepted 
-	 *  or false in case it was denied or any error occured
+	/** handleRequest method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the request object made by the customer,
+	 * <li>the Taxi object with which the request is connected and
+	 * <li>the decision of the taxi driver (whether he will undertake this request or not)
+	 * </ul>
+	 * The method:
+	 * <ul>
+	 * <li>In case the decision is 'yes":
+	 * <ul>
+	 * <li>The status of the request is updated from pending to ongoing (in case it is not already canceled by the customer)
+	 * <li>The status of the taxi is updated from true (available) to false (booked)
+	 * <li>The customer is informed that his request was accepted
+	 * </ul>
+	 * <li>In case the decision is "no":
+	 * <ul>
+	 * <li>The status of the request is updated from pending to canceled
+	 * <li>The customer is informed that his request was denied
+	 * </ul>
+	 * </ul> 
+	 * The method returns true in case the request was accepted or false in case it was denied or any error occurred
 	 *  
-	 *  first we are checking if any of the inputs is empty/null
-	 *  we then check driver's decision.
-	 *  - "yes": we update the status of the request from pending to ongoing 
-	 *              in case it is not already canceled by the customer
-	 *           we update the status of the taxi from true (available) to false (booked)
-	 *           we inform customer that his request was accepted
-	 *  - "no" : we update the status of the request from pending to canceled
-	 *           we inform customer that his request was denied
+	 * @param req type Request
+	 * @param taxi type Taxi
+	 * @param decision type String
+	 * @return boolean
 	 */
 	public boolean handleRequest(Request req, Taxi taxi, String decision){
 		if(req == null || taxi == null || decision == null || decision == " ")

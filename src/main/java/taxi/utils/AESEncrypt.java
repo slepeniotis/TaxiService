@@ -7,14 +7,16 @@ import javax.crypto.spec.SecretKeySpec;
 import sun.misc.*;
 
 
-/*
- * For encryption we must use a secret key along with an algorithm. 
- * In the following code we use an algorithm called AES 128 and the bytes of the word 
- * "TheBestSecretKey" as the secret key (the best secret key we found in this world). 
- * AES algorithm can use a key of 128 bits (16 bytes * 8); so we selected that key.
+/**The AESEncrypt class implements the encryption and decryption with AES 128 algorithm.
+ * <p>
+ * For encryption a secret key must be used along with the algorithm. 
+ * In this implementation of the algorithm, the bytes of the word "TheBestSecretKey" are used 
+ * as the secret key (the best secret key found in this world).
+ * <p> 
+ * AES algorithm can use a key of 128 bits (16 bytes * 8).
  * 
- * We use "generateKey()" method to generate a secret key for AES algorithm with a given key. 
- * Below is the code how you can use the above encryption algorithm.
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
  */
 
 public class AESEncrypt {
@@ -24,6 +26,11 @@ public class AESEncrypt {
 			new byte[] { 'T', 'h', 'e', 'B', 'e', 's', 't', 'S', 'e', 'c', 'r','e', 't', 'K', 'e', 'y' };
 
 
+	/**<h2>encrypt method</h2>
+	 * This method implements the encryption of a string using AES 128 algorithm.
+	 * @param Data type String
+	 * @return String
+	 */	
 	public static String encrypt(String Data) throws Exception {
 		try {
 			Key key = generateKey();
@@ -39,6 +46,11 @@ public class AESEncrypt {
 		}
 	}
 
+	/**<h2>decrypt method</h2>
+	 * This method implements the decryption of a string which was before encrypted using the encrypt method.
+	 * @param encryptedData type String
+	 * @return String
+	 */	
 	public static String decrypt(String encryptedData) throws Exception {
 		try {
 			Key key = generateKey();
@@ -55,7 +67,10 @@ public class AESEncrypt {
 		}
 	}
 
-
+	/**<h2>generateKey method</h2>
+	 * This method is used to generate a secret key for AES algorithm with a given key. 
+	 * @return Key
+	 */	
 	private static Key generateKey() throws Exception {
 		Key key = new SecretKeySpec(keyValue, ALGO);
 		return key;

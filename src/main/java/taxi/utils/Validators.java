@@ -13,13 +13,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 
-//class which includes all the methods related to validation checks
+/**The Validators class implements all the validation checks for the taxi service.
+ *  
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
+ */
 public class Validators {
 
-	/* Method validating username of a customer.
-	 * Searches in the appropriate table of the DB to find if another user 
-	 * with the same username exists.
-	 * In case the username does not already exist, the validation was successful (true).
+	/** validateUsernameCst method 
+	 * This method is used for validating username of a customer.
+	 * Searches in the appropriate table of the DB to find if another user with the same username exists.
+	 * In case the username does not already exist, the validation is successful (true).
+	 * 
+	 * @param username type String
+	 * @return boolean true if validation is successful/false if it is not
 	 */
 	public static boolean validateUsernameCst(String username){
 		//it is not allowed to have a username "ERROR" as this is reserved word for our implementation
@@ -40,10 +47,13 @@ public class Validators {
 
 	}
 
-	/* Method validating username of a taxi driver.
-	 * Searches in the appropriate table of the DB to find if another user 
-	 * with the same username exists.
-	 * In case the username does not already exist, the validation was successful (true).
+	/** validateUsernameTx method 
+	 * This method is used for validating username of a taxi driver.
+	 * Searches in the appropriate table of the DB to find if another user with the same username exists.
+	 * In case the username does not already exist, the validation is successful (true).
+	 * 
+	 * @param username type String
+	 * @return boolean true if validation is successful/false if it is not
 	 */
 	public static boolean validateUsernameTx(String username){
 		//it is not allowed to have a username "ERROR" as this is reserved word for our implementation
@@ -65,12 +75,16 @@ public class Validators {
 
 	}
 
-	/* Method validating password.
-	 * At first creates two patterns: one for capital letters and one for numeric digits.
-	 * Then it checks the length of the password: It is not allowed to be empty and less 
-	 * than 8 characters.
-	 * After this it checks if the password has at least one capital letter and one number. 
-	 * If the checks are passed, the validation was completed successfully (true) 
+	/** validatePassword method 
+	 * This method is used for validating password.
+	 * <ul>
+	 * <li>At first it creates two patterns: one for capital letters and one for numeric digits.
+	 * <li>Then it checks the length of the password: It is not allowed to be empty and less than 8 characters.
+	 * <li>After this, it checks if the password has at least one capital letter and one number.
+	 * </ul> 
+	 * 
+	 * @param password type String
+	 * @return boolean true if validation is successful/false if it is not
 	 */
 	public static boolean validatePassword(String password){
 		final Pattern hasUppercase = Pattern.compile("[A-Z]");
@@ -89,10 +103,16 @@ public class Validators {
 		return true;
 	}
 
-	/* Method validating customer's email.
-	 * At first creates a pattern which checks that the email has the appropriate format: user@domain.xx.
-	 * If the email matches that pattern, it checks if this email exists already in the table of the DB.
-	 * If the email does not exist, then the validation was completed successfully (true) 
+	/** validateEmailCst method 
+	 * This method is used for validating customer's email.
+	 * <ul>
+	 * <li>At first creates a pattern which checks that the email has the appropriate format: user@domain.xx.
+	 * <li>If the email matches that pattern, it checks if this email exists already in the table of the DB.
+	 * <li>If the email does not exist, then the validation is completed successfully (true)
+	 * </ul>
+	 * 
+	 * @param email type String
+	 * @return boolean true if validation is successful/false if it is not
 	 */
 	public static boolean validateEmailCst(String email){
 		if(email == " ")
@@ -120,10 +140,16 @@ public class Validators {
 
 	}
 
-	/* Method validating taxi driver's email.
-	 * At first creates a pattern which checks that the email has the appropriate format: user@domain.xx.
-	 * If the email matches that pattern, it checks if this email exists already in the table of the DB.
-	 * If the email does not exist, then the validation was completed successfully (true) 
+	/** validateEmailTx method
+	 * This method is used for validating taxi driver's email.
+	 * <ul>
+	 * <li>At first creates a pattern which checks that the email has the appropriate format: user@domain.xx.
+	 * <li>If the email matches that pattern, it checks if this email exists already in the table of the DB.
+	 * <li>If the email does not exist, then the validation is completed successfully (true) 
+	 * </ul>
+	 * 
+	 * @param email type String
+	 * @return boolean true if validation is successful/false if it is not
 	 */
 	public static boolean validateEmailTx(String email){
 		if(email == " ")
@@ -151,15 +177,20 @@ public class Validators {
 
 	}
 
-	/* Method validating credit card.
-	 * This method receives as parameters all the relevant information of a credit card, except the type.
-	 * At the first step checks if the credit card number has 16 characters and the ccv 3 characters
-	 * At the second step checks that credit card number and ccv are consist of numbers 
+	/** validateCreditCard method
+	 * This method is used for validating credit card.
+	 * Receives as parameters all the relevant information of a credit card, except the type.
+	 * <ul>
+	 * <li>At the first step checks if the credit card number has 16 characters and the ccv 3 characters
+	 * <li>At the second step checks that credit card number and ccv consist of numbers 
+	 * <li>Expiry date is represented as MM/YY. String that includes the expiry date, is splitted to month and year.
+	 * <li>Then this date is checked whether has passed or not
+	 * </ul>
 	 * 
-	 * Expiry date is represented as MM/YY.
-	 * We split the string to month and year and then we check that the credit card has not expired
-	 *  
-	 * If the checks are passed, the validation was completed successfully (true) 
+	 * @param creditCardNumber type String
+	 * @param expiryDate type String
+	 * @param ccv type String
+	 * @return boolean true if validation is successful/false if it is not
 	 */
 	public static boolean validateCreditCard(String creditCardNumber, String expiryDate, String ccv){
 
@@ -201,11 +232,13 @@ public class Validators {
 
 	}
 
-	/* Method validating date of birth.
-	 * This method receives as parameter the date of birth of a user.
-	 * Then we check if this date is before the current date
-	 *   
-	 * If the checks are passed, the validation was completed successfully (true) 
+	/** validateDateOfBirth method
+	 * This method is used for validating date of birth.
+	 * Receives as parameter the date of birth of a user.
+	 * Then is checked if this date is before the current date.
+	 *  
+	 * @param DateOfBirth type Date
+	 * @return boolean true if validation is successful/false if it is not  
 	 */
 	public static boolean validateDateOfBirth(Date DateOfBirth){
 
@@ -218,15 +251,18 @@ public class Validators {
 		return true;
 	}
 
-
-	/* Method validating taxi.
-	 * This method receives as parameter the license plate of a taxi.
-	 * We assume that a license plate consists of 3 capital letters and 4 numbers
-	 * At first step we are checking the length of the license plate. It has to be 7 and not empty
-	 * Secondly, we split the license plate to its letters and numbers
-	 * We then assure that the letters variable has no numbers, and that the numbers variable has only numbers
+	/** validateLicensePlate method
+	 * This method is used for validating taxi.
+	 * Receives as parameter the license plate of a taxi.
+	 * It is assumed that a license plate consists of 3 capital letters and 4 numbers.
+	 * <ul>
+	 * <li>At first step the length of the license plate is checked. It has to be 7 and not empty
+	 * <li>Secondly, it is splitted to its letters and numbers.
+	 * <li>We then assure that the letters variable has no numbers, and that the numbers variable has only numbers
+	 * </ul>
 	 *   
-	 * If the checks are passed, the validation was completed successfully (true) 
+	 * @param licensePlate type String
+	 * @return boolean true if validation is successful/false if it is not  
 	 */
 	public static boolean validateLicensePlate(String licensePlate){
 		final Pattern hasNumber = Pattern.compile("\\d");
@@ -255,14 +291,17 @@ public class Validators {
 		return false;
 	}
 
-	/* Method validating taxi.
-	 * This method receives as parameter the license plate of a taxi.
-	 * We assume that a license plate consists of 3 capital letters and 4 numbers
-	 * At first step we are checking the length of the license plate. It has to be 7 and not empty
-	 * Secondly, we split the license plate to its letters and numbers
-	 * We then assure that the letters variable has no numbers, and that the numbers variable has only numbers
-	 *   
-	 * If the checks are passed, the validation was completed successfully (true) 
+	/** validateCarModelDate method
+	 * This method is used for validating car model production date.
+	 * Receives as parameter the carModelDate of a taxi.
+	 * It is assumed that a car model date has the format MM/YYYY.
+	 * <ul>
+	 * <li>At first step the length of the car model date is checked. It has to be 7 and not empty
+	 * <li>Secondly, the date is splitted to month and year.
+	 * <li>Then this date is checked whether has passed or not
+	 * 
+	 * @param carModelDate type String
+	 * @return boolean true if validation is successful/false if it is not  
 	 */
 	public static boolean validateCarModelDate(String carModelDate){
 
@@ -299,11 +338,13 @@ public class Validators {
 		return true;
 	}
 
-	/* Method validating taxi is not already defined.
-	 * This method receives as parameter the taxi object.
-	 * Then we check in the table Taxi that this object is not already defined, using the equals method
+	/** validateTaxi method
+	 * This method is used for validating that a taxi is not already defined.
+	 * Receives as parameter the taxi object.
+	 * Then a check is made within the table TaxiDriver that this object is not already defined from other driver, using the equals method
 	 *   
-	 * If the checks are passed, the validation was completed successfully (true) 
+	 * @param taxi type Taxi
+	 * @return boolean true if validation is successful/false if it is not  
 	 */
 	public static boolean validateTaxi(Taxi taxi){
 

@@ -12,6 +12,13 @@ import taxi.persistence.JPAUtil;
 import taxi.utils.AESEncrypt;
 import taxi.utils.Validators;
 
+/**
+* The RegistrationService class implements the functions regarding customer, taxi and taxi driver registration.
+* 
+* @author  Team 4
+* @since   Academic Year 2016-2017 
+*/
+
 public class RegistrationService {
 
 	EntityManager em;
@@ -21,14 +28,32 @@ public class RegistrationService {
 		em = JPAUtil.getCurrentEntityManager();
 	}
 
-	//REGISTRATION METHODS
-
-	/* Registration for Taxi and TaxiDriver
-	 * we receive all the information needed for the creation of a taxi.
-	 * we check if any value is empty/null. we assume that location is fetched from GPS
-	 * The taxi is then created and inserted in the DB.
+	/** createTaxi method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the carModel
+	 * <li>the carType
+	 * <li>the licensePlate
+	 * <li>the carModelDate
+	 * <li>the latitude
+	 * <li>the longtitude
+	 * </ul>
+	 * The method:
+	 * <ul>
+	 * <li>Validates the license plate
+	 * <li>Validates the car model date
+	 * <li>Creates the new taxi object and inserts it in the DB
+	 * <li>Finally it returns the new object
+	 * </ul>
+	 * <b>Note:</b> It is assumed that coordinates are fetched from GPS
 	 * 
-	 * the object taxi which was created is returned as a result
+	 * @param carModel type String
+	 * @param carType type String
+	 * @param licensePlate type String
+	 * @param carModelDate type String
+	 * @param latitude type double
+	 * @param longtitude type double
+	 * @return Taxi
 	 */
 	public Taxi createTaxi(String carModel, String carType, String licensePlate, String carModelDate, double locationLat, double locationLon){
 
@@ -63,13 +88,54 @@ public class RegistrationService {
 		}
 	}
 
-	/* We receive all the information needed for the creation of a taxi driver.
-	 * we check if any value is empty/null. we assume that taxi of the driver is already created
-	 * The taxi driver is then created and inserted in the DB.
+	/** registerTaxiDriver method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the name
+	 * <li>the surname
+	 * <li>the sex
+	 * <li>the username
+	 * <li>the password
+	 * <li>the dateOfBirth
+	 * <li>the address
+	 * <li>the city
+	 * <li>the zipCode
+	 * <li>the email
+	 * <li>the creditCardType
+	 * <li>the creditCardNumber
+	 * <li>the expiryDate
+	 * <li>the ccv
+	 * <li>the taxi he owns
+	 * </ul>
+	 * The method:
+	 * <ul>
+	 * <li>Validates username
+	 * <li>Validates password and then encrypts it
+	 * <li>Validates email
+	 * <li>Validates credit card
+	 * <li>Validates date of birth
+	 * <li>Validates that the taxi is not already defined from other driver
+	 * <li>Creates the new taxi driver object and inserts it in the DB
+	 * <li>Finally it returns the new object
 	 * 
-	 * the object taxi driver which was created is returned as a result
+	 * @param name type String
+	 * @param surname type String
+	 * @param sex type String
+	 * @param username type String
+	 * @param password type String
+	 * @param dateOfBirth type Date
+	 * @param address type String
+	 * @param city type String
+	 * @param zipCode type int
+	 * @param email type String
+	 * @param creditCardType type String
+	 * @param creditCardNumber type String
+	 * @param expiryDate type String
+	 * @param ccv type String
+	 * @param owns type Taxi
+	 * @return TaxiDriver
 	 */
-	public TaxiDriver registerTaxiDriver(String name, String surname,String sex, String username, String password, Date dateOfBirth, 
+	public TaxiDriver registerTaxiDriver(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
 			String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
 			String expiryDate, String ccv, Taxi owns){
 
@@ -148,12 +214,55 @@ public class RegistrationService {
 		}
 	}
 
-	/* Registration for Customer
-	 * we receive all the information needed for the creation of a customer.
-	 * we check if any value is empty/null. we assume that location is fetched from GPS
-	 * The customer is then created and inserted in the DB.
-	 * 
-	 * the object customer which was created is returned as a result
+	/** registerCustomer method
+	 * This method gets as parameters:
+	 * <ul>
+	 * <li>the name
+	 * <li>the surname
+	 * <li>the sex
+	 * <li>the username
+	 * <li>the password
+	 * <li>the dateOfBirth
+	 * <li>the latitude
+	 * <li>the longtitude
+	 * <li>the address
+	 * <li>the city
+	 * <li>the zipCode
+	 * <li>the email
+	 * <li>the creditCardType
+	 * <li>the creditCardNumber
+	 * <li>the expiryDate
+	 * <li>the ccv
+	 * </ul>
+	 * The method:
+	 * <ul>
+	 * <li>Validates username
+	 * <li>Validates password and then encrypts it
+	 * <li>Validates email
+	 * <li>Validates credit card
+	 * <li>Validates date of birth
+	 * <li>Creates the new customer object and inserts it in the DB
+	 * <li>Finally it returns the new object
+	 * <b>Note:</b> It is assumed that coordinates are fetched from GPS 
+	 *  
+	 * @param name type String
+	 * @param surname type String
+	 * @param sex type String
+	 * @param username type String
+	 * @param password type String
+	 * @param dateOfBirth type Date
+	 * @param locationLat type double
+	 * @param locationLon type double
+	 * @param address type String
+	 * @param city type String
+	 * @param zipCode type int
+	 * @param email type String
+	 * @param creditCardType type String
+	 * @param creditCardNumber type String
+	 * @param expiryDate type String
+	 * @param ccv type String
+	 * @param owns type Taxi
+	 * @return Customer
 	 */
 	public Customer registerCustomer(String name, String surname, String sex, String username, String password, Date dateOfBirth, 
 			double locationLat, double locationLon, String address, String city, int zipCode, String email, String creditCardType, String creditCardNumber, 
