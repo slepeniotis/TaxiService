@@ -45,7 +45,7 @@ public class StatisticsService {
 	 * <li>At first, all the requests made within the given range are fetched from Request table
 	 * <li>In case the result set is not empty, the route connected with the request is fetched,
 	 * <li>from the route, the commission is fetched and summarized with the final result.
-	 * 
+	 * <p>
 	 * @param selection type int
 	 * @param fromRange type Date
 	 * @param toRange type Date
@@ -97,7 +97,7 @@ public class StatisticsService {
 	 * <li>in case the result set is empty, then the result is 0. Else... 
 	 * <li>from those routes, the request connected with them (if any) is fetched and counted.
 	 * </ul>
-	 * 
+	 * <p>
 	 * @param selection type int
 	 * @param city type String
 	 * @return int

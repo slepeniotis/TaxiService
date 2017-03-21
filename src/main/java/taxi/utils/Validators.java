@@ -24,7 +24,7 @@ public class Validators {
 	 * This method is used for validating username of a customer.
 	 * Searches in the appropriate table of the DB to find if another user with the same username exists.
 	 * In case the username does not already exist, the validation is successful (true).
-	 * 
+	 * <p>
 	 * @param username type String
 	 * @return boolean true if validation is successful/false if it is not
 	 */
@@ -51,7 +51,7 @@ public class Validators {
 	 * This method is used for validating username of a taxi driver.
 	 * Searches in the appropriate table of the DB to find if another user with the same username exists.
 	 * In case the username does not already exist, the validation is successful (true).
-	 * 
+	 * <p>
 	 * @param username type String
 	 * @return boolean true if validation is successful/false if it is not
 	 */
@@ -82,7 +82,7 @@ public class Validators {
 	 * <li>Then it checks the length of the password: It is not allowed to be empty and less than 8 characters.
 	 * <li>After this, it checks if the password has at least one capital letter and one number.
 	 * </ul> 
-	 * 
+	 * <p>
 	 * @param password type String
 	 * @return boolean true if validation is successful/false if it is not
 	 */
@@ -110,7 +110,7 @@ public class Validators {
 	 * <li>If the email matches that pattern, it checks if this email exists already in the table of the DB.
 	 * <li>If the email does not exist, then the validation is completed successfully (true)
 	 * </ul>
-	 * 
+	 * <p>
 	 * @param email type String
 	 * @return boolean true if validation is successful/false if it is not
 	 */
@@ -147,7 +147,7 @@ public class Validators {
 	 * <li>If the email matches that pattern, it checks if this email exists already in the table of the DB.
 	 * <li>If the email does not exist, then the validation is completed successfully (true) 
 	 * </ul>
-	 * 
+	 * <p>
 	 * @param email type String
 	 * @return boolean true if validation is successful/false if it is not
 	 */
@@ -186,7 +186,7 @@ public class Validators {
 	 * <li>Expiry date is represented as MM/YY. String that includes the expiry date, is splitted to month and year.
 	 * <li>Then this date is checked whether has passed or not
 	 * </ul>
-	 * 
+	 * <p>
 	 * @param creditCardNumber type String
 	 * @param expiryDate type String
 	 * @param ccv type String
@@ -236,7 +236,7 @@ public class Validators {
 	 * This method is used for validating date of birth.
 	 * Receives as parameter the date of birth of a user.
 	 * Then is checked if this date is before the current date.
-	 *  
+	 *  <p>
 	 * @param DateOfBirth type Date
 	 * @return boolean true if validation is successful/false if it is not  
 	 */
@@ -260,7 +260,7 @@ public class Validators {
 	 * <li>Secondly, it is splitted to its letters and numbers.
 	 * <li>We then assure that the letters variable has no numbers, and that the numbers variable has only numbers
 	 * </ul>
-	 *   
+	 *   <p>
 	 * @param licensePlate type String
 	 * @return boolean true if validation is successful/false if it is not  
 	 */
@@ -299,7 +299,7 @@ public class Validators {
 	 * <li>At first step the length of the car model date is checked. It has to be 7 and not empty
 	 * <li>Secondly, the date is splitted to month and year.
 	 * <li>Then this date is checked whether has passed or not
-	 * 
+	 * <p>
 	 * @param carModelDate type String
 	 * @return boolean true if validation is successful/false if it is not  
 	 */
@@ -342,7 +342,7 @@ public class Validators {
 	 * This method is used for validating that a taxi is not already defined.
 	 * Receives as parameter the taxi object.
 	 * Then a check is made within the table TaxiDriver that this object is not already defined from other driver, using the equals method
-	 *   
+	 *   <p>
 	 * @param taxi type Taxi
 	 * @return boolean true if validation is successful/false if it is not  
 	 */

@@ -8,18 +8,18 @@ import taxi.utils.RequestStatus;
 
 
 /**
-* The Request class implements all requests made from a customer to a taxi.
-* <p>
-* Every request is connected with a taxi, a customer and a route
-* It also has:
-* <ul>
-* <li>the date/time in which the request was made, 
-* <li>the status of the request (enum RequestStatus: PENDING, ONGOING, CANCELED, DONE)
-* </ul>
-* 
-* @author  Team 4
-* @since   Academic Year 2016-2017 
-*/
+ * The Request class implements all requests made from a customer to a taxi.
+ * <p>
+ * Every request is connected with a taxi, a customer and a route
+ * It also has:
+ * <ul>
+ * <li>the date/time in which the request was made, 
+ * <li>the status of the request (enum RequestStatus: PENDING, ONGOING, CANCELED, DONE)
+ * </ul>
+ * <p>
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
+ */
 
 //Declaring table id DB with name Request
 @Entity
@@ -63,7 +63,7 @@ public class Request {
 	 * @return an empty Request object
 	 */
 	public Request(){}
-	
+
 	/**<h2>The main constructor</h2>
 	 * The route is going to be connected with the Request in a later phase.
 	 * The status of the request is always PENDING at the beginning.
@@ -100,7 +100,7 @@ public class Request {
 	}
 
 	/**<h2>setDateTime method</h2>
-	 * this method sets the given Date to the attribute dateTime of the caller object.
+	 * this method sets the given Date to the attribute dateTime of the caller object.<p>
 	 * @param dateTime type Date
 	 * @return void
 	 */
@@ -116,7 +116,7 @@ public class Request {
 	}
 
 	/**<h2>setStatus method</h2>
-	 * this method sets the given RequestStatus to the attribute status of the caller object.
+	 * this method sets the given RequestStatus to the attribute status of the caller object.<p>
 	 * @param status type RequestStatus
 	 * @return void
 	 */
@@ -125,7 +125,7 @@ public class Request {
 	}
 
 	/**<h2>setTaxi method</h2>
-	 * this method sets the given Taxi to the attribute taxi of the caller object.
+	 * this method sets the given Taxi to the attribute taxi of the caller object.<p>
 	 * @param taxi type Taxi
 	 * @return void
 	 */
@@ -141,7 +141,7 @@ public class Request {
 	}
 
 	/**<h2>setCustomer method</h2>
-	 * this method sets the given Customer to the attribute customer of the caller object.
+	 * this method sets the given Customer to the attribute customer of the caller object.<p>
 	 * @param customer type Customer
 	 * @return void
 	 */
@@ -157,7 +157,7 @@ public class Request {
 	}
 
 	/**<h2>setRoute method</h2>
-	 * this method sets the given Route to the attribute route of the caller object.
+	 * this method sets the given Route to the attribute route of the caller object.<p>
 	 * @param route type Route
 	 * @return void
 	 */
@@ -173,7 +173,7 @@ public class Request {
 	}
 
 	/**startRequest method
-	 * sets the route to the already made request
+	 * sets the route to the already made request<p>
 	 * @param route type Route
 	 * @return void
 	 */

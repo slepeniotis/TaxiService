@@ -36,6 +36,7 @@ public class LoginService {
 	 * <li>the latitude and
 	 * <li>the longtitude
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>
 	 * <li>Checks whether the usertype is customer or taxi driver
@@ -46,7 +47,7 @@ public class LoginService {
 	 * <li>The login is successful and the latitude/longtitude of the customer or taxi are updated
 	 * </ul>
 	 * <b>Note:</b> The method returns object in order to avoid several similar methods for TaxiDriver and Customer objects
-	 * 
+	 * <p>
 	 * @param userType type String
 	 * @param username type String
 	 * @param password type String

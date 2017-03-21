@@ -15,13 +15,30 @@ import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
-
+/**EvaluationResource class implements the REST service for EvaluationService<p>
+ * 
+ * The base path for this class is /evaluation
+ * 
+ * @author  Team 4
+ * @since   Academic Year 2016-2017
+ */
 @Path("/evaluation")
 public class EvaluationResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
 
+	/**createEval method<p>
+	 * receives POST requests at path /evaluation<p>
+	 * This method receives as input JSON<p>
+	 * This JSON is transformed to EvaluationInfo object<p>
+	 * 
+	 * The Evaluation object is created calling the service createEvaluation with the appropriate inputs. 
+	 * If the Evaluation is created successfully, the response is 201, or else 404. 
+	 * <p>
+	 * @param evaluationInfo type EvaluationInfo
+	 * @return Response
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createEval(EvaluationInfo evaluationInfo){

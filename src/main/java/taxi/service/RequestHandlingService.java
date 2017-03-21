@@ -40,6 +40,7 @@ public class RequestHandlingService {
 	 * <li>the customer object and
 	 * <li>the range in kilometers
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>  
 	 * <li>Creates an empty list of Taxis to store the results of the search
@@ -49,7 +50,7 @@ public class RequestHandlingService {
 	 * <li>Otherwise, the distance between customer and each taxi is calculated.
 	 * <li>If the distance is less or equal to the given range, then this taxi is inserted in the result list.
 	 * </ul>
-	 * 
+	 * <p>
 	 * @param customer type Customer
 	 * @param range type int
 	 * @return List<Taxi>
@@ -81,6 +82,7 @@ public class RequestHandlingService {
 	 * <li>the taxi object selected by the customer for this request and
 	 * <li>the customer object
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>  
 	 * <li>Uses the current date as the date that the request was made
@@ -89,7 +91,7 @@ public class RequestHandlingService {
 	 * <li>Informs taxi driver for this request
 	 * <li>The created request is returned
 	 * </ul>
-	 *  
+	 *  <p>
 	 * @param taxi type Taxi
 	 * @param customer type Customer
 	 * @return Request
@@ -124,6 +126,7 @@ public class RequestHandlingService {
 	 * <li>the Taxi object with which the request is connected and
 	 * <li>the decision of the taxi driver (whether he will undertake this request or not)
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>
 	 * <li>In case the decision is 'yes":
@@ -139,7 +142,7 @@ public class RequestHandlingService {
 	 * </ul>
 	 * </ul> 
 	 * The method returns true in case the request was accepted or false in case it was denied or any error occurred
-	 *  
+	 *  <p>
 	 * @param req type Request
 	 * @param taxi type Taxi
 	 * @param decision type String
@@ -197,7 +200,7 @@ public class RequestHandlingService {
 	 * This method creates a route with information given by the customer.
 	 * After successful creation of the route, it is connected to the request made by the customer. 
 	 * The Route object is returned.
-	 * 
+	 * <p>
 	 * @param req type Request
 	 * @param fromAddress type String
 	 * @param toAddress type String
@@ -234,6 +237,7 @@ public class RequestHandlingService {
 	 * <li>the cost of the route and
 	 * <li>the duration of the route
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>
 	 * <li>Is called when the route has finished
@@ -244,7 +248,7 @@ public class RequestHandlingService {
 	 * <li>And finally the customer is informed about the final cost and is asked to evaluate the service
 	 * <li>Returns true in case everything went ok
 	 * </ul>
-	 * 
+	 * <p>
 	 * @param req type Request
 	 * @param taxi type Taxi
 	 * @param cost type float
@@ -281,13 +285,14 @@ public class RequestHandlingService {
 	 * <li>the request object made by the customer and
 	 * <li>the customer object which cancels the request
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>
 	 * <li>Assumes that customer can only cancel a request he already made and it is not already canceled or done
 	 * <li>Updates the status of request to CANCELED 
 	 * <li>Informs taxi driver that the request has been canceled
 	 * </ul>
-	 *  
+	 *  <p>
 	 * @param customer type Customer
 	 * @param req type Request
 	 * @return boolean

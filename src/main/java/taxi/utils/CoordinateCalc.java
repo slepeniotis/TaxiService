@@ -12,7 +12,7 @@ public class CoordinateCalc {
 	public CoordinateCalc(){}
 		
 	/**<h2>calculateDistanceInKilometer method</h2>
-	 * This method implements the calculation of the distance between to sets of coordinates
+	 * This method implements the calculation of the distance between to sets of coordinates<p>
 	 * @param userLat origin latitude, type double
 	 * @param userLng origin longtitude, type double
 	 * @param venueLat destination latitude, type double

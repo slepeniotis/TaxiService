@@ -5,13 +5,13 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
-* The Evaluation class implements all evaluations made by customers, for a pair of Request-Route.
-* <p>
-* Every evaluation consists of a rating, a comment and the date of evaluation
-*  
-* @author  Team 4
-* @since   Academic Year 2016-2017 
-*/
+ * The Evaluation class implements all evaluations made by customers, for a pair of Request-Route.
+ * <p>
+ * Every evaluation consists of a rating, a comment and the date of evaluation
+ *  <p>
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
+ */
 
 //Declaring table id DB with name Evaluation
 @Entity
@@ -38,7 +38,7 @@ public class Evaluation {
 	 * @return an empty Evaluation object
 	 */
 	public Evaluation() {}
-	
+
 	/**<h2>The main constructor</h2>
 	 * @param rating rating of the evaluation, type int
 	 * @param comment comment of the evaluation, type String
@@ -67,7 +67,7 @@ public class Evaluation {
 	}
 
 	/**<h2>setRating method</h2>
-	 * this method sets the given integer to the attribute rating of the caller object.
+	 * this method sets the given integer to the attribute rating of the caller object.<p>
 	 * @param rating type int
 	 * @return void
 	 */
@@ -83,7 +83,7 @@ public class Evaluation {
 	}
 
 	/**<h2>setComment method</h2>
-	 * this method sets the given String to the attribute comment of the caller object.
+	 * this method sets the given String to the attribute comment of the caller object.<p>
 	 * @param comment type String
 	 * @return void
 	 */
@@ -99,7 +99,7 @@ public class Evaluation {
 	}
 
 	/**<h2>setDateOfEval method</h2>
-	 * this method sets the given Date to the attribute dateOfEval of the caller object.
+	 * this method sets the given Date to the attribute dateOfEval of the caller object.<p>
 	 * @param dateOfEval type Date
 	 * @return void
 	 */

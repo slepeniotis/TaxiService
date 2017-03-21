@@ -7,22 +7,23 @@ import java.util.ArrayList;
 
 
 /**
-* The Taxi class implements all taxis using the taxi service.
-* <p>
-* Every taxi has a list of requests received, since it can receive several requests
-* It also has:
-* <ul>
-* <li>carModel, 
-* <li>carType,
-* <li>licensePlate,
-* <li>carModelDate,
-* <li>locationLat,
-* <li>locationLon,
-* <li>status,
-* </ul>
-* @author  Team 4
-* @since   Academic Year 2016-2017 
-*/
+ * The Taxi class implements all taxis using the taxi service.
+ * <p>
+ * Every taxi has a list of requests received, since it can receive several requests
+ * It also has:
+ * <ul>
+ * <li>carModel, 
+ * <li>carType,
+ * <li>licensePlate,
+ * <li>carModelDate,
+ * <li>locationLat,
+ * <li>locationLon,
+ * <li>status,
+ * </ul>
+ * <p>
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
+ */
 
 //Declaring table id DB with name Taxi
 @Entity
@@ -66,7 +67,7 @@ public class Taxi {
 	 * @return an empty Taxi object
 	 */
 	public Taxi(){}
-	
+
 	/**<h2>The main constructor</h2>
 	 * The status of the Taxi is always true (free) at the beginning.
 	 * <p>
@@ -104,7 +105,7 @@ public class Taxi {
 	}
 
 	/**<h2>setCarModel method</h2>
-	 * this method sets the given String to the attribute carModel of the caller object.
+	 * this method sets the given String to the attribute carModel of the caller object.<p>
 	 * @param carModel type String
 	 * @return void
 	 */
@@ -120,7 +121,7 @@ public class Taxi {
 	}
 
 	/**<h2>setCarType method</h2>
-	 * this method sets the given String to the attribute carType of the caller object.
+	 * this method sets the given String to the attribute carType of the caller object.<p>
 	 * @param carType type String
 	 * @return void
 	 */
@@ -136,7 +137,7 @@ public class Taxi {
 	}
 
 	/**<h2>setLicensePlate method</h2>
-	 * this method sets the given String to the attribute licensePlate of the caller object.
+	 * this method sets the given String to the attribute licensePlate of the caller object.<p>
 	 * @param licensePlate type String
 	 * @return void
 	 */
@@ -152,7 +153,7 @@ public class Taxi {
 	}
 
 	/**<h2>setLocationLat method</h2>
-	 * this method sets the given double to the attribute locationLat of the caller object.
+	 * this method sets the given double to the attribute locationLat of the caller object.<p>
 	 * @param locationLat type double
 	 * @return void
 	 */
@@ -168,7 +169,7 @@ public class Taxi {
 	}
 
 	/**<h2>setLocationLon method</h2>
-	 * this method sets the given double to the attribute locationLon of the caller object.
+	 * this method sets the given double to the attribute locationLon of the caller object.<p>
 	 * @param locationLon type double
 	 * @return void
 	 */
@@ -184,7 +185,7 @@ public class Taxi {
 	}
 
 	/**<h2>setStatus method</h2>
-	 * this method sets the given boolean to the attribute status of the caller object.
+	 * this method sets the given boolean to the attribute status of the caller object.<p>
 	 * @param status type boolean
 	 * @return void
 	 */
@@ -200,7 +201,7 @@ public class Taxi {
 	}
 
 	/**<h2>setCarModelDate method</h2>
-	 * this method sets the given String to the attribute carModelDate of the caller object.
+	 * this method sets the given String to the attribute carModelDate of the caller object.<p>
 	 * @param carModelDate type String
 	 * @return void
 	 */
@@ -214,9 +215,9 @@ public class Taxi {
 	public List<Request> getRequest() {
 		return this.accepts;
 	}
-	
+
 	/**<h2>addRequest method</h2>
-	 * this method adds the given Request object to the list of Requests of the caller object.
+	 * this method adds the given Request object to the list of Requests of the caller object.<p>
 	 * @param req type Request
 	 * @return void
 	 */
@@ -238,7 +239,7 @@ public class Taxi {
 
 		return temp;
 	}
-	
+
 	/**<h2>equals method</h2>
 	 * @param obj type Object
 	 * @return a boolean whether the given object is the same with the caller object

@@ -27,23 +27,23 @@ public class Initializer  {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Query query = null;
-		
+
 		//creating and executing several queries within the same transaction		
 		query = em.createNativeQuery("delete from request");
 		query.executeUpdate();
-		
+
 		query = em.createNativeQuery("delete from customer");
 		query.executeUpdate();
 
 		query = em.createNativeQuery("delete from taxidriver");
 		query.executeUpdate();
-		
+
 		query = em.createNativeQuery("delete from taxi");
 		query.executeUpdate();
-		
+
 		query = em.createNativeQuery("delete from route");
 		query.executeUpdate();
-		
+
 		query = em.createNativeQuery("delete from evaluation");
 		//execute the query given above
 		query.executeUpdate();
@@ -53,7 +53,7 @@ public class Initializer  {
 
 		//save changes from this transaction to the DB
 		tx.commit();
-		
+
 		em.close();
 
 	}

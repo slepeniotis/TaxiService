@@ -15,12 +15,30 @@ import java.net.URI;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
+/**RegistrationResource class implements the REST service for RegistrationService<p>
+ * 
+ * The base path for this class is /register
+ * 
+ * @author  Team 4
+ * @since   Academic Year 2016-2017
+ */
 @Path("/register")
 public class RegistrationResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
 
+	/**registerTaxi method<p>
+	 * receives POST requests at path /register/taxi<p>
+	 * This method is called when a taxi and a taxi driver are registered to the system.<p>
+	 * It receives as input JSON. This JSON is transformed to TaxiInfo object<p>
+	 * 
+	 * The registration of a taxi and a taxi driver are done calling the services createTaxi and registerTaxiDriver. 
+	 * If the registration was successful for both, the response is 201, or else 404. 
+	 * <p>
+	 * @param taxiInfo type TaxiInfo
+	 * @return Response
+	 */
 	@POST
 	@Path("/taxi")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -52,6 +70,17 @@ public class RegistrationResource extends AbstractResource {
 		}
 	}
 
+	/**registerCustomer method<p>
+	 * receives POST requests at path /register/customer<p>
+	 * This method is called when a customer is registered to the system.<p>
+	 * It receives as input JSON. This JSON is transformed to CustomerInfo object<p>
+	 * 
+	 * The registration of a customer is done calling the service registerCustomer. 
+	 * If the registration was successful, the response is 201, or else 404. 
+	 * <p>
+	 * @param customerInfo type CustomerInfo
+	 * @return Response
+	 */
 	@POST
 	@Path("/customer")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -63,7 +92,7 @@ public class RegistrationResource extends AbstractResource {
 				customerInfo.getLocationLat(), customerInfo.getLocationLon(), customerInfo.getAddress(), 
 				customerInfo.getCity(), customerInfo.getZipCode(), customerInfo.getEmail(), customerInfo.getCreditCardType(), 
 				customerInfo.getCreditCardNumber(), customerInfo.getExpiryDate(), customerInfo.getCcv());		
-		
+
 		if(customer != null){
 			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 			URI newTaxiUri = ub.path(Long.toString(customer.getId())).build();

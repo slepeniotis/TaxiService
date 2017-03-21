@@ -14,7 +14,7 @@ import sun.misc.*;
  * as the secret key (the best secret key found in this world).
  * <p> 
  * AES algorithm can use a key of 128 bits (16 bytes * 8).
- * 
+ * <p>
  * @author  Team 4
  * @since   Academic Year 2016-2017 
  */
@@ -27,7 +27,7 @@ public class AESEncrypt {
 
 
 	/**<h2>encrypt method</h2>
-	 * This method implements the encryption of a string using AES 128 algorithm.
+	 * This method implements the encryption of a string using AES 128 algorithm.<p>
 	 * @param Data type String
 	 * @return String
 	 */	
@@ -47,7 +47,7 @@ public class AESEncrypt {
 	}
 
 	/**<h2>decrypt method</h2>
-	 * This method implements the decryption of a string which was before encrypted using the encrypt method.
+	 * This method implements the decryption of a string which was before encrypted using the encrypt method.<p>
 	 * @param encryptedData type String
 	 * @return String
 	 */	
@@ -68,7 +68,7 @@ public class AESEncrypt {
 	}
 
 	/**<h2>generateKey method</h2>
-	 * This method is used to generate a secret key for AES algorithm with a given key. 
+	 * This method is used to generate a secret key for AES algorithm with a given key. <p>
 	 * @return Key
 	 */	
 	private static Key generateKey() throws Exception {

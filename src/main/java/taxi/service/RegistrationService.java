@@ -38,6 +38,7 @@ public class RegistrationService {
 	 * <li>the latitude
 	 * <li>the longtitude
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>
 	 * <li>Validates the license plate
@@ -46,7 +47,7 @@ public class RegistrationService {
 	 * <li>Finally it returns the new object
 	 * </ul>
 	 * <b>Note:</b> It is assumed that coordinates are fetched from GPS
-	 * 
+	 * <p>
 	 * @param carModel type String
 	 * @param carType type String
 	 * @param licensePlate type String
@@ -107,6 +108,7 @@ public class RegistrationService {
 	 * <li>the ccv
 	 * <li>the taxi he owns
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>
 	 * <li>Validates username
@@ -117,7 +119,7 @@ public class RegistrationService {
 	 * <li>Validates that the taxi is not already defined from other driver
 	 * <li>Creates the new taxi driver object and inserts it in the DB
 	 * <li>Finally it returns the new object
-	 * 
+	 * <p>
 	 * @param name type String
 	 * @param surname type String
 	 * @param sex type String
@@ -234,6 +236,7 @@ public class RegistrationService {
 	 * <li>the expiryDate
 	 * <li>the ccv
 	 * </ul>
+	 * <p>
 	 * The method:
 	 * <ul>
 	 * <li>Validates username
@@ -244,7 +247,7 @@ public class RegistrationService {
 	 * <li>Creates the new customer object and inserts it in the DB
 	 * <li>Finally it returns the new object
 	 * <b>Note:</b> It is assumed that coordinates are fetched from GPS 
-	 *  
+	 *  <p>
 	 * @param name type String
 	 * @param surname type String
 	 * @param sex type String

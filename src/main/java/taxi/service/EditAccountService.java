@@ -33,10 +33,11 @@ public class EditAccountService {
 	 * <li>the new city and
 	 * <li>the new zip code
 	 * </ul>
+	 * <p>
 	 * The appropriate record is fetched from the DB.
 	 * The object which was changed, is returned as result.
 	 * <b>Note:</b> The method returns object in order to avoid several similar methods for TaxiDriver and Customer objects
-	 * 
+	 * <p>
 	 * @param userType type String
 	 * @param userId type long
 	 * @param address type String
@@ -86,11 +87,12 @@ public class EditAccountService {
 	 * <li>the new expiryDate and
 	 * <li>the new ccv
 	 * </ul>
+	 * <p>
 	 * The appropriate record is fetched from the DB.
 	 * After the validation, the credit card is changed.
 	 * The object which was changed, is returned as result.
 	 * <b>Note:</b> The method returns object in order to avoid several similar methods for TaxiDriver and Customer objects
-	 * 
+	 * <p>
 	 * @param userType type String
 	 * @param userId type long
 	 * @param creditCardType type String
@@ -146,11 +148,12 @@ public class EditAccountService {
 	 * <li>the userid
 	 * <li>the new email
 	 * </ul>
+	 * <p>
 	 * The appropriate record is fetched from the DB.
 	 * After the validation, the email is changed.
 	 * The object which was changed, is returned as result.
 	 * <b>Note:</b> The method returns object in order to avoid several similar methods for TaxiDriver and Customer objects
-	 * 
+	 * <p>
 	 * @param userType type String
 	 * @param userId type long
 	 * @param email type String

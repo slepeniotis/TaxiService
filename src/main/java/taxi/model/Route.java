@@ -4,25 +4,25 @@ package taxi.model;
 import javax.persistence.*;
 
 /**
-* The Route class implements all routes requested by customers, and connected with their requests.
-* <p>
-* Every Route has only one request and only one evaluation
-* It also has:
-* <ul>
-* <li>the the origin address of the route,
-* <li>the the origin city of the route,
-* <li>the the origin zip code of the route,
-* <li>the the destination address of the route,
-* <li>the the destination city of the route,
-* <li>the the destination zip code of the route, 
-* <li>the the duration of the route,
-* <li>the the cost of the route and
-* <li>the the commission for the taxi service
-* </ul>
-* 
-* @author  Team 4
-* @since   Academic Year 2016-2017 
-*/
+ * The Route class implements all routes requested by customers, and connected with their requests.
+ * <p>
+ * Every Route has only one request and only one evaluation
+ * It also has:
+ * <ul>
+ * <li>the the origin address of the route,
+ * <li>the the origin city of the route,
+ * <li>the the origin zip code of the route,
+ * <li>the the destination address of the route,
+ * <li>the the destination city of the route,
+ * <li>the the destination zip code of the route, 
+ * <li>the the duration of the route,
+ * <li>the the cost of the route and
+ * <li>the the commission for the taxi service
+ * </ul>
+ * <p>
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
+ */
 
 //Declaring table id DB with name Route
 @Entity
@@ -69,7 +69,7 @@ public class Route {
 	@OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinColumn(name="evalID")
 	private Evaluation eval;
-	
+
 	//each route has one request
 	@OneToOne(optional=false, mappedBy="route", fetch=FetchType.EAGER, targetEntity=Request.class)
 	private Request req; 
@@ -78,7 +78,7 @@ public class Route {
 	 * @return an empty Route object
 	 */
 	public Route(){}
-	
+
 	/**<h2>The main constructor</h2>
 	 * Cost and duration is always zero at the beginning.
 	 * Commission is always calculated from the cost.
@@ -124,7 +124,7 @@ public class Route {
 	}
 
 	/**<h2>setFromAddress method</h2>
-	 * this method sets the given String to the attribute fromAddress of the caller object.
+	 * this method sets the given String to the attribute fromAddress of the caller object.<p>
 	 * @param fromAddress type String
 	 * @return void
 	 */
@@ -140,7 +140,7 @@ public class Route {
 	}
 
 	/**<h2>setToAddress method</h2>
-	 * this method sets the given String to the attribute toAddress of the caller object.
+	 * this method sets the given String to the attribute toAddress of the caller object.<p>
 	 * @param toAddress type String
 	 * @return void
 	 */
@@ -156,7 +156,7 @@ public class Route {
 	}
 
 	/**<h2>setFromCity method</h2>
-	 * this method sets the given String to the attribute fromCity of the caller object.
+	 * this method sets the given String to the attribute fromCity of the caller object.<p>
 	 * @param fromCity type String
 	 * @return void
 	 */
@@ -172,7 +172,7 @@ public class Route {
 	}
 
 	/**<h2>setToCity method</h2>
-	 * this method sets the given String to the attribute toCity of the caller object.
+	 * this method sets the given String to the attribute toCity of the caller object.<p>
 	 * @param toCity type String
 	 * @return void
 	 */
@@ -188,7 +188,7 @@ public class Route {
 	}
 
 	/**<h2>setFromZipCode method</h2>
-	 * this method sets the given integer to the attribute fromZipCode of the caller object.
+	 * this method sets the given integer to the attribute fromZipCode of the caller object.<p>
 	 * @param fromZipCode type int
 	 * @return void
 	 */
@@ -204,7 +204,7 @@ public class Route {
 	}
 
 	/**<h2>setToZipCode method</h2>
-	 * this method sets the given integer to the attribute toZipCode of the caller object.
+	 * this method sets the given integer to the attribute toZipCode of the caller object.<p>
 	 * @param toZipCode type int
 	 * @return void
 	 */
@@ -220,7 +220,7 @@ public class Route {
 	}
 
 	/**<h2>setDuration method</h2>
-	 * this method sets the given integer to the attribute duration of the caller object.
+	 * this method sets the given integer to the attribute duration of the caller object.<p>
 	 * @param duration type int
 	 * @return void
 	 */
@@ -234,10 +234,10 @@ public class Route {
 	public float getCost() {
 		return cost;
 	}
-	
+
 	/**<h2>setCost method</h2>
 	 * this method sets the given float to the attribute cost of the caller object.
-	 * In case the cost parameter is less or equal to zero, the cost of the caller object is set to 0. 
+	 * In case the cost parameter is less or equal to zero, the cost of the caller object is set to 0. <p>
 	 * @param cost type float
 	 * @return void
 	 */
@@ -249,7 +249,7 @@ public class Route {
 			this.cost = 0;
 		}
 	}
-	
+
 	/**<h2>getCommision method</h2>
 	 * @return route's commission
 	 */
@@ -265,23 +265,23 @@ public class Route {
 	}
 
 	/**<h2>setEval method</h2>
-	 * this method sets the given evaluation object to the attribute eval of the caller object. 
+	 * this method sets the given evaluation object to the attribute eval of the caller object. <p>
 	 * @param eval type Evaluation
 	 * @return void
 	 */
 	public void setEval(Evaluation eval) {
 		this.eval = eval;
 	}
-	
+
 	/**<h2>getReq method</h2>
 	 * @return route's request
 	 */
 	public Request getReq() {
 		return req;
 	}
-	
+
 	/**<h2>setReq method</h2>
-	 * this method sets the given request object to the attribute req of the caller object. 
+	 * this method sets the given request object to the attribute req of the caller object. <p>
 	 * @param req type Request
 	 * @return void
 	 */
@@ -291,7 +291,7 @@ public class Route {
 
 	/**<h2>calculateCommision method</h2>
 	 * This method calculates the commission based on the cost of the route.
-	 * In case the cost is 0, then commission is also set to 0. 
+	 * In case the cost is 0, then commission is also set to 0. <p>
 	 * @return void
 	 */
 	public void calculateCommision(){

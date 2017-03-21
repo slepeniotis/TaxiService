@@ -7,32 +7,32 @@ import taxi.utils.AESEncrypt;
 
 
 /**
-* The Customer TaxiDriver implements all taxi drivers using the taxi service.
-* <p>
-* Every taxi driver has only one taxi.
-* It also has:
-* <ul>
-* <li>name, 
-* <li>surname,
-* <li>sex,
-* <li>username,
-* <li>password,
-* <li>dateOfBirth,
-* <li>locationLat,
-* <li>locationLon,
-* <li>address,
-* <li>city,
-* <li>zipCode,
-* <li>email,
-* <li>creditCardType,
-* <li>creditCardNumber,
-* <li>expiryDate,
-* <li>ccv
-* </ul>
-*  
-* @author  Team 4
-* @since   Academic Year 2016-2017 
-*/
+ * The Customer TaxiDriver implements all taxi drivers using the taxi service.
+ * <p>
+ * Every taxi driver has only one taxi.
+ * It also has:
+ * <ul>
+ * <li>name, 
+ * <li>surname,
+ * <li>sex,
+ * <li>username,
+ * <li>password,
+ * <li>dateOfBirth,
+ * <li>locationLat,
+ * <li>locationLon,
+ * <li>address,
+ * <li>city,
+ * <li>zipCode,
+ * <li>email,
+ * <li>creditCardType,
+ * <li>creditCardNumber,
+ * <li>expiryDate,
+ * <li>ccv
+ * </ul>
+ *  <p>
+ * @author  Team 4
+ * @since   Academic Year 2016-2017 
+ */
 
 //Declaring table id DB with name TaxiDriver
 @Entity
@@ -100,7 +100,7 @@ public class TaxiDriver {
 	 * @return an empty TaxiDriver object
 	 */
 	public TaxiDriver(){}
-	
+
 	/**<h2>The main constructor</h2>
 	 * @param name name of the taxi driver, type String
 	 * @param surname surname of the taxi driver, type String
@@ -160,7 +160,7 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setName method</h2>
-	 * this method sets the given String to the attribute name of the caller object.
+	 * this method sets the given String to the attribute name of the caller object.<p>
 	 * @param name type String
 	 * @return void
 	 */
@@ -176,7 +176,7 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setSurname method</h2>
-	 * this method sets the given String to the attribute surname of the caller object.
+	 * this method sets the given String to the attribute surname of the caller object.<p>
 	 * @param surname type String
 	 * @return void
 	 */
@@ -190,9 +190,9 @@ public class TaxiDriver {
 	public String getCreditCardType() {
 		return this.creditCardType;
 	}
-	
+
 	/**<h2>setCreditCardType method</h2>
-	 * this method sets the given String to the attribute creditCardType of the caller object.
+	 * this method sets the given String to the attribute creditCardType of the caller object.<p>
 	 * @param creditCardType type String
 	 * @return void
 	 */
@@ -208,23 +208,23 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setCreditCardNumber method</h2>
-	 * this method sets the given String to the attribute creditCardNumber of the caller object.
+	 * this method sets the given String to the attribute creditCardNumber of the caller object.<p>
 	 * @param creditCardNumber type String
 	 * @return void
 	 */
 	public void setCreditCardNumber(String creditCardNumber) {
 		this.creditCardNumber = creditCardNumber;
 	}	
-	
+
 	/**<h2>getExpiryDate method</h2>
 	 * @return taxi driver's expiryDate
 	 */
 	public String getExpiryDate() {
 		return this.expiryDate;
 	}
-	
+
 	/**<h2>setExpiryDate method</h2>
-	 * this method sets the given String to the attribute expiryDate of the caller object.
+	 * this method sets the given String to the attribute expiryDate of the caller object.<p>
 	 * @param expiryDate type String
 	 * @return void
 	 */
@@ -238,9 +238,9 @@ public class TaxiDriver {
 	public String getCcv() {
 		return this.ccv;
 	}
-	
+
 	/**<h2>setCcv method</h2>
-	 * this method sets the given String to the attribute ccv of the caller object.
+	 * this method sets the given String to the attribute ccv of the caller object.<p>
 	 * @param ccv type String
 	 * @return void
 	 */
@@ -256,7 +256,7 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setSex method</h2>
-	 * this method sets the given String to the attribute sex of the caller object.
+	 * this method sets the given String to the attribute sex of the caller object.<p>
 	 * @param sex type String
 	 * @return void
 	 */
@@ -272,7 +272,7 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setAddress method</h2>
-	 * this method sets the given String to the attribute address of the caller object.
+	 * this method sets the given String to the attribute address of the caller object.<p>
 	 * @param address type String
 	 * @return void
 	 */
@@ -288,7 +288,7 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setCity method</h2>
-	 * this method sets the given String to the attribute city of the caller object.
+	 * this method sets the given String to the attribute city of the caller object.<p>
 	 * @param city type String
 	 * @return void
 	 */
@@ -304,7 +304,7 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setZipCode method</h2>
-	 * this method sets the given integer to the attribute zipCode of the caller object.
+	 * this method sets the given integer to the attribute zipCode of the caller object.<p>
 	 * @param zipCode type int
 	 * @return void
 	 */
@@ -318,9 +318,9 @@ public class TaxiDriver {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	/**<h2>setEmail method</h2>
-	 * this method sets the given String to the attribute email of the caller object.
+	 * this method sets the given String to the attribute email of the caller object.<p>
 	 * @param email type String
 	 * @return void
 	 */
@@ -344,7 +344,7 @@ public class TaxiDriver {
 
 	/**<h2>setPassword method</h2>
 	 * this method sets the given String to the attribute password of the caller object.
-	 * Before setting it, it uses encrypt method of class AESEncrypt, in order to encrypt it.
+	 * Before setting it, it uses encrypt method of class AESEncrypt, in order to encrypt it.<p>
 	 * @param password type String
 	 * @return void
 	 */
@@ -366,7 +366,7 @@ public class TaxiDriver {
 	}
 
 	/**<h2>setDateOfBirth method</h2>
-	 * this method sets the given Date to the attribute dateOfBirth of the caller object.
+	 * this method sets the given Date to the attribute dateOfBirth of the caller object.<p>
 	 * @param dateOfBirth type Date
 	 * @return void
 	 */
@@ -380,9 +380,9 @@ public class TaxiDriver {
 	public Taxi getOwns() {
 		return owns;
 	}
-	
+
 	/**<h2>setOwns method</h2>
-	 * this method sets the given Taxi to the attribute owns of the caller object.
+	 * this method sets the given Taxi to the attribute owns of the caller object.<p>
 	 * @param owns type Taxi
 	 * @return void
 	 */

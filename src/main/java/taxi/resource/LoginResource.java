@@ -17,17 +17,34 @@ import java.net.URI;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
-
+/**LoginResource class implements the REST service for LoginService<p>
+ * 
+ * The base path for this class is /login
+ * 
+ * @author  Team 4
+ * @since   Academic Year 2016-2017
+ */
 @Path("/login")
 public class LoginResource extends AbstractResource {
 
 	@Context
 	UriInfo uriInfo;
 
+	/**customerLogin method<p>
+	 * receives POST requests at path /login/CustomerLogin<p>
+	 * This method receives as input JSON. This JSON is transformed to LoginInfo object<p>
+	 * 
+	 * The user is logged in calling the service login with the appropriate inputs. 
+	 * This call will return the object of the Customer logged in. 
+	 * If the login was successful, the response is 201, or else 404. 
+	 * <p>
+	 * @param loginInfo type LoginInfo
+	 * @return Response
+	 */
 	@POST
 	@Path("/CustomerLogin")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response CustomerLogin (LoginInfo loginInfo){
+	public Response customerLogin (LoginInfo loginInfo){
 
 		LoginService service = new LoginService();		
 		Customer c1 = (Customer)service.login("Customer", loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());
@@ -42,10 +59,21 @@ public class LoginResource extends AbstractResource {
 		}		
 	}
 
+	/**taxiDriverLogin method<p>
+	 * receives POST requests at path /login/TaxiDriverLogin<p>
+	 * This method receives as input JSON. This JSON is transformed to LoginInfo object<p>
+	 * 
+	 * The user is logged in calling the service login with the appropriate inputs. 
+	 * This call will return the object of the TaxiDriver logged in. 
+	 * If the login was successful, the response is 201, or else 404. 
+	 * <p>
+	 * @param loginInfo type LoginInfo
+	 * @return Response
+	 */
 	@POST
 	@Path("/TaxiDriverLogin")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response TaxiDriverLogin (LoginInfo loginInfo){
+	public Response taxiDriverLogin (LoginInfo loginInfo){
 
 		LoginService service = new LoginService();
 		TaxiDriver txdr1 = (TaxiDriver)service.login("Taxi Driver", loginInfo.getUsername(), loginInfo.getPassword(), loginInfo.getLat(), loginInfo.getLon());

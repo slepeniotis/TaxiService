@@ -7,7 +7,7 @@ package taxi.utils;
  * <li>Done: the request has ended
  * <li>Canceled: the request was canceled
  * </ul>
- * 
+ * <p>
  * @author  Team 4
  * @since   Academic Year 2016-2017 
  */
